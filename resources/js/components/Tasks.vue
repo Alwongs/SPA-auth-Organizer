@@ -2,8 +2,13 @@
     <div class="container">
 
         <!-- Tasks -->     
-        <div class="card p-3 mt-5 mx-auto" style="max-width: 800px;">
-            <div class="form-group form-check">
+        <div class="card p-4 mx-auto" style="max-width: 800px;">
+            <div class="row">
+                <div class="offset-sm-2 mb-2 col-sm-8 text-center text-dark">
+                    <h3>To-do list</h3>
+                </div>
+            </div>
+            <div class="form-group form-check p-0">
                 <form @submit.prevent="addTask">
                     <input @blure="addTask" type="text" v-model="new_title" class="form-control" placeholder="Enter your task here"  :class="{ 'is-invalid': $v.new_title.$error }">
 
@@ -34,7 +39,7 @@
                             <form @submit.prevent="updateTask(task)" v-if="task_input_name_id == task.id" class="d-flex">
                                 <input v-on:keyup.esc="task_input_name_id = null" type="text" v-model="task.title" class="form-control" placeholder="enter your task here">                               
                             </form>
-                            <h4 :class="[{'task-is-done': task.is_done},{'text-brown bg-warning': task.importance == 5},{'text-brown': task.importance == 4}]" v-if="task_input_name_id != task.id" @click="task_input_name_id = task.id">{{ task.title }}</h4>
+                            <h4 :class="[{'task-is-done': task.is_done},{'text-brown bg-warning': task.importance == 5},{'text-brown': task.importance == 4},{'text-muted': task.importance == 0},{'text-dark': task.importance == 1}]" v-if="task_input_name_id != task.id" @click="task_input_name_id = task.id">{{ task.title }}</h4>
                         </td>                     
                         <td>
                             <form>
@@ -78,7 +83,9 @@ export default {
             new_title: '',
             task_input_name_id: null,
             updated_title: '',
-            select_is_open: false
+            select_is_open: false,
+            authenticated: auth.check(),
+            user: auth.user
         }
     },
     methods: {
@@ -124,7 +131,8 @@ export default {
                 return;
             }
             axios.post('/api/tasks', {
-                title: this.new_title
+                title: this.new_title,
+                user_id: this.user.id
             })
                 .then(response => {
                     this.$v.$reset()
@@ -155,6 +163,10 @@ export default {
     },
     mounted(){
         this.getTasks()
+        Event.$on('userLoggedIn', () => {
+            this.authenticated = true;
+            this.user = auth.user;
+        });
     },
     validations: {
         new_title: {

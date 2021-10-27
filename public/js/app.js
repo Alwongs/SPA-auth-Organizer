@@ -3110,6 +3110,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -3121,7 +3126,9 @@ __webpack_require__.r(__webpack_exports__);
       new_title: '',
       task_input_name_id: null,
       updated_title: '',
-      select_is_open: false
+      select_is_open: false,
+      authenticated: auth.check(),
+      user: auth.user
     };
   },
   methods: {
@@ -3169,7 +3176,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios.post('/api/tasks', {
-        title: this.new_title
+        title: this.new_title,
+        user_id: this.user.id
       }).then(function (response) {
         _this3.$v.$reset();
 
@@ -3197,7 +3205,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    var _this5 = this;
+
     this.getTasks();
+    Event.$on('userLoggedIn', function () {
+      _this5.authenticated = true;
+      _this5.user = auth.user;
+    });
   },
   validations: {
     new_title: {
@@ -8400,7 +8414,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.bg-grey {\n    background-color: rgb(236, 241, 241);\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.bg-grey {\r\n    background-color: rgb(236, 241, 241);\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -41629,17 +41643,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header bg-secondary" }, [
       _c(
         "h5",
-        { staticClass: "modal-title", attrs: { id: "createModalLabel" } },
+        {
+          staticClass: "modal-title text-light",
+          attrs: { id: "createModalLabel" }
+        },
         [_vm._v("Add event")]
       ),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "close",
+          staticClass: "close text-light",
           attrs: {
             type: "button",
             "data-dismiss": "modal",
@@ -41654,7 +41671,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
+    return _c("div", { staticClass: "modal-footer p-0" }, [
       _c(
         "button",
         {
@@ -41695,17 +41712,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header bg-secondary" }, [
       _c(
         "h5",
-        { staticClass: "modal-title", attrs: { id: "editModalLabel" } },
+        {
+          staticClass: "modal-title text-light",
+          attrs: { id: "editModalLabel" }
+        },
         [_vm._v("Edit event")]
       ),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "close",
+          staticClass: "close text-light",
           attrs: {
             type: "button",
             "data-dismiss": "modal",
@@ -41720,7 +41740,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
+    return _c("div", { staticClass: "modal-footer p-0" }, [
       _c(
         "button",
         {
@@ -42249,17 +42269,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header bg-secondary" }, [
       _c(
         "h5",
-        { staticClass: "modal-title", attrs: { id: "overdueEditModalLabel" } },
+        {
+          staticClass: "modal-title text-light",
+          attrs: { id: "overdueEditModalLabel" }
+        },
         [_vm._v("Edit event")]
       ),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "close",
+          staticClass: "close text-light",
           attrs: {
             type: "button",
             "data-dismiss": "modal",
@@ -42274,7 +42297,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
+    return _c("div", { staticClass: "modal-footer p-0" }, [
       _c(
         "button",
         {
@@ -42769,17 +42792,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header bg-secondary" }, [
       _c(
         "h5",
-        { staticClass: "modal-title", attrs: { id: "soonEditModalLabel" } },
+        {
+          staticClass: "modal-title text-light",
+          attrs: { id: "soonEditModalLabel" }
+        },
         [_vm._v("Edit event")]
       ),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "close",
+          staticClass: "close text-light",
           attrs: {
             type: "button",
             "data-dismiss": "modal",
@@ -42794,7 +42820,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
+    return _c("div", { staticClass: "modal-footer p-0" }, [
       _c(
         "button",
         {
@@ -42838,11 +42864,13 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "card p-3 mt-5 mx-auto",
+        staticClass: "card p-4 mx-auto",
         staticStyle: { "max-width": "800px" }
       },
       [
-        _c("div", { staticClass: "form-group form-check" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-check p-0" }, [
           _c(
             "form",
             {
@@ -42900,7 +42928,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-sm" }, [
-          _vm._m(0),
+          _vm._m(1),
           _vm._v(" "),
           _c(
             "tbody",
@@ -42982,7 +43010,9 @@ var render = function() {
                           class: [
                             { "task-is-done": task.is_done },
                             { "text-brown bg-warning": task.importance == 5 },
-                            { "text-brown": task.importance == 4 }
+                            { "text-brown": task.importance == 4 },
+                            { "text-muted": task.importance == 0 },
+                            { "text-dark": task.importance == 1 }
                           ],
                           on: {
                             click: function($event) {
@@ -43147,6 +43177,18 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "offset-sm-2 mb-2 col-sm-8 text-center text-dark" },
+        [_c("h3", [_vm._v("To-do list")])]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -43492,7 +43534,7 @@ var staticRenderFns = [
       _c(
         "div",
         { staticClass: "offset-sm-2 col-sm-8 text-center text-light" },
-        [_c("h3", [_vm._v("Today is a greate day. Yes..")])]
+        [_c("h3", [_vm._v("Today")])]
       )
     ])
   },
@@ -43526,17 +43568,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header bg-secondary" }, [
       _c(
         "h5",
-        { staticClass: "modal-title", attrs: { id: "todayEditModalLabel" } },
+        {
+          staticClass: "modal-title text-light",
+          attrs: { id: "todayEditModalLabel" }
+        },
         [_vm._v("Edit event")]
       ),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "close",
+          staticClass: "close text-light",
           attrs: {
             type: "button",
             "data-dismiss": "modal",
@@ -43551,7 +43596,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
+    return _c("div", { staticClass: "modal-footer p-0" }, [
       _c(
         "button",
         {
@@ -43950,17 +43995,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
+    return _c("div", { staticClass: "modal-header bg-secondary" }, [
       _c(
         "h5",
-        { staticClass: "modal-title", attrs: { id: "tomorrowEditModalLabel" } },
+        {
+          staticClass: "modal-title text-light",
+          attrs: { id: "tomorrowEditModalLabel" }
+        },
         [_vm._v("Edit event")]
       ),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "close",
+          staticClass: "close text-light",
           attrs: {
             type: "button",
             "data-dismiss": "modal",
@@ -43975,7 +44023,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
+    return _c("div", { staticClass: "modal-footer p-0" }, [
       _c(
         "button",
         {
@@ -61308,7 +61356,7 @@ exports.withParams = withParams;
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"axios@^0.21","name":"axios","escapedName":"axios","rawSpec":"^0.21","saveSpec":null,"fetchSpec":"^0.21"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_shasum":"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575","_spec":"axios@^0.21","_where":"d:\\\\OpenServer\\\\domains\\\\passport","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundleDependencies":false,"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"deprecated":false,"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
+module.exports = JSON.parse('{"_args":[["axios@0.21.4","c:\\\\OpenServer\\\\domains\\\\SPA-auth-Organizer"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"c:\\\\OpenServer\\\\domains\\\\SPA-auth-Organizer","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 

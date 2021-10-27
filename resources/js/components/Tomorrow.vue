@@ -46,9 +46,9 @@
                         <div class="modal fade" id="tomorrowEditModal" tabindex="-1" aria-labelledby="tomorrowEditModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="tomorrowEditModalLabel">Edit event</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <div class="modal-header bg-secondary">
+                                        <h5 class="modal-title text-light" id="tomorrowEditModalLabel">Edit event</h5>
+                                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -70,7 +70,7 @@
                                                     <option value="monthly">monthly</option>
                                                 </select>
                                             </div>
-                                            <div class="modal-footer">
+                                            <div class="modal-footer p-0">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Save</button>
                                             </div>
