@@ -24,7 +24,8 @@ class TaskStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|unique:tasks,title'
+            'title' => 'required|max:255|unique:tasks,title',
+            'user_id' => 'required'
         ];
     }
 }
