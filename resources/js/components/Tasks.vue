@@ -5,7 +5,7 @@
         <div class="card p-4 mx-auto" style="max-width: 800px;">
             <div class="row">
                 <div class="offset-sm-2 mb-2 col-sm-8 text-center text-dark">
-                    <h3>To-do list</h3>
+                    <h3>Todo-list</h3>
                 </div>
             </div>
             <div class="form-group form-check p-0">
