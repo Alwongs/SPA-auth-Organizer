@@ -7,6 +7,8 @@ use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\PostponeController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\API\CompanyController;
+use App\Http\Controllers\API\TestController;
 
 
 /*
@@ -31,7 +33,9 @@ Route::middleware('auth:api')->group(function () {
             'users' => UserController::class,
             'events' => EventController::class,
             'events/postpone' => PostponeController::class,
-            'tasks' => TaskController::class
+            'tasks' => TaskController::class,
+            'companies' => CompanyController::class,
+            'tests' => TestController::class,
         ]);
 });
 

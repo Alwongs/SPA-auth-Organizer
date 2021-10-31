@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EventResource extends JsonResource
+class CompanyResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,9 @@ class EventResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'date' => $this->date,
-            'type' => $this->type,
-            'description' => $this->description
+            'description' => $this->description,
+            'created_at' => $this->created_at,
+            'tests' => TestResource::collection($this->tests)
         ];
     }
 }

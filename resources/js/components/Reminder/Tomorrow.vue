@@ -27,7 +27,7 @@
 
                     <tr class="content" v-for="(event, index) in tomorrow" :key="event.id">
                         <th scope="row">{{index + 1}}.</th>
-                        <td @click="showDate(event.date)" class="show-date"><h5 class="title-brown">{{event.title}}</h5></td>
+                        <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;" class="show-date"><h5 class="title-brown">{{event.title}}</h5></td>
                         <td>
                             <button v-if="event.type != 'unique'" @click="postpone(event)" type="button" class="btn btn-success m-0">
                                 <i class="fa fa-check" aria-hidden="true"></i>
@@ -42,7 +42,7 @@
                             </button>
                         </td>
 
-                        <!-- Modal Edit -->
+                            <!-- Modal Edit -->
                         <div class="modal fade" id="tomorrowEditModal" tabindex="-1" aria-labelledby="tomorrowEditModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">

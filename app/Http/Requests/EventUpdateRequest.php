@@ -26,7 +26,8 @@ class EventUpdateRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'date' => 'required',
-            'type' => 'required|max:20'
+            'type' => 'required|max:20',
+            'description' => 'nullable'
         ];
     }
 }

@@ -72,7 +72,7 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($event)
+    public function show(Event $event)
     {
         return new EventResource($event);
     }

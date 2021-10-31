@@ -1,16 +1,31 @@
 import VueRouter from 'vue-router';
 import Home from './components/Home';
-import Events from './components/Events';
+import Events from './components/Reminder/Events';
+import Event from './components/Reminder/Event';
 import Users from './components/Users';
-import Tasks from './components/Tasks';
+import Tasks from './components/To-do/Tasks';
+import Companies from './components/Jobs/Companies';
+import Company from './components/Jobs/Company';
 import About from './components/About';
 import Register from './components/Register';
 import Login from './components/Login';
 
 let routes = [
     {
+        path: '/',
+        component: Home,
+        meta: { middlewareAuth: true }
+    },
+    {
         path: '/events',
+        name: 'events',
         component: Events,
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/events/:id',
+        name: 'event',
+        component: Event,
         meta: { middlewareAuth: true }
     },
     {
@@ -19,8 +34,15 @@ let routes = [
         meta: { middlewareAuth: true }
     },
     {
-        path: '/',
-        component: Home,
+        path: '/companies',
+        name: 'companies',
+        component: Companies,
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/companies/:id',
+        name: 'company',
+        component: Company,
         meta: { middlewareAuth: true }
     },
     {

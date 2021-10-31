@@ -27,7 +27,7 @@
 
                     <tr class="content" v-for="(event, index) in today" :key="event.id">
                         <th scope="row">{{index + 1}}.</th>
-                        <td class="show-date" @click="showDate(event.date)"><h4>{{event.title}}!</h4></td>
+                        <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;"><h4>{{event.title}}!</h4></td>
                         <td>
                             <button v-if="event.type != 'unique'" @click="postpone(event)" type="button" class="btn btn-success m-0">
                                 <i class="fa fa-check" aria-hidden="true"></i>

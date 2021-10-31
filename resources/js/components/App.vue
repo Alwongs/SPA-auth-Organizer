@@ -6,6 +6,7 @@
                     <router-link class="nav-item nav-link" to="/">Home</router-link>
                     <router-link class="nav-item nav-link" to="/events">Events</router-link>
                     <router-link class="nav-item nav-link" to="/tasks">Todo-list</router-link>
+                    <router-link class="nav-item nav-link" to="/companies">Companies</router-link>
                     <router-link class="nav-item nav-link" to="/users">Users</router-link>
                     <router-link class="nav-item nav-link" to="/about">About</router-link>
                 </div>

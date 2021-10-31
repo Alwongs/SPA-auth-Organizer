@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
-class EventStoreRequest extends FormRequest
+class CompanyStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +26,11 @@ class EventStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|unique:events,title',
-            'date' => 'required',
-            'type' => 'required|max:10',
+            'description' => 'nullable',
             'user_id' => 'required',
-            'description' => 'nullable'
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'title.unique' => 'Title should be unique!'
+            'title' => Rule::unique('companies')->where(function ($query) {
+                return $query->where('user_id', Auth::id());
+            })
         ];
     }
 }

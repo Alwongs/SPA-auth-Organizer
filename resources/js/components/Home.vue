@@ -17,10 +17,10 @@
 <script>
 import { required, maxLength } from 'vuelidate/lib/validators'
 
-import Overdue from "./Overdue.vue"
-import Today from "./Today.vue"
-import Tomorrow from "./Tomorrow.vue"
-import Soon from "./Soon.vue"
+import Overdue from "./Reminder/Overdue.vue"
+import Today from "./Reminder/Today.vue"
+import Tomorrow from "./Reminder/Tomorrow.vue"
+import Soon from "./Reminder/Soon.vue"
 
 export default {
     name: "Home",

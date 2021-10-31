@@ -16,10 +16,9 @@
                 </td>                        
             </tr>
 
-
             <tr class="content" v-for="(event, index) in in_week" :key="event.id">
                 <th scope="row">{{index + 1}}.</th>
-                <td  @click="showDate(event.date)" class="show-date">{{event.title}}</td>
+                <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;" class="show-date">{{event.title}}</td>
                 <td>
                     <button v-if="event.type != 'unique'" @click="postpone(event)" type="button" class="btn btn-success m-0">
                         <i class="fa fa-check" aria-hidden="true"></i>
@@ -33,46 +32,46 @@
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </button>
                 </td>
-
-                <!-- Modal Edit -->
-                <div class="modal fade" id="soonEditModal" tabindex="-1" aria-labelledby="soonEditModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header bg-secondary">
-                                <h5 class="modal-title text-light" id="soonEditModalLabel">Edit event</h5>
-                                <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form @submit.prevent="updateEvent(current_event)">
-                                    <div class="form-group">
-                                        <label for="soonEditTitleModal">title</label>
-                                        <input v-model="current_event.title" type="text" class="form-control" id="soonEditTitleModal">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="soonEditDateModal">date</label>
-                                        <input v-model="current_event.date"  type="date" min="2021-01-01" max="2100-01-01" class="form-control" id="soonEditDateModal" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="soonEditTypeModal">Type</label>
-                                        <select v-model="current_event.type" class="form-control" id="soonEditTypeModal">
-                                            <option value="unique">unique</option>
-                                            <option value="annual">annual</option>
-                                            <option value="monthly">monthly</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer p-0">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </tr>
         </tbody>
+
+            <!-- Modal Edit -->
+        <div class="modal fade" id="soonEditModal" tabindex="-1" aria-labelledby="soonEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-secondary">
+                        <h5 class="modal-title text-light" id="soonEditModalLabel">Edit event</h5>
+                        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="updateEvent(current_event)">
+                            <div class="form-group">
+                                <label for="soonEditTitleModal">title</label>
+                                <input v-model="current_event.title" type="text" class="form-control" id="soonEditTitleModal">
+                            </div>
+                            <div class="form-group">
+                                <label for="soonEditDateModal">date</label>
+                                <input v-model="current_event.date"  type="date" min="2021-01-01" max="2100-01-01" class="form-control" id="soonEditDateModal" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="soonEditTypeModal">Type</label>
+                                <select v-model="current_event.type" class="form-control" id="soonEditTypeModal">
+                                    <option value="unique">unique</option>
+                                    <option value="annual">annual</option>
+                                    <option value="monthly">monthly</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer p-0">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </table>          
 
 </template>
