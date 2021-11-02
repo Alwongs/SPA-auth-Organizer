@@ -127,6 +127,7 @@ export default {
                 type: current_event.type
             })
             .then(response => {
+                $('#todayEditModal').modal('hide');
                 this.getAllEvents()
             })
             .catch(error => {

@@ -152,18 +152,11 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form @submit.prevent="updateCompany()">
+                                <form @submit.prevent="updateCompany(current_company)">
 
                                     <div class="form-group">
                                         <label for="editCompanyTitleModal">title</label>
-                                        <input v-model="current_company.title" type="text" class="form-control" id="editCompanyTitleModal"  :class="{ 'is-invalid': $v.current_company.title.$error }">
-                                            <!-- Mistakes -->
-                                        <div class="invalid-feedback" v-if="!$v.current_company.title.required">
-                                            Обязательное поле.
-                                        </div>
-                                        <div class="invalid-feedback" v-if="!$v.current_company.title.maxLength">
-                                            Максимальное количество символов: {{$v.current_company.title.$params.maxLength.max}}
-                                        </div>
+                                        <input v-model="current_company.title" type="text" class="form-control" id="editCompanyTitleModal" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="editCompanyDescriptionModal">Description</label>
@@ -190,22 +183,15 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form @submit.prevent="updateTest()">
+                                <form @submit.prevent="updateTest(current_test)">
 
                                     <div class="form-group">
                                         <label for="editTestDateModal">Date:</label>
-                                        <input v-model="current_test.date" type="text" class="form-control" id="editTestDateModal" reqiured>
+                                        <input v-model="current_test.date" type="text" class="form-control" id="editTestDateModal" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="editTestTitleModal">Title:</label>
-                                        <input v-model="current_test.title" type="text" class="form-control" id="editTestTitleModal"   :class="{ 'is-invalid': $v.current_test.title.$error }">
-                                            <!-- Mistakes -->
-                                        <div class="invalid-feedback" v-if="!$v.current_test.title.required">
-                                            Обязательное поле.
-                                        </div>
-                                        <div class="invalid-feedback" v-if="!$v.current_test.title.maxLength">
-                                            Максимальное количество символов: {{$v.current_test.title.$params.maxLength.max}}
-                                        </div>
+                                        <input v-model="current_test.title" type="text" class="form-control" id="editTestTitleModal" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="editTestDescriptionModal">Description</label>
@@ -213,14 +199,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="editTestResultModal">Result:</label>
-                                        <input v-model="current_test.result" type="text" class="form-control" id="editTestResultModal"   :class="{ 'is-invalid': $v.current_test.result.$error }">
-                                            <!-- Mistakes -->
-                                        <div class="invalid-feedback" v-if="!$v.current_test.result.required">
-                                            Обязательное поле.
-                                        </div>
-                                        <div class="invalid-feedback" v-if="!$v.current_test.result.maxLength">
-                                            Максимальное количество символов: {{$v.current_test.result.$params.maxLength.max}}
-                                        </div>
+                                        <input v-model="current_test.result" type="text" class="form-control" id="editTestResultModal" required>
                                     </div>
 
                                     <div class="modal-footer p-0">
@@ -290,17 +269,14 @@ export default {
                 this.loading = false
             })
         },
-        updateCompany(){ 
-            this.$v.current_company.title.$touch()
-            if(this.$v.current_company.title.$anyError) {
-                return;
-            }        
+        updateCompany(current_company){        
             axios.post('/api/companies/' + current_company.id, {
                 _method: 'PATCH',                
                 title: current_company.title,
                 description: current_company.description,
             })         
             .then(response => {
+                $('#editCompanyModal').modal('hide')
                 this.getCompany(this.id)
             })
             .catch(error => {
@@ -311,12 +287,7 @@ export default {
                 this.loading = false
             })
         },
-        updateTest(){
-            this.$v.current_test.title.$touch()
-            this.$v.current_test.result.$touch()
-            if(this.$v.current_test.title.$anyError || this.$v.current_test.result.$anyError ) {
-                return;
-            }         
+        updateTest(current_test){        
             axios.post('/api/tests/' + current_test.id, {
                 _method: 'PATCH',                
                 date: current_test.date,
@@ -325,6 +296,7 @@ export default {
                 result: current_test.result,
             })         
             .then(response => {
+                $('#editTestModal').modal('hide')
                 this.getCompany(this.id)
             })
             .catch(error => {

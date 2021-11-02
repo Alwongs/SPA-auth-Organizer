@@ -126,6 +126,7 @@ export default {
                 type: current_event.type
             })
             .then(response => {
+                $('#overdueEditModal').modal('hide');
                 this.getAllEvents()
                     
             })

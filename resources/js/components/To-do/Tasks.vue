@@ -8,6 +8,10 @@
                     <h3>Todo-list</h3>
                 </div>
             </div>
+            <div class="alert alert-danger" role="alert" v-if="errored">
+                Ошибка загрузки данных! <br>
+                {{errors[0]}}
+            </div>
             <div class="form-group form-check p-0">
                 <form @submit.prevent="addTask">
                     <input @blure="addTask" type="text" v-model="new_title" class="form-control" placeholder="Enter your task here"  :class="{ 'is-invalid': $v.new_title.$error }">
@@ -21,7 +25,9 @@
                     </div>                
                 </form>                
             </div>            
-
+            <div v-if="loading" class="spinner-border text-secondary m-2" role="status">
+                <span class="visually-hidden"></span>
+            </div>
             <table class="table table-hover table-sm">
                 <thead class="">
                     <tr>
@@ -37,7 +43,7 @@
                         <th :class="[{'task-is-done': task.is_done},{'text-danger': task.importance == 5}]" scope="row">{{index+1}}.</th>
                         <td>
                             <form @submit.prevent="updateTask(task)" v-if="task_input_name_id == task.id" class="d-flex">
-                                <input v-on:keyup.esc="task_input_name_id = null" type="text" v-model="task.title" class="form-control" placeholder="enter your task here">                               
+                                <input v-on:keyup.esc="task_input_name_id = null" type="text" v-model="task.title" class="form-control" placeholder="enter your task here" required>                               
                             </form>
                             <h4 :class="[{'task-is-done': task.is_done},{'text-brown bg-warning': task.importance == 5},{'text-brown': task.importance == 4},{'text-muted': task.importance == 0},{'text-dark': task.importance == 1}]" v-if="task_input_name_id != task.id" @click="task_input_name_id = task.id">{{ task.title }}</h4>
                         </td>                     
@@ -63,9 +69,6 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="spinner-border" style="width: 4rem; height: 4rem;" role="status" v-if="loading">
-            <span class="sr-only">Loading...</span>
         </div>
     </div>
 </template>
@@ -100,9 +103,14 @@ export default {
                     this.task_input_name_id = null
                     this.updated_title = ''
                     this.getTasks()
+                    this.errors = []
+                    this.errored = false
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.log(error.response)
+                    if(error.response.data.errors.title){
+                        this.errors.push(error.response.data.errors.title[0])
+                    }
                     this.errored = true
                 })
                 .finally(() => {
@@ -138,9 +146,15 @@ export default {
                     this.$v.$reset()
                     this.new_title = ''
                     this.getTasks()
+                    this.errors = []
+                    this.errored = false
                 })
                 .catch(error => {
-                    console.log(error)
+                    console.log(error.response.data.errors.title)
+                    if(error.response.data.errors.title){
+                        this.errors = []
+                        this.errors.push(error.response.data.errors.title[0])
+                    }
                     this.errored = true
                 })
                 .finally(() => {

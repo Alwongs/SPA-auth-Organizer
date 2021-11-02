@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-
+        <div class="alert alert-danger" role="alert" v-if="errored">
+            Ошибка загрузки данных! <br>
+            {{errors[0]}}
+        </div>
         <!-- Card -->                                              
         <div class="card mt-4 bg-secondary">
             <div class="card-body p-1">
@@ -31,6 +34,11 @@
                             <div class="modal-body">
                                 <form @submit.prevent="addEvent">
                                     <div class="form-group">
+
+                                        <div class="alert alert-danger" role="alert" v-if="errored">
+                                            Ошибка загрузки данных! <br>
+                                            {{errors[0]}}
+                                        </div>
                                         <label for="createTitleModal">title</label>
                                         <input v-model="new_title" type="text" class="form-control" id="createTitleModal" :class="{ 'is-invalid': $v.new_title.$error }">
                                         <!-- Mistakes -->
@@ -88,7 +96,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <div v-if="loading" class="spinner-border text-secondary m-2" role="status">
+                            <span class="visually-hidden"></span>
+                        </div>
                         <tr v-for="event in events" :key="event.id">
+
                             <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;">{{event.id}}</td>
                             <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;">{{event.title}}</td>
                             <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;">{{event.date}}</td>
@@ -116,6 +128,10 @@
                                         </div>
                                         <div class="modal-body">
                                             <form @submit.prevent="updateEvent(current_event)">
+                                                <div class="alert alert-danger" role="alert" v-if="errored">
+                                                    Ошибка загрузки данных! <br>
+                                                    {{errors[0]}}
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="editTitleModal">title</label>
                                                     <input v-model="current_event.title" type="text" class="form-control" id="editTitleModal">
@@ -188,14 +204,20 @@ export default {
                 user_id: this.user.id
             })
             .then(response => {
-                this.$v.$reset()
-                this.new_title = '',
-                this.new_date = '',
-                this.new_type = '',
-                this.getAllEvents()
+                this.$v.$reset();
+                this.new_title = '';
+                this.new_date = '';
+                this.new_type = '';
+                $('#createModal').modal('hide');
+                this.getAllEvents();
+                this.errors = [];
+                this.errored = false;
             })
             .catch(error => {
-                console.log(error)
+                if(error.response.data.errors.title){
+                    this.errors = []
+                    this.errors.push(error.response.data.errors.title[0])
+                }
                 this.errored = true
             })
             .finally(() => {
@@ -210,10 +232,15 @@ export default {
                 type: current_event.type
             })
             .then(response => {
+                $('#editModal').modal('hide');
                 this.getAllEvents()
+                this.errors = []
+                this.errored = false
             })
             .catch(error => {
-                console.log(error)
+                if(error.response.data.errors.title){
+                    this.errors.push(error.response.data.errors.title[0])
+                }
                 this.errored = true
             })
             .finally(() => {
@@ -228,7 +255,6 @@ export default {
                     this.getAllEvents()
                 })
                 .catch(error => {
-                    console.log(error)
                     this.errored = true
                 })
                 .finally(() => {
@@ -238,11 +264,9 @@ export default {
         getAllEvents() {
             axios.get('/api/events')
             .then(response => {
-                console.log(response.data)
                 this.events = response.data.events
             })
             .catch(error => {
-                console.log(error)
                 this.errored = true
             })
             .finally(() => {

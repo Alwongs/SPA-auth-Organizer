@@ -9,6 +9,7 @@ use App\Http\Resources\TaskResource;
 use App\Http\Requests\TaskStoreRequest;
 use App\Http\Requests\TaskUpdateRequest;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -19,7 +20,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return TaskResource::collection(Task::orderBy('importance', 'desc')->get());
+        return TaskResource::collection(Task::where('user_id', Auth::id())->orderBy('importance', 'desc')->get());
     }
 
     /**

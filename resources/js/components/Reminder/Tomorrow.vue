@@ -136,7 +136,8 @@ export default {
                 date: current_event.date,
                 type: current_event.type
             })
-            .then(response => {
+            .then(response => {                
+                $('#tomorrowEditModal').modal('hide');
                 this.getAllEvents()
             })
             .catch(error => {

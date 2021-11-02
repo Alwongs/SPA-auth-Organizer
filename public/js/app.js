@@ -2185,6 +2185,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2403,8 +2404,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2442,21 +2441,23 @@ __webpack_require__.r(__webpack_exports__);
         $('#createModal').modal('hide');
 
         _this.getAllCompanies();
+
+        _this.errors = [];
+        _this.errored = false;
       })["catch"](function (error) {
-        console.log(error);
+        if (error.response.data.errors.title) {
+          _this.errors = [];
+
+          _this.errors.push(error.response.data.errors.title[0]);
+        }
+
         _this.errored = true;
       })["finally"](function () {
         _this.loading = false;
       });
     },
-    updateCompany: function updateCompany() {
+    updateCompany: function updateCompany(current_company) {
       var _this2 = this;
-
-      this.$v.current_company.title.$touch();
-
-      if (this.$v.current_company.title.$anyError) {
-        return;
-      }
 
       axios.post('/api/companies/' + current_company.id, {
         _method: 'PATCH',
@@ -2757,27 +2758,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2826,20 +2806,16 @@ __webpack_require__.r(__webpack_exports__);
         _this.loading = false;
       });
     },
-    updateCompany: function updateCompany() {
+    updateCompany: function updateCompany(current_company) {
       var _this2 = this;
-
-      this.$v.current_company.title.$touch();
-
-      if (this.$v.current_company.title.$anyError) {
-        return;
-      }
 
       axios.post('/api/companies/' + current_company.id, {
         _method: 'PATCH',
         title: current_company.title,
         description: current_company.description
       }).then(function (response) {
+        $('#editCompanyModal').modal('hide');
+
         _this2.getCompany(_this2.id);
       })["catch"](function (error) {
         console.log(error);
@@ -2848,15 +2824,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.loading = false;
       });
     },
-    updateTest: function updateTest() {
+    updateTest: function updateTest(current_test) {
       var _this3 = this;
-
-      this.$v.current_test.title.$touch();
-      this.$v.current_test.result.$touch();
-
-      if (this.$v.current_test.title.$anyError || this.$v.current_test.result.$anyError) {
-        return;
-      }
 
       axios.post('/api/tests/' + current_test.id, {
         _method: 'PATCH',
@@ -2865,6 +2834,8 @@ __webpack_require__.r(__webpack_exports__);
         description: current_test.description,
         result: current_test.result
       }).then(function (response) {
+        $('#editTestModal').modal('hide');
+
         _this3.getCompany(_this3.id);
       })["catch"](function (error) {
         console.log(error);
@@ -3416,6 +3387,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -3453,9 +3440,22 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this.$v.$reset();
 
-        _this.new_title = '', _this.new_date = '', _this.new_type = '', _this.getAllEvents();
+        _this.new_title = '';
+        _this.new_date = '';
+        _this.new_type = '';
+        $('#createModal').modal('hide');
+
+        _this.getAllEvents();
+
+        _this.errors = [];
+        _this.errored = false;
       })["catch"](function (error) {
-        console.log(error);
+        if (error.response.data.errors.title) {
+          _this.errors = [];
+
+          _this.errors.push(error.response.data.errors.title[0]);
+        }
+
         _this.errored = true;
       })["finally"](function () {
         _this.loading = false;
@@ -3470,9 +3470,17 @@ __webpack_require__.r(__webpack_exports__);
         date: current_event.date,
         type: current_event.type
       }).then(function (response) {
+        $('#editModal').modal('hide');
+
         _this2.getAllEvents();
+
+        _this2.errors = [];
+        _this2.errored = false;
       })["catch"](function (error) {
-        console.log(error);
+        if (error.response.data.errors.title) {
+          _this2.errors.push(error.response.data.errors.title[0]);
+        }
+
         _this2.errored = true;
       })["finally"](function () {
         _this2.loading = false;
@@ -3486,7 +3494,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this3.getAllEvents();
       })["catch"](function (error) {
-        console.log(error);
         _this3.errored = true;
       })["finally"](function () {
         _this3.loading = false;
@@ -3496,10 +3503,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.get('/api/events').then(function (response) {
-        console.log(response.data);
         _this4.events = response.data.events;
       })["catch"](function (error) {
-        console.log(error);
         _this4.errored = true;
       })["finally"](function () {
         _this4.loading = false;
@@ -3669,6 +3674,8 @@ __webpack_require__.r(__webpack_exports__);
         date: current_event.date,
         type: current_event.type
       }).then(function (response) {
+        $('#overdueEditModal').modal('hide');
+
         _this2.getAllEvents();
       })["catch"](function (error) {
         console.log(error);
@@ -3838,6 +3845,8 @@ __webpack_require__.r(__webpack_exports__);
         date: current_event.date,
         type: current_event.type
       }).then(function (response) {
+        $('#soonEditModal').modal('hide');
+
         _this2.getAllEvents();
       })["catch"](function (error) {
         console.log(error);
@@ -4019,6 +4028,8 @@ __webpack_require__.r(__webpack_exports__);
         date: current_event.date,
         type: current_event.type
       }).then(function (response) {
+        $('#todayEditModal').modal('hide');
+
         _this2.getAllEvents();
       })["catch"](function (error) {
         console.log(error);
@@ -4210,6 +4221,8 @@ __webpack_require__.r(__webpack_exports__);
         date: current_event.date,
         type: current_event.type
       }).then(function (response) {
+        $('#tomorrowEditModal').modal('hide');
+
         _this2.getAllEvents();
       })["catch"](function (error) {
         console.log(error);
@@ -4336,6 +4349,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -4366,8 +4382,16 @@ __webpack_require__.r(__webpack_exports__);
         _this.updated_title = '';
 
         _this.getTasks();
+
+        _this.errors = [];
+        _this.errored = false;
       })["catch"](function (error) {
-        console.log(error);
+        console.log(error.response);
+
+        if (error.response.data.errors.title) {
+          _this.errors.push(error.response.data.errors.title[0]);
+        }
+
         _this.errored = true;
       })["finally"](function () {
         _this.loading = false;
@@ -4405,8 +4429,18 @@ __webpack_require__.r(__webpack_exports__);
         _this3.new_title = '';
 
         _this3.getTasks();
+
+        _this3.errors = [];
+        _this3.errored = false;
       })["catch"](function (error) {
-        console.log(error);
+        console.log(error.response.data.errors.title);
+
+        if (error.response.data.errors.title) {
+          _this3.errors = [];
+
+          _this3.errors.push(error.response.data.errors.title[0]);
+        }
+
         _this3.errored = true;
       })["finally"](function () {
         _this3.loading = false;
@@ -42463,6 +42497,27 @@ var render = function() {
                       },
                       [
                         _c("div", { staticClass: "form-group" }, [
+                          _vm.errored
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass: "alert alert-danger",
+                                  attrs: { role: "alert" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Ошибка загрузки данных! "
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(_vm.errors[0]) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
                           _c("label", { attrs: { for: "createTitleModal" } }, [
                             _vm._v("title")
                           ]),
@@ -42676,9 +42731,8 @@ var render = function() {
                                 on: {
                                   submit: function($event) {
                                     $event.preventDefault()
-                                    return _vm.updateCompany.apply(
-                                      null,
-                                      arguments
+                                    return _vm.updateCompany(
+                                      _vm.current_company
                                     )
                                   }
                                 }
@@ -42701,13 +42755,10 @@ var render = function() {
                                       }
                                     ],
                                     staticClass: "form-control",
-                                    class: {
-                                      "is-invalid":
-                                        _vm.$v.current_company.title.$error
-                                    },
                                     attrs: {
                                       type: "text",
-                                      id: "editTitleModal"
+                                      id: "editTitleModal",
+                                      required: ""
                                     },
                                     domProps: {
                                       value: _vm.current_company.title
@@ -42724,36 +42775,7 @@ var render = function() {
                                         )
                                       }
                                     }
-                                  }),
-                                  _vm._v(" "),
-                                  !_vm.$v.current_company.title.required
-                                    ? _c(
-                                        "div",
-                                        { staticClass: "invalid-feedback" },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    Обязательное поле.\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  !_vm.$v.current_company.title.maxLength
-                                    ? _c(
-                                        "div",
-                                        { staticClass: "invalid-feedback" },
-                                        [
-                                          _vm._v(
-                                            "\n                                                    Максимальное количество символов: " +
-                                              _vm._s(
-                                                _vm.$v.current_company.title
-                                                  .$params.maxLength.max
-                                              ) +
-                                              "\n                                                "
-                                          )
-                                        ]
-                                      )
-                                    : _vm._e()
+                                  })
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "form-group" }, [
@@ -43464,7 +43486,7 @@ var render = function() {
                         on: {
                           submit: function($event) {
                             $event.preventDefault()
-                            return _vm.updateCompany()
+                            return _vm.updateCompany(_vm.current_company)
                           }
                         }
                       },
@@ -43486,12 +43508,10 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.$v.current_company.title.$error
-                            },
                             attrs: {
                               type: "text",
-                              id: "editCompanyTitleModal"
+                              id: "editCompanyTitleModal",
+                              required: ""
                             },
                             domProps: { value: _vm.current_company.title },
                             on: {
@@ -43506,28 +43526,7 @@ var render = function() {
                                 )
                               }
                             }
-                          }),
-                          _vm._v(" "),
-                          !_vm.$v.current_company.title.required
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                _vm._v(
-                                  "\n                                        Обязательное поле.\n                                    "
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          !_vm.$v.current_company.title.maxLength
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                _vm._v(
-                                  "\n                                        Максимальное количество символов: " +
-                                    _vm._s(
-                                      _vm.$v.current_company.title.$params
-                                        .maxLength.max
-                                    ) +
-                                    "\n                                    "
-                                )
-                              ])
-                            : _vm._e()
+                          })
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -43602,7 +43601,7 @@ var render = function() {
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
-                          return _vm.updateTest()
+                          return _vm.updateTest(_vm.current_test)
                         }
                       }
                     },
@@ -43625,7 +43624,7 @@ var render = function() {
                           attrs: {
                             type: "text",
                             id: "editTestDateModal",
-                            reqiured: ""
+                            required: ""
                           },
                           domProps: { value: _vm.current_test.date },
                           on: {
@@ -43658,10 +43657,11 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.$v.current_test.title.$error
+                          attrs: {
+                            type: "text",
+                            id: "editTestTitleModal",
+                            required: ""
                           },
-                          attrs: { type: "text", id: "editTestTitleModal" },
                           domProps: { value: _vm.current_test.title },
                           on: {
                             input: function($event) {
@@ -43675,28 +43675,7 @@ var render = function() {
                               )
                             }
                           }
-                        }),
-                        _vm._v(" "),
-                        !_vm.$v.current_test.title.required
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                                        Обязательное поле.\n                                    "
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.current_test.title.maxLength
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                                        Максимальное количество символов: " +
-                                  _vm._s(
-                                    _vm.$v.current_test.title.$params.maxLength
-                                      .max
-                                  ) +
-                                  "\n                                    "
-                              )
-                            ])
-                          : _vm._e()
+                        })
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
@@ -43748,10 +43727,11 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.$v.current_test.result.$error
+                          attrs: {
+                            type: "text",
+                            id: "editTestResultModal",
+                            required: ""
                           },
-                          attrs: { type: "text", id: "editTestResultModal" },
                           domProps: { value: _vm.current_test.result },
                           on: {
                             input: function($event) {
@@ -43765,28 +43745,7 @@ var render = function() {
                               )
                             }
                           }
-                        }),
-                        _vm._v(" "),
-                        !_vm.$v.current_test.result.required
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                                        Обязательное поле.\n                                    "
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.$v.current_test.result.maxLength
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                                        Максимальное количество символов: " +
-                                  _vm._s(
-                                    _vm.$v.current_test.result.$params.maxLength
-                                      .max
-                                  ) +
-                                  "\n                                    "
-                              )
-                            ])
-                          : _vm._e()
+                        })
                       ]),
                       _vm._v(" "),
                       _vm._m(8)
@@ -44576,6 +44535,18 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _vm.errored
+      ? _c(
+          "div",
+          { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+          [
+            _vm._v("\n        Ошибка загрузки данных! "),
+            _c("br"),
+            _vm._v("\n        " + _vm._s(_vm.errors[0]) + "\n    ")
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "card mt-4 bg-secondary" }, [
       _c("div", { staticClass: "card-body p-1" }, [
         _vm._m(0),
@@ -44612,6 +44583,27 @@ var render = function() {
                       },
                       [
                         _c("div", { staticClass: "form-group" }, [
+                          _vm.errored
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass: "alert alert-danger",
+                                  attrs: { role: "alert" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Ошибка загрузки данных! "
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(_vm.errors[0]) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
                           _c("label", { attrs: { for: "createTitleModal" } }, [
                             _vm._v("title")
                           ]),
@@ -44811,345 +44803,384 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.events, function(event) {
-              return _c("tr", { key: event.id }, [
-                _c(
-                  "td",
-                  {
-                    staticStyle: { cursor: "pointer" },
-                    on: {
-                      click: function($event) {
-                        return _vm.$router.push({
-                          name: "event",
-                          params: { id: event.id }
-                        })
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(event.id))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticStyle: { cursor: "pointer" },
-                    on: {
-                      click: function($event) {
-                        return _vm.$router.push({
-                          name: "event",
-                          params: { id: event.id }
-                        })
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(event.title))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticStyle: { cursor: "pointer" },
-                    on: {
-                      click: function($event) {
-                        return _vm.$router.push({
-                          name: "event",
-                          params: { id: event.id }
-                        })
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(event.date))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticStyle: { cursor: "pointer" },
-                    on: {
-                      click: function($event) {
-                        return _vm.$router.push({
-                          name: "event",
-                          params: { id: event.id }
-                        })
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(event.type))]
-                ),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
+            [
+              _vm.loading
+                ? _c(
+                    "div",
                     {
-                      staticClass: "btn btn-primary m-0",
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "modal",
-                        "data-target": "#editModal"
-                      },
+                      staticClass: "spinner-border text-secondary m-2",
+                      attrs: { role: "status" }
+                    },
+                    [_c("span", { staticClass: "visually-hidden" })]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.events, function(event) {
+                return _c("tr", { key: event.id }, [
+                  _c(
+                    "td",
+                    {
+                      staticStyle: { cursor: "pointer" },
                       on: {
                         click: function($event) {
-                          $event.preventDefault()
-                          _vm.current_event = event
+                          return _vm.$router.push({
+                            name: "event",
+                            params: { id: event.id }
+                          })
                         }
+                      }
+                    },
+                    [_vm._v(_vm._s(event.id))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticStyle: { cursor: "pointer" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$router.push({
+                            name: "event",
+                            params: { id: event.id }
+                          })
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(event.title))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticStyle: { cursor: "pointer" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$router.push({
+                            name: "event",
+                            params: { id: event.id }
+                          })
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(event.date))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticStyle: { cursor: "pointer" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$router.push({
+                            name: "event",
+                            params: { id: event.id }
+                          })
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(event.type))]
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary m-0",
+                        attrs: {
+                          type: "button",
+                          "data-toggle": "modal",
+                          "data-target": "#editModal"
+                        },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.current_event = event
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-pencil",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger m-0",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteEvent(event.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-trash" })]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal fade",
+                      attrs: {
+                        id: "editModal",
+                        tabindex: "-1",
+                        "aria-labelledby": "editModalLabel",
+                        "aria-hidden": "true"
                       }
                     },
                     [
-                      _c("i", {
-                        staticClass: "fa fa-pencil",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger m-0",
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteEvent(event.id)
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fa fa-trash" })]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "modal fade",
-                    attrs: {
-                      id: "editModal",
-                      tabindex: "-1",
-                      "aria-labelledby": "editModalLabel",
-                      "aria-hidden": "true"
-                    }
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "modal-dialog modal-lg modal-dialog-centered"
-                      },
-                      [
-                        _c("div", { staticClass: "modal-content" }, [
-                          _vm._m(4, true),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "modal-body" }, [
-                            _c(
-                              "form",
-                              {
-                                on: {
-                                  submit: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.updateEvent(_vm.current_event)
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "modal-dialog modal-lg modal-dialog-centered"
+                        },
+                        [
+                          _c("div", { staticClass: "modal-content" }, [
+                            _vm._m(4, true),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-body" }, [
+                              _c(
+                                "form",
+                                {
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.updateEvent(_vm.current_event)
+                                    }
                                   }
-                                }
-                              },
-                              [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "editTitleModal" } },
-                                    [_vm._v("title")]
-                                  ),
+                                },
+                                [
+                                  _vm.errored
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass: "alert alert-danger",
+                                          attrs: { role: "alert" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                Ошибка загрузки данных! "
+                                          ),
+                                          _c("br"),
+                                          _vm._v(
+                                            "\n                                                " +
+                                              _vm._s(_vm.errors[0]) +
+                                              "\n                                            "
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.current_event.title,
-                                        expression: "current_event.title"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "text",
-                                      id: "editTitleModal"
-                                    },
-                                    domProps: {
-                                      value: _vm.current_event.title
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.current_event,
-                                          "title",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "editDateModal" } },
-                                    [_vm._v("Date")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.current_event.date,
-                                        expression: "current_event.date"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      type: "date",
-                                      min: "2021-01-01",
-                                      max: "2100-01-01",
-                                      id: "editDateModal",
-                                      required: ""
-                                    },
-                                    domProps: { value: _vm.current_event.date },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.current_event,
-                                          "date",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "editDescriptionModal" } },
-                                    [_vm._v("Description")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("textarea", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.current_event.description,
-                                        expression: "current_event.description"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      id: "editDescriptionModal",
-                                      rows: "10"
-                                    },
-                                    domProps: {
-                                      value: _vm.current_event.description
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.current_event,
-                                          "description",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { attrs: { for: "editTypeModal" } },
-                                    [_vm._v("Type")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "select",
-                                    {
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c(
+                                      "label",
+                                      { attrs: { for: "editTitleModal" } },
+                                      [_vm._v("title")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
                                       directives: [
                                         {
                                           name: "model",
                                           rawName: "v-model",
-                                          value: _vm.current_event.type,
-                                          expression: "current_event.type"
+                                          value: _vm.current_event.title,
+                                          expression: "current_event.title"
                                         }
                                       ],
                                       staticClass: "form-control",
-                                      attrs: { id: "editTypeModal" },
+                                      attrs: {
+                                        type: "text",
+                                        id: "editTitleModal"
+                                      },
+                                      domProps: {
+                                        value: _vm.current_event.title
+                                      },
                                       on: {
-                                        change: function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
                                           _vm.$set(
                                             _vm.current_event,
-                                            "type",
-                                            $event.target.multiple
-                                              ? $$selectedVal
-                                              : $$selectedVal[0]
+                                            "title",
+                                            $event.target.value
                                           )
                                         }
                                       }
-                                    },
-                                    [
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "unique" } },
-                                        [_vm._v("unique")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "annual" } },
-                                        [_vm._v("annual")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "option",
-                                        { attrs: { value: "monthly" } },
-                                        [_vm._v("monthly")]
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _vm._m(5, true)
-                              ]
-                            )
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c(
+                                      "label",
+                                      { attrs: { for: "editDateModal" } },
+                                      [_vm._v("Date")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.current_event.date,
+                                          expression: "current_event.date"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "date",
+                                        min: "2021-01-01",
+                                        max: "2100-01-01",
+                                        id: "editDateModal",
+                                        required: ""
+                                      },
+                                      domProps: {
+                                        value: _vm.current_event.date
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.current_event,
+                                            "date",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c(
+                                      "label",
+                                      {
+                                        attrs: { for: "editDescriptionModal" }
+                                      },
+                                      [_vm._v("Description")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("textarea", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.current_event.description,
+                                          expression:
+                                            "current_event.description"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        id: "editDescriptionModal",
+                                        rows: "10"
+                                      },
+                                      domProps: {
+                                        value: _vm.current_event.description
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.current_event,
+                                            "description",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c(
+                                      "label",
+                                      { attrs: { for: "editTypeModal" } },
+                                      [_vm._v("Type")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.current_event.type,
+                                            expression: "current_event.type"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: { id: "editTypeModal" },
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.current_event,
+                                              "type",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "unique" } },
+                                          [_vm._v("unique")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "annual" } },
+                                          [_vm._v("annual")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "monthly" } },
+                                          [_vm._v("monthly")]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._m(5, true)
+                                ]
+                              )
+                            ])
                           ])
-                        ])
-                      ]
-                    )
-                  ]
-                )
-              ])
-            }),
-            0
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              })
+            ],
+            2
           )
         ])
       ])
@@ -46972,6 +47003,18 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
+        _vm.errored
+          ? _c(
+              "div",
+              { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+              [
+                _vm._v("\n            Ошибка загрузки данных! "),
+                _c("br"),
+                _vm._v("\n            " + _vm._s(_vm.errors[0]) + "\n        ")
+              ]
+            )
+          : _vm._e(),
+        _vm._v(" "),
         _c("div", { staticClass: "form-group form-check p-0" }, [
           _c(
             "form",
@@ -47029,6 +47072,17 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
+        _vm.loading
+          ? _c(
+              "div",
+              {
+                staticClass: "spinner-border text-secondary m-2",
+                attrs: { role: "status" }
+              },
+              [_c("span", { staticClass: "visually-hidden" })]
+            )
+          : _vm._e(),
+        _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-sm" }, [
           _vm._m(1),
           _vm._v(" "),
@@ -47074,7 +47128,8 @@ var render = function() {
                             staticClass: "form-control",
                             attrs: {
                               type: "text",
-                              placeholder: "enter your task here"
+                              placeholder: "enter your task here",
+                              required: ""
                             },
                             domProps: { value: task.title },
                             on: {
@@ -47263,19 +47318,7 @@ var render = function() {
           )
         ])
       ]
-    ),
-    _vm._v(" "),
-    _vm.loading
-      ? _c(
-          "div",
-          {
-            staticClass: "spinner-border",
-            staticStyle: { width: "4rem", height: "4rem" },
-            attrs: { role: "status" }
-          },
-          [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-        )
-      : _vm._e()
+    )
   ])
 }
 var staticRenderFns = [

@@ -31,6 +31,10 @@
                             <div class="modal-body">
                                 <form @submit.prevent="addCompany">
                                     <div class="form-group">
+                                        <div class="alert alert-danger" role="alert" v-if="errored">
+                                            Ошибка загрузки данных! <br>
+                                            {{errors[0]}}
+                                        </div>
                                         <label for="createTitleModal">title</label>
                                         <input v-model="new_title" type="text" class="form-control" id="createTitleModal" :class="{ 'is-invalid': $v.new_title.$error }">
                                         <!-- Mistakes -->
@@ -92,17 +96,11 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form @submit.prevent="updateCompany">
+                                            <form @submit.prevent="updateCompany(current_company)">
                                                 <div class="form-group">
                                                     <label for="editTitleModal">title</label>
-                                                    <input v-model="current_company.title" type="text" class="form-control" id="editTitleModal" :class="{ 'is-invalid': $v.current_company.title.$error }">
-                                                        <!-- Mistakes -->
-                                                    <div class="invalid-feedback" v-if="!$v.current_company.title.required">
-                                                        Обязательное поле.
-                                                    </div>
-                                                    <div class="invalid-feedback" v-if="!$v.current_company.title.maxLength">
-                                                        Максимальное количество символов: {{$v.current_company.title.$params.maxLength.max}}
-                                                    </div>  
+                                                    <input v-model="current_company.title" type="text" class="form-control" id="editTitleModal" required>
+ 
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="editDescriptionModal">Description</label>
@@ -154,25 +152,26 @@ export default {
                 user_id: this.user.id
             })
             .then(response => {
-                this.$v.$reset()
-                this.new_title = ''
-                this.new_description = ''
-                $('#createModal').modal('hide')
-                this.getAllCompanies()
+                this.$v.$reset();
+                this.new_title = '';
+                this.new_description = '';
+                $('#createModal').modal('hide');
+                this.getAllCompanies();
+                this.errors = [];
+                this.errored = false;
             })
             .catch(error => {
-                console.log(error)
+                if(error.response.data.errors.title){
+                    this.errors = []
+                    this.errors.push(error.response.data.errors.title[0])
+                }
                 this.errored = true
             })
             .finally(() => {
                 this.loading = false
             })
         },
-        updateCompany(){
-            this.$v.current_company.title.$touch()
-            if(this.$v.current_company.title.$anyError) {
-                return;
-            }
+        updateCompany(current_company){
             axios.post('/api/companies/' + current_company.id, {
                 _method: 'PATCH',
                 title: current_company.title,

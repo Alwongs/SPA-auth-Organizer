@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 
 class TestStoreRequest extends FormRequest
@@ -25,7 +27,9 @@ class TestStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255',
+            'title' => Rule::unique('tests')->where(function ($query) {
+                return $query->where('user_id', Auth::id());
+            }),
             'description' => 'nullable',
             'date' => 'required',
             'result' => 'required',

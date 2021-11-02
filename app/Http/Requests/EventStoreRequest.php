@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class EventStoreRequest extends FormRequest
 {
@@ -24,7 +26,9 @@ class EventStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|unique:events,title',
+            'title' => Rule::unique('events')->where(function ($query) {
+                return $query->where('user_id', Auth::id());
+            }),
             'date' => 'required',
             'type' => 'required|max:10',
             'user_id' => 'required',

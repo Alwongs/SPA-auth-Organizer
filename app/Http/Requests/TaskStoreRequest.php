@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class TaskStoreRequest extends FormRequest
 {
@@ -24,7 +26,9 @@ class TaskStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|unique:tasks,title',
+            'title' => Rule::unique('tasks')->where(function ($query) {
+                return $query->where('user_id', Auth::id());
+            }),
             'user_id' => 'required'
         ];
     }
