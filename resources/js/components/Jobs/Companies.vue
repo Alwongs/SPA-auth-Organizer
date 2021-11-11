@@ -70,9 +70,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr v-if="loading">
+                            <td colspan="5" class="text-center">
+                                <div class="spinner-grow text-center text-secondary m-2" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr v-if="companies.length == 0">
+                            <td class="text-center text-secondary" colspan="6">You have no companies in the list yet. Add first one..</td>
+                        </tr>
                         <tr v-for="company in companies" :key="company.id">
                             <td @click="$router.push({ name: 'company', params: {id: company.id}})" style="cursor:pointer;">{{company.id}}</td>
-                            <td @click="$router.push({ name: 'company', params: {id: company.id}})" style="cursor:pointer;">{{company.title}}</td>
+                            <td @click="$router.push({ name: 'company', params: {id: company.id}})" style="cursor:pointer;">{{company.title | capitalize }}</td>
                             <td @click="$router.push({ name: 'company', params: {id: company.id}})" style="cursor:pointer;">Подробнее</td>
                             <td>
                                 <button @click.prevent="current_company = company" type="button" class="btn btn-primary m-0" data-toggle="modal" data-target="#editModal">
@@ -140,6 +150,12 @@ export default {
             user: auth.user
         }
     },
+    filters: {
+		// Регистрируем фильтр capitalize:
+		capitalize: function(str) {
+			return str[0].toUpperCase() + str.slice(1);
+		}
+	},
     methods: {
         addCompany(){
             this.$v.new_title.$touch()
@@ -191,19 +207,22 @@ export default {
             })
         },
         deleteCompany(id){
-            axios.post('/api/companies/' + id, {
-                _method: 'DELETE'
-            })
-                .then(response => {
-                    this.getAllCompanies()
+            if(confirm('Are your shure you want to DELETE this?')){
+                axios.post('/api/companies/' + id, {
+                    _method: 'DELETE'
                 })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                })
-                .finally(() => {
-                    this.loading = false
-                })
+                    .then(response => {
+                        this.getAllCompanies()
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.errored = true
+                    })
+                    .finally(() => {
+                        this.loading = false
+                    })
+            }
+
         },
         getAllCompanies() {
             axios.get('/api/companies')

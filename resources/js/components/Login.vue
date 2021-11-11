@@ -16,6 +16,7 @@
                         <label for="password">Password:</label>
                         <input type="password" name="password" v-model="password" class="form-control" id="password">
                     </div>
+                    <div @click="$router.push('/register')"><a href="#">Register</a></div>
                     <div class="text-right">
                         <button type="submit" @click.prevent="login" class="btn btn-primary">Login</button>
                     </div>
@@ -26,10 +27,11 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
-            username: 'Alwong@ya.ru',
+            username: '',
             password: '',
         };
     },

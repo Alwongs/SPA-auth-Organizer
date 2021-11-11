@@ -1,83 +1,135 @@
 <template>
     <div class="container-fluid">
+        <div class="alert alert-danger" role="alert" v-if="errored">
+            Ошибка загрузки данных! <br>
+            {{errors}}
+        </div>
+        
+        <edit-event @updateEvent="updateEvent"></edit-event>
 
         <div class="row">
+
+                <!-- Overdue -->
             <div class="col-sm-4">
-                <overdue></overdue>
+                <one-of-events 
+                    :events="overdue" 
+                    :title="'Overdue'" 
+                    @deleteEvent="deleteEvent($event)"
+                    @postponeEvent="postponeEvent($event)"
+                ></one-of-events>
             </div>
+
+                <!-- Today -->
             <div class="col-sm-4">
-                <today></today>
+                <one-of-events 
+                    :events="today" 
+                    :title="'Today'" 
+                    @deleteEvent="deleteEvent($event)"
+                    @postponeEvent="postponeEvent($event)"
+                ></one-of-events>
             </div>
+
+                <!-- Tomorrow -->
             <div class="col-sm-4">
-                <tomorrow></tomorrow>
+                <one-of-events 
+                    :events="tomorrow" 
+                    :title="'Tomorrow'" 
+                    @deleteEvent="deleteEvent($event)"
+                    @postponeEvent="postponeEvent($event)"                    
+                ></one-of-events>
+                <one-of-events 
+                    :events="in_week" 
+                    :title="'In week'" 
+                    @deleteEvent="deleteEvent($event)"
+                    @postponeEvent="postponeEvent($event)"                    
+                ></one-of-events>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { required, maxLength } from 'vuelidate/lib/validators'
-
-import Overdue from "./Reminder/Overdue.vue"
-import Today from "./Reminder/Today.vue"
-import Tomorrow from "./Reminder/Tomorrow.vue"
-import Soon from "./Reminder/Soon.vue"
+import OneOfEvents from "./OneOfEvents.vue"
+import EditEvent from "./EditEvent.vue"
+import { bus } from "../app"
 
 export default {
     name: "Home",
-    components: {
-        Overdue,
-        Today,
-        Tomorrow,
-        Soon
-    },
+    components: { OneOfEvents, EditEvent },
     data(){
         return {
+            overdue: [],
+            today: [],
+            tomorrow: [],
+            in_week: [],
+
             errored: false,
             errors: [],
-            loading: true,
-            events: [],
-            new_title: '',
-            new_date: '',
-            new_type: ''
+            loading: true
         }
     },
     methods: {
-        addEvent(){
-            this.$v.new_title.$touch()
-            this.$v.new_date.$touch()
-            this.$v.new_type.$touch()
-            if(this.$v.new_title.$anyError || this.$v.new_date.$anyError || this.$v.new_type.$anyError) {
-                return;
-            }            
-            axios.post('/api/events', {
-                title: this.new_title,
-                date: this.new_date,
-                type: this.new_type
+        updateEvent(current_event){
+            axios.post('/api/events/' + current_event.id, {
+                _method: 'PATCH',
+                title: current_event.title,
+                date: current_event.date,
+                type: current_event.type
             })
             .then(response => {
-                this.$v.$reset()
-                this.new_title = '',
-                this.new_date = '',
-                this.new_type = '',
                 this.getAllEvents()
             })
             .catch(error => {
-                console.log(error)
+                console.log(error.response.data.errors.title[0])
+                this.errors = error.response.data.errors.title[0]
                 this.errored = true
             })
             .finally(() => {
                 this.loading = false
             })
+        },
+        postponeEvent(event){
+            axios.post('/api/events/postpone/' + event.id, {
+                _method: 'PATCH',
+                title: event.title,
+                date: event.date,
+                type: event.type
+            })
+            .then(response => {
+                this.getAllEvents()                    
+            })
+            .catch(error => {
+                this.errored = true
+            })
+            .finally(() => {
+                this.loading = false
+            })
+        },
+        deleteEvent(id){
+            if(confirm('The unique event will be deleted!')) {
+                axios.post('/api/events/' + id, {
+                    _method: 'DELETE'
+                })
+                    .then(response => {
+                        this.getAllEvents()
+                    })
+                    .catch(error => {
+                        this.errored = true
+                    })
+                    .finally(() => {
+                        this.loading = false
+                    })
+                }
         },
         getAllEvents() {
             axios.get('/api/events')
             .then(response => {
-                console.log(response.data)
-                this.events = response.data.events
+                this.overdue = response.data.overdue
+                this.today = response.data.today
+                this.tomorrow = response.data.tomorrow
+                this.in_week = response.data.in_week
             })
             .catch(error => {
-                console.log(error)
                 this.errored = true
             })
             .finally(() => {
@@ -85,19 +137,12 @@ export default {
             })
         },
     },
-    validations: {
-        new_title: {
-            required,
-            maxLength: maxLength(50)
-        },
-        new_date: {
-            required
-        },
-        new_type: {
-            required
-        }
+    mounted(){
+        bus.$on('rerender', () => {
+            this.getAllEvents()
+        });
+        this.getAllEvents()
     }
-
 }
 </script>
 

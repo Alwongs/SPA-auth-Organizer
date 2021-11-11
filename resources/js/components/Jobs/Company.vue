@@ -20,9 +20,15 @@
                 </nav>
 
                 <div class="content p-4 bg-light">
-                    <h3>{{ company.title }}</h3>
+                    <div v-if="loading" class="text-center">
+                        <div class="spinner-grow text-center text-secondary m-2" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                    </div>
+
+                    <h3>{{ company.title | capitalize }}</h3>
                     <b>Description:</b> 
-                    <p>{{company.description}}</p>
+                    <p>{{company.description | capitalize }}</p>
 
                      <b>Tests in the company:</b> 
 
@@ -36,9 +42,19 @@
                                 <th class="col-sm-1"></th>
                             </thead>
                             <tbody>
+                                <tr v-if="loading">
+                                    <td colspan="5" class="text-center">
+                                        <div class="spinner-grow text-center text-secondary m-2" role="status">
+                                            <span class="sr-only"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr v-if="company.tests.length == 0">
+                                    <td class="text-center text-secondary" colspan="6">You have no tests in the list yet. Add first one..</td>
+                                </tr>
                                 <tr v-for="test in company.tests" :key="test.id">
                                     <td @click.prevent="current_test = test" data-toggle="modal" data-target="#showModal">{{ test.date }}</td>
-                                    <td @click.prevent="current_test = test" data-toggle="modal" data-target="#showModal">{{ test.title }}</td>
+                                    <td @click.prevent="current_test = test" data-toggle="modal" data-target="#showModal">{{ test.title | capitalize }}</td>
                                     <td @click.prevent="current_test = test" data-toggle="modal" data-target="#showModal">{{ test.result }}</td>
                                     <td>
                                         <button @click.prevent="current_test = test" type="button" class="btn btn-primary m-0" data-toggle="modal" data-target="#editTestModal">
@@ -238,6 +254,12 @@ export default {
             user: auth.user
         }
     },
+    filters: {
+		// Регистрируем фильтр capitalize:
+		capitalize: function(str) {
+			return str[0].toUpperCase() + str.slice(1);
+		}
+	},
     methods: {
         addTest(){
             this.$v.new_date.$touch()
@@ -254,6 +276,7 @@ export default {
                 company_id: this.company.id,
             })
             .then(response => {
+                $('#createModal').modal('hide')
                 this.$v.$reset()
                 this.new_date = '',
                 this.new_title = '',
@@ -308,34 +331,41 @@ export default {
             })
         },
         deleteCompany(id){
-            axios.post('/api/companies/' + id, {
-                _method: 'DELETE'
-            })
-                .then(response => {
-                    this.getCompany(this.id)
+            if(confirm('Are your shure you want to DELETE this?')) {
+                axios.post('/api/companies/' + id, {
+                    _method: 'DELETE'
                 })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                })
-                .finally(() => {
-                    this.loading = false
-                })
+                    .then(response => {
+                        this.getCompany(this.id)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.errored = true
+                    })
+                    .finally(() => {
+                        this.loading = false
+                    })
+                this.$router.go(-1)
+            }
         },
         deleteTest(id){
-            axios.post('/api/tests/' + id, {
-                _method: 'DELETE'
-            })
-                .then(response => {
-                    this.getCompany(this.id)
+            if(confirm('Are your shure you want to DELETE this?')) {
+                axios.post('/api/tests/' + id, {
+                    _method: 'DELETE'
                 })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                })
-                .finally(() => {
-                    this.loading = false
-                })
+                    .then(response => {
+                        this.getCompany(this.id)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.errored = true
+                    })
+                    .finally(() => {
+                        this.loading = false
+                    })
+                this.$router.go(-1)  
+            }
+
         },
         getCompany(id) {
             axios.get('/api/companies/' + id)

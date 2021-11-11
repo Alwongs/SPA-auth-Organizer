@@ -19,6 +19,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr v-if="loading">
+                        <td colspan="4" class="text-center text-secondary">
+                            <div class="spinner-grow text-secondary m-2" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </td>                        
+                    </tr>
                     <tr class="no-content" v-if="overdue.length == 0">
                         <td colspan="5" class="text-center text-secondary">
                             <h5>no overdue..</h5>
@@ -27,7 +34,7 @@
 
                     <tr v-for="(event, index) in overdue" :key="event.id">
                         <th scope="row">{{index + 1}}.</th>
-                        <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;" class="text-danger show-date"><b>{{event.title}}</b></td>
+                        <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;" class="text-danger show-date"><b>{{event.title | capitalize }}</b></td>
                         <td>
                             <button v-if="event.type != 'unique'" @click="postpone(event)" type="button" class="btn btn-success m-0">
                                 <i class="fa fa-check" aria-hidden="true"></i>
@@ -92,10 +99,19 @@ export default {
     name: "Overdue",
     data(){
         return {
+            errored: false,
+            errors: [],
+            loading: true,
             overdue: [],
             current_event: {}
         }
     },
+    filters: {
+		// Регистрируем фильтр capitalize:
+		capitalize: function(str) {
+			return str[0].toUpperCase() + str.slice(1);
+		}
+	},
     methods: {
         showDate(message) {
             alert('Deadline is: ' + message);

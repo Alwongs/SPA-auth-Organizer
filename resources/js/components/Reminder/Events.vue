@@ -96,13 +96,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <div v-if="loading" class="spinner-border text-secondary m-2" role="status">
-                            <span class="visually-hidden"></span>
-                        </div>
+                        <tr v-if="loading">
+                            <td colspan="6" class="text-center">
+                                <div class="spinner-grow text-center text-secondary m-2" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr v-if="events.length == 0">
+                            <td class="text-center text-secondary" colspan="6">You have no events yet. Add first one..</td>
+                        </tr>
                         <tr v-for="event in events" :key="event.id">
 
                             <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;">{{event.id}}</td>
-                            <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;">{{event.title}}</td>
+                            <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;">{{ event.title | capitalize }}</td>
                             <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;">{{event.date}}</td>
                             <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;">{{event.type}}</td>
                             <td>
@@ -189,6 +196,12 @@ export default {
             user: auth.user
         }
     },
+    filters: {
+		// Регистрируем фильтр capitalize:
+		capitalize: function(str) {
+			return str[0].toUpperCase() + str.slice(1);
+		}
+	},
     methods: {
         addEvent(){
             this.$v.new_title.$touch()
@@ -200,6 +213,7 @@ export default {
             axios.post('/api/events', {
                 title: this.new_title,
                 date: this.new_date,
+                description: this.new_description,
                 type: this.new_type,
                 user_id: this.user.id
             })
@@ -229,6 +243,7 @@ export default {
                 _method: 'PATCH',
                 title: current_event.title,
                 date: current_event.date,
+                description: current_event.description,
                 type: current_event.type
             })
             .then(response => {
@@ -248,18 +263,21 @@ export default {
             })
         },
         deleteEvent(id){
-            axios.post('/api/events/' + id, {
-                _method: 'DELETE'
-            })
-                .then(response => {
-                    this.getAllEvents()
+            if(confirm('Are your shure you want to DELETE this?')) {
+                axios.post('/api/events/' + id, {
+                    _method: 'DELETE'
                 })
-                .catch(error => {
-                    this.errored = true
-                })
-                .finally(() => {
-                    this.loading = false
-                })
+                    .then(response => {
+                        this.getAllEvents()
+                    })
+                    .catch(error => {
+                        this.errored = true
+                    })
+                    .finally(() => {
+                        this.loading = false
+                    })
+            }
+
         },
         getAllEvents() {
             axios.get('/api/events')

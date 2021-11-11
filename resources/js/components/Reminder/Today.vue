@@ -19,6 +19,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr v-if="loading">
+                        <td colspan="4" class="text-center">
+                            <div class="spinner-grow text-secondary m-2" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </td>                        
+                    </tr>
                     <tr class="no-content" v-if="today.length == 0">
                         <td colspan="5" class="text-center text-secondary">
                             <h5>no events today..</h5>
@@ -27,7 +34,7 @@
 
                     <tr class="content" v-for="(event, index) in today" :key="event.id">
                         <th scope="row">{{index + 1}}.</th>
-                        <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;"><h4>{{event.title}}!</h4></td>
+                        <td @click="$router.push({ name: 'event', params: {id: event.id}})" style="cursor:pointer;"><h4>{{event.title | capitalize }}!</h4></td>
                         <td>
                             <button v-if="event.type != 'unique'" @click="postpone(event)" type="button" class="btn btn-success m-0">
                                 <i class="fa fa-check" aria-hidden="true"></i>
@@ -92,11 +99,20 @@ export default {
     name: "Today",
     data(){
         return {
+            errored: false,
+            errors: [],
+            loading: true,
             today: [],
             current_event: {},
             changed_date: false,
         }
     },
+    filters: {
+		// Регистрируем фильтр capitalize:
+		capitalize: function(str) {
+			return str[0].toUpperCase() + str.slice(1);
+		}
+	},
     methods: {
         showDate(message) {
             alert('Deadline is: ' + message);

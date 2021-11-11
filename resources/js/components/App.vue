@@ -10,19 +10,26 @@
                     <router-link class="nav-item nav-link" to="/users">Users</router-link>
                     <router-link class="nav-item nav-link" to="/about">About</router-link>
                 </div>
+
+                <button v-if="this.$route.path == '/' || this.$route.path == '/events'" @click="openAddModal()" type="button" class="btn btn-info">
+                    New event
+                </button>
+                <add-event></add-event>
+
                 <div class="navbar-nav">
                     <div v-if="authenticated && user">
                         <span><a class="nav-item nav-link" href="#" @click.prevent="logout()"><span class="text-success"><b>{{ user.name }}</b></span>&emsp;Logout</a></span>                                 
                     </div>
                     <div class="navbar-nav" v-else>
-                        <router-link class="nav-item nav-link" to="/login">Login</router-link>
-                        <router-link class="nav-item nav-link" to="/register">Register</router-link>
+                        <router-link v-if="this.$route.path == '/register'" class="nav-item nav-link text-danger" to="/login"><span class="bg-warning p-1 rounded">Login</span></router-link>
+                        <router-link v-if="this.$route.path == '/login'" class="nav-item nav-link text-danger" to="/register"><span class="bg-warning p-1 rounded">Register</span></router-link>
                     </div>
 
                 </div>
             </div>
         </nav>
-
+        
+        
 
         <div style="margin-top: 2rem">
             <router-view></router-view>
@@ -31,31 +38,46 @@
 </template>
 
 <script>
+import { bus } from "../app"
+import AddEvent from "./AddEvent.vue"
+
+
+
 export default {
+    components: { AddEvent },
     data() {
         return {
             authenticated: auth.check(),
-            user: auth.user
+            user: auth.user,
+            isAddModalOpen: false
         };
     },
     methods: {
         logout() {
-            auth.logout();
-            axios.post('/api/logout')
-                .then(response => {
-                    this.user = null;
-                    this.$router.push('/about');
-                })
-                .catch(error => {
-                     console.log(error);
-                });
-        }
+            if(confirm('Do you really want to logout?')) {
+                auth.logout();
+                axios.post('/api/logout')
+                    .then(response => {
+                        this.user = null;
+                        this.$router.push('/about');
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        },
+        openAddModal() {
+            bus.$emit('openAddModal', {
+                isAddModalOpen: true
+            }) 
+        },
     },
     mounted() {
         Event.$on('userLoggedIn', () => {
             this.authenticated = true;
             this.user = auth.user;
         });
+        console.log(this.$route.path)
     },
 }
 </script>
@@ -64,5 +86,4 @@ export default {
 .bg-grey {
     background-color: rgb(236, 241, 241);
 }
-
 </style>

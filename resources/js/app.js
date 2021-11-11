@@ -17,6 +17,8 @@ Vue.use(VueRouter);
 
 window.Event = new Vue;
 
+export const bus = new Vue();
+
 const app = new Vue({
     el: '#app',
     components: {App},

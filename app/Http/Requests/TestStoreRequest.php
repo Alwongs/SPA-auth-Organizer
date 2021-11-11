@@ -27,9 +27,7 @@ class TestStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => Rule::unique('tests')->where(function ($query) {
-                return $query->where('user_id', Auth::id());
-            }),
+            'title' => 'required',
             'description' => 'nullable',
             'date' => 'required',
             'result' => 'required',
