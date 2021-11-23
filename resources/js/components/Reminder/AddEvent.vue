@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { bus } from "../app"
+import { bus } from "../../app"
 import { required, maxLength } from 'vuelidate/lib/validators'
 
 export default {
@@ -121,6 +121,7 @@ export default {
                 this.new_type = ''
                 this.success = true
                 bus.$emit('rerender')
+                this.closeModal()
             })
             .catch(error => {
                 this.errors = error.response.data.errors.title[0]

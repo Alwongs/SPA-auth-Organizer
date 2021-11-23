@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { bus } from "../app"
+import { bus } from "../../app"
 
 export default {
     data() {

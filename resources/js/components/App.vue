@@ -39,7 +39,7 @@
 
 <script>
 import { bus } from "../app"
-import AddEvent from "./AddEvent.vue"
+import AddEvent from "./Reminder/AddEvent.vue"
 
 
 

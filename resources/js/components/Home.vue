@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import OneOfEvents from "./OneOfEvents.vue"
-import EditEvent from "./EditEvent.vue"
+import OneOfEvents from "./Reminder/OneOfEvents.vue"
+import EditEvent from "./Reminder/EditEvent.vue"
 import { bus } from "../app"
 
 export default {
