@@ -1,5 +1,5 @@
 import VueRouter from 'vue-router';
-import Home from './components/Home';
+import Home from './components/Reminder/Home';
 import Events from './components/Reminder/Events';
 import Event from './components/Reminder/Event';
 import Users from './components/Users';
