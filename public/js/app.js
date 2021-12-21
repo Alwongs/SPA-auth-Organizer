@@ -3078,6 +3078,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -45556,60 +45558,62 @@ var render = function() {
               })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "createRemindsPre" } }, [
-            _vm._v("Остаток при выезде")
+        _c("fieldset", { attrs: { disabled: _vm.dataExist } }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "createRemindsPre" } }, [
+              _vm._v("Остаток при выезде")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.new_remains_pre,
+                  expression: "new_remains_pre"
+                }
+              ],
+              staticClass: "form-control short",
+              attrs: { type: "text", id: "createRemindsPre" },
+              domProps: { value: _vm.new_remains_pre },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.new_remains_pre = $event.target.value
+                }
+              }
+            })
           ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.new_remains_pre,
-                expression: "new_remains_pre"
-              }
-            ],
-            staticClass: "form-control short",
-            attrs: { type: "text", id: "createRemindsPre", required: "" },
-            domProps: { value: _vm.new_remains_pre },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "createRemindsPre" } }, [
+              _vm._v("Километраж при выезде")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.new_odo_pre,
+                  expression: "new_odo_pre"
                 }
-                _vm.new_remains_pre = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "createRemindsPre" } }, [
-            _vm._v("Километраж при выезде")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.new_odo_pre,
-                expression: "new_odo_pre"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "number", id: "createRemindsPre", required: "" },
-            domProps: { value: _vm.new_odo_pre },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", id: "createRemindsPre", required: "" },
+              domProps: { value: _vm.new_odo_pre },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.new_odo_pre = $event.target.value
                 }
-                _vm.new_odo_pre = $event.target.value
               }
-            }
-          })
+            })
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [

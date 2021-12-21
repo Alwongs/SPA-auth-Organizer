@@ -11,14 +11,16 @@
                 <label for="createDateModal">Date</label>
                 <input v-model="new_date" :type="dataExist ? 'text' : 'date'" min="2021-01-01" max="2100-01-01" class="form-control" id="createDateModal" required>
             </div>
-            <div class="form-group">
-                <label for="createRemindsPre">Остаток при выезде</label>
-                <input v-model="new_remains_pre" type="text" class="form-control short" id="createRemindsPre" required>                                         
-            </div>
-            <div class="form-group">
-                <label for="createRemindsPre">Километраж при выезде</label>
-                <input v-model="new_odo_pre" type="number" class="form-control" id="createRemindsPre" required>                                         
-            </div>
+            <fieldset v-bind:disabled="dataExist">
+                <div class="form-group">
+                    <label for="createRemindsPre">Остаток при выезде</label>
+                    <input v-model="new_remains_pre" type="text" class="form-control short" id="createRemindsPre">                                       
+                </div>
+                <div class="form-group">
+                    <label for="createRemindsPre">Километраж при выезде</label>
+                    <input v-model="new_odo_pre" type="number" class="form-control" id="createRemindsPre" required>                                         
+                </div>
+            </fieldset> 
             <div class="form-group">
                 <label for="createRemindsPre">Заправка</label>
                 <div class="form-row">
