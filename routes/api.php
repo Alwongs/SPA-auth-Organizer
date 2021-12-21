@@ -9,6 +9,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\CompanyController;
 use App\Http\Controllers\API\TestController;
+use App\Http\Controllers\API\DayController;
 
 
 /*
@@ -36,6 +37,7 @@ Route::middleware('auth:api')->group(function () {
             'tasks' => TaskController::class,
             'companies' => CompanyController::class,
             'tests' => TestController::class,
+            'days' => DayController::class
         ]);
 });
 

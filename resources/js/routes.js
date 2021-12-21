@@ -1,4 +1,9 @@
 import VueRouter from 'vue-router';
+import Main from './components/Logbook/Main';
+import Create from './components/Logbook/Create';
+import Day from './components/Logbook/Day';
+import Report from './components/Logbook/Report';
+import Month from './components/Logbook/Month';
 import Home from './components/Reminder/Home';
 import Events from './components/Reminder/Events';
 import Event from './components/Reminder/Event';
@@ -52,6 +57,36 @@ let routes = [
     {
         path: '/users',
         component: Users,
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/logbook',
+        component: Main,
+        name: 'home',
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/create',
+        component: Create,
+        name: 'create',
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/day',
+        component: Day,
+        name: 'day',
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/report',
+        component: Report,
+        name: 'report',
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/month',
+        component: Month,
+        name: 'month',
         meta: { middlewareAuth: true }
     },
     {

@@ -2,13 +2,17 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
             <div class="container">
-                <div class="navbar-nav">
+                <div @click="clickHandler()" class="toggle text-light">{{ option }}</div>
+                <div v-if="show == true" class="navbar-nav">
+                    <template>
                     <router-link class="nav-item nav-link" to="/">Home</router-link>
                     <router-link class="nav-item nav-link" to="/events">Events</router-link>
                     <router-link class="nav-item nav-link" to="/tasks">Todo-list</router-link>
                     <router-link class="nav-item nav-link" to="/companies">Companies</router-link>
+                    <router-link class="nav-item nav-link" to="/logbook">Logbook</router-link>
                     <router-link class="nav-item nav-link" to="/users">Users</router-link>
                     <router-link class="nav-item nav-link" to="/about">About</router-link>
+                    </template>
                 </div>
 
                 <button v-if="this.$route.path == '/' || this.$route.path == '/events'" @click="openAddModal()" type="button" class="btn btn-info">
@@ -31,7 +35,7 @@
         
         
 
-        <div style="margin-top: 2rem">
+        <div>
             <router-view></router-view>
         </div>
     </div>
@@ -49,10 +53,21 @@ export default {
         return {
             authenticated: auth.check(),
             user: auth.user,
-            isAddModalOpen: false
+            show: false,
+            isAddModalOpen: false,
+            option: 'Aplications'
         };
     },
     methods: {
+        clickHandler() {
+            console.log('works')
+            this.show = !this.show
+            if(this.show) {
+                this.option = 'Hide'
+            } else {
+                this.option = 'Aplications'
+            }
+        },
         logout() {
             if(confirm('Do you really want to logout?')) {
                 auth.logout();
@@ -86,4 +101,9 @@ export default {
 .bg-grey {
     background-color: rgb(236, 241, 241);
 }
+
+.toggle {
+    cursor: pointer;
+}
+
 </style>
