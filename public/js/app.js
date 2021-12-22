@@ -3080,6 +3080,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3095,10 +3101,17 @@ __webpack_require__.r(__webpack_exports__);
       new_odo_post: '',
       new_remains_post: '',
       message: '',
-      dataExist: false
+      dataExist: false,
+      dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thirsday', 'Friday', 'Suturday']
     };
   },
   methods: {
+    fillSame: function fillSame() {
+      this.new_odo_post = this.new_odo_pre;
+      this.new_remains_post = this.new_remains_pre;
+      console.log(this.new_remains_post);
+      console.log(this.new_remains_pre);
+    },
     getLastData: function getLastData(array) {
       var lastData = array[array.length - 1];
       return lastData;
@@ -45446,6 +45459,23 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c(
+      "div",
+      {
+        staticClass: "header text-right pr-3",
+        class: {
+          "text-danger":
+            new Date(this.new_date).getDay() == 0 ||
+            new Date(this.new_date).getDay() == 6
+        }
+      },
+      [
+        _c("h3", [
+          _vm._v(_vm._s(_vm.dayOfWeek[new Date(this.new_date).getDay()]))
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
       "form",
       {
         on: {
@@ -45456,109 +45486,111 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "createDateModal" } }, [_vm._v("Date")]),
-          _vm._v(" "),
-          (_vm.dataExist ? "text" : "date") === "checkbox"
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.new_date,
-                    expression: "new_date"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  min: "2021-01-01",
-                  max: "2100-01-01",
-                  id: "createDateModal",
-                  required: "",
-                  type: "checkbox"
-                },
-                domProps: {
-                  checked: Array.isArray(_vm.new_date)
-                    ? _vm._i(_vm.new_date, null) > -1
-                    : _vm.new_date
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.new_date,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.new_date = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.new_date = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
-                      }
-                    } else {
-                      _vm.new_date = $$c
-                    }
-                  }
-                }
-              })
-            : (_vm.dataExist ? "text" : "date") === "radio"
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.new_date,
-                    expression: "new_date"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  min: "2021-01-01",
-                  max: "2100-01-01",
-                  id: "createDateModal",
-                  required: "",
-                  type: "radio"
-                },
-                domProps: { checked: _vm._q(_vm.new_date, null) },
-                on: {
-                  change: function($event) {
-                    _vm.new_date = null
-                  }
-                }
-              })
-            : _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.new_date,
-                    expression: "new_date"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  min: "2021-01-01",
-                  max: "2100-01-01",
-                  id: "createDateModal",
-                  required: "",
-                  type: _vm.dataExist ? "text" : "date"
-                },
-                domProps: { value: _vm.new_date },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.new_date = $event.target.value
-                  }
-                }
-              })
-        ]),
-        _vm._v(" "),
         _c("fieldset", { attrs: { disabled: _vm.dataExist } }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "createDateModal" } }, [
+              _vm._v("Date")
+            ]),
+            _vm._v(" "),
+            (_vm.dataExist ? "text" : "date") === "checkbox"
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.new_date,
+                      expression: "new_date"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    min: "2021-01-01",
+                    max: "2100-01-01",
+                    id: "createDateModal",
+                    required: "",
+                    type: "checkbox"
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.new_date)
+                      ? _vm._i(_vm.new_date, null) > -1
+                      : _vm.new_date
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.new_date,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.new_date = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.new_date = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.new_date = $$c
+                      }
+                    }
+                  }
+                })
+              : (_vm.dataExist ? "text" : "date") === "radio"
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.new_date,
+                      expression: "new_date"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    min: "2021-01-01",
+                    max: "2100-01-01",
+                    id: "createDateModal",
+                    required: "",
+                    type: "radio"
+                  },
+                  domProps: { checked: _vm._q(_vm.new_date, null) },
+                  on: {
+                    change: function($event) {
+                      _vm.new_date = null
+                    }
+                  }
+                })
+              : _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.new_date,
+                      expression: "new_date"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    min: "2021-01-01",
+                    max: "2100-01-01",
+                    id: "createDateModal",
+                    required: "",
+                    type: _vm.dataExist ? "text" : "date"
+                  },
+                  domProps: { value: _vm.new_date },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.new_date = $event.target.value
+                    }
+                  }
+                })
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "createRemindsPre" } }, [
               _vm._v("Остаток при выезде")
@@ -45723,28 +45755,42 @@ var render = function() {
             _vm._v("Остаток при заезде")
           ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.new_remains_post,
-                expression: "new_remains_post"
-              }
-            ],
-            staticClass: "form-control short",
-            attrs: { type: "text", id: "createRemindsPre", required: "" },
-            domProps: { value: _vm.new_remains_post },
-            on: {
-              focus: _vm.countOdoPost,
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "form-row" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.new_remains_post,
+                  expression: "new_remains_post"
                 }
-                _vm.new_remains_post = $event.target.value
+              ],
+              staticClass: "form-control short",
+              attrs: { type: "number", id: "createRemindsPre", required: "" },
+              domProps: { value: _vm.new_remains_post },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.new_remains_post = $event.target.value
+                }
               }
-            }
-          })
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "btn col",
+                on: {
+                  click: function($event) {
+                    return _vm.fillSame()
+                  }
+                }
+              },
+              [_vm._v("Без выезда")]
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "btn-block p-0" }, [

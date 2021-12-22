@@ -6,12 +6,15 @@
         <div class="header text-center p-3">
             <h1>Создать новый день</h1>
         </div>
+        <div class="header text-right pr-3" :class="{ 'text-danger': new Date(this.new_date).getDay() == 0 || new Date(this.new_date).getDay() == 6}">
+            <h3>{{ dayOfWeek[new Date(this.new_date).getDay()] }}</h3>
+        </div>
         <form @submit.prevent="addDay">
-            <div class="form-group">
-                <label for="createDateModal">Date</label>
-                <input v-model="new_date" :type="dataExist ? 'text' : 'date'" min="2021-01-01" max="2100-01-01" class="form-control" id="createDateModal" required>
-            </div>
             <fieldset v-bind:disabled="dataExist">
+                <div class="form-group">
+                    <label for="createDateModal">Date</label>
+                    <input v-model="new_date" :type="dataExist ? 'text' : 'date'" min="2021-01-01" max="2100-01-01" class="form-control" id="createDateModal" required>
+                </div>
                 <div class="form-group">
                     <label for="createRemindsPre">Остаток при выезде</label>
                     <input v-model="new_remains_pre" type="text" class="form-control short" id="createRemindsPre">                                       
@@ -36,7 +39,10 @@
             </div>
             <div class="form-group">
                 <label for="createRemindsPre">Остаток при заезде</label>
-                <input v-model="new_remains_post" @focus="countOdoPost" type="text" class="form-control short" id="createRemindsPre" required>                                         
+                <div class="form-row">
+                    <input v-model="new_remains_post" type="number" class="form-control short" id="createRemindsPre" required>                                         
+                    <div class="btn col" @click="fillSame()">Без выезда</div>
+                </div>
             </div>
                                  
             <div class="btn-block p-0">
@@ -64,10 +70,18 @@ export default {
             new_odo_post: '',
             new_remains_post: '',
             message: '',
-            dataExist: false
+            dataExist: false,
+            dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thirsday', 'Friday', 'Suturday']
         }
     },
     methods: {
+        fillSame() {
+
+            this.new_odo_post = this.new_odo_pre;
+            this.new_remains_post = this.new_remains_pre;           
+            console.log(this.new_remains_post)
+            console.log(this.new_remains_pre);
+        },
         getLastData(array) {
             let lastData = array[array.length - 1];
             return lastData
