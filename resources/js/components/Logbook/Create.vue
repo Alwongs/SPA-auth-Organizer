@@ -6,8 +6,9 @@
         <div class="header text-center p-3">
             <h1>Создать новый день</h1>
         </div>
-        <div class="header text-right pr-3" :class="{ 'text-danger': new Date(this.new_date).getDay() == 0 || new Date(this.new_date).getDay() == 6}">
-            <h3>{{ dayOfWeek[new Date(this.new_date).getDay()] }}</h3>
+        <div class="header text-right pr-3 row" :class="{ 'text-danger': new Date(this.new_date).getDay() == 0 || new Date(this.new_date).getDay() == 6}">
+            <h5 class="col pt-2">{{ dayOfWeek[new Date(this.new_date).getDay()] }}</h5>
+            <div class="btn col" @click="fillSame()">Без выезда</div>
         </div>
         <form @submit.prevent="addDay">
             <fieldset v-bind:disabled="dataExist">
@@ -38,11 +39,8 @@
                 <input v-model="new_odo_post" :input="countOdoPost()" type="number" class="form-control" id="createRemindsPre" required>                                         
             </div>
             <div class="form-group">
-                <label for="createRemindsPre">Остаток при заезде</label>
-                <div class="form-row">
-                    <input v-model="new_remains_post" type="number" class="form-control short" id="createRemindsPre" required>                                         
-                    <div class="btn col" @click="fillSame()">Без выезда</div>
-                </div>
+                <label for="createRemainsPost">Остаток при заезде</label>
+                <input v-model="new_remains_post" type="number" step="any" class="form-control short" id="createRemainsPost" required>                                         
             </div>
                                  
             <div class="btn-block p-0">
@@ -76,11 +74,9 @@ export default {
     },
     methods: {
         fillSame() {
-
             this.new_odo_post = this.new_odo_pre;
-            this.new_remains_post = this.new_remains_pre;           
+            this.new_remains_post = this.new_remains_pre;
             console.log(this.new_remains_post)
-            console.log(this.new_remains_pre);
         },
         getLastData(array) {
             let lastData = array[array.length - 1];
@@ -148,7 +144,6 @@ export default {
                         this.dataExist = true
                         let last_data = this.getLastData(all_days);
                         this.new_date = this.getNextDate(last_data.date)
-
                         this.new_remains_pre = last_data.remains_post;
                         this.new_odo_pre = last_data.odo_post;
                     } else {

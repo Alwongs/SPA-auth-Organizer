@@ -44,7 +44,6 @@ export default {
             let day = new Date(date). getDate();
             let month = new Date(date).toLocaleString('ru-Ru', { month: 'long' }).toLowerCase();
             let year = new Date(date). getFullYear();
-
             return day + ' ' + month + ' ' + year;
         },
         deleteDay(id) {
@@ -53,7 +52,7 @@ export default {
                     _method: 'DELETE'
                 })
                     .then(response => {
-                        
+                        this.$router.push({ name: 'month', params: { month_type: this.month_type} })                        
                     })
                     .catch(error => {
                         console.log(error)
@@ -62,7 +61,6 @@ export default {
                     .finally(() => {
                         this.loading = false
                     })
-                this.$router.push({ name: 'month', params: { month_type: this.month_type} })
             }
         }
     },

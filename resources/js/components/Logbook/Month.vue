@@ -24,10 +24,12 @@
                     </tr>
                 </tbody>
             </table>
+            <h6 class="text-center" v-if="days.length === 0">Данных нет...</h6>
         </div>
         <div class="button-block">
             <button @click="$router.push('/create')">Создать день</button>
             <button @click="$router.push('/logbook')">Домой</button>
+            <button @click="deleteAll()">Удалить всё</button>
         </div>
     </div>
 </template>
@@ -36,7 +38,6 @@
 
 export default {
     data() {
-
         return {
             authenticated: auth.check(),
             user: auth.user,
@@ -51,6 +52,31 @@ export default {
         }
     },
     methods: {
+        deleteAll() {
+            if(confirm('Are your shure you want to DELETE All notes?!!!')) {
+                    console.log(this.days)
+                this.days.map((day) => {
+                    console.log(day.id)
+                    this.deleteDay(day.id);
+                });
+                
+                this.getMonth();
+            }
+        },
+        deleteDay(id) {
+            axios.post('/api/days/' + id, {
+                _method: 'DELETE'
+            })
+                .then(response => {                       
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.errored = true
+                })
+                .finally(() => {
+                    this.loading = false
+                })
+        },
         isWeekend(day) {
             if(day === 0 || day === 6) {
                 return true;

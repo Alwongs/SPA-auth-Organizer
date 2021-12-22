@@ -3084,8 +3084,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3110,7 +3108,6 @@ __webpack_require__.r(__webpack_exports__);
       this.new_odo_post = this.new_odo_pre;
       this.new_remains_post = this.new_remains_pre;
       console.log(this.new_remains_post);
-      console.log(this.new_remains_pre);
     },
     getLastData: function getLastData(array) {
       var lastData = array[array.length - 1];
@@ -3278,17 +3275,18 @@ __webpack_require__.r(__webpack_exports__);
       if (confirm('Are your shure you want to DELETE this?')) {
         axios.post('/api/days/' + id, {
           _method: 'DELETE'
-        }).then(function (response) {})["catch"](function (error) {
+        }).then(function (response) {
+          _this.$router.push({
+            name: 'month',
+            params: {
+              month_type: _this.month_type
+            }
+          });
+        })["catch"](function (error) {
           console.log(error);
           _this.errored = true;
         })["finally"](function () {
           _this.loading = false;
-        });
-        this.$router.push({
-          name: 'month',
-          params: {
-            month_type: this.month_type
-          }
         });
       }
     }
@@ -3455,6 +3453,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3471,29 +3471,54 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    deleteAll: function deleteAll() {
+      var _this = this;
+
+      if (confirm('Are your shure you want to DELETE All notes?!!!')) {
+        console.log(this.days);
+        this.days.map(function (day) {
+          console.log(day.id);
+
+          _this.deleteDay(day.id);
+        });
+        this.getMonth();
+      }
+    },
+    deleteDay: function deleteDay(id) {
+      var _this2 = this;
+
+      axios.post('/api/days/' + id, {
+        _method: 'DELETE'
+      }).then(function (response) {})["catch"](function (error) {
+        console.log(error);
+        _this2.errored = true;
+      })["finally"](function () {
+        _this2.loading = false;
+      });
+    },
     isWeekend: function isWeekend(day) {
       if (day === 0 || day === 6) {
         return true;
       }
     },
     getMonth: function getMonth() {
-      var _this = this;
+      var _this3 = this;
 
       axios.get('/api/days').then(function (response) {
-        if (_this.month_type == 'pre_month') {
-          _this.days = response.data.pre_month;
-          _this.month_name = response.data.previous_month_name;
-        } else if (_this.month_type == 'current_month') {
-          _this.days = response.data.current_month;
-          _this.month_name = response.data.current_month_name;
+        if (_this3.month_type == 'pre_month') {
+          _this3.days = response.data.pre_month;
+          _this3.month_name = response.data.previous_month_name;
+        } else if (_this3.month_type == 'current_month') {
+          _this3.days = response.data.current_month;
+          _this3.month_name = response.data.current_month_name;
         } else {
-          _this.days = {};
+          _this3.days = {};
         }
       })["catch"](function (error) {
         console.log(error);
-        _this.errored = true;
+        _this3.errored = true;
       })["finally"](function () {
-        _this.loading = false;
+        _this3.loading = false;
       });
     }
   },
@@ -45461,7 +45486,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "header text-right pr-3",
+        staticClass: "header text-right pr-3 row",
         class: {
           "text-danger":
             new Date(this.new_date).getDay() == 0 ||
@@ -45469,9 +45494,22 @@ var render = function() {
         }
       },
       [
-        _c("h3", [
+        _c("h5", { staticClass: "col pt-2" }, [
           _vm._v(_vm._s(_vm.dayOfWeek[new Date(this.new_date).getDay()]))
-        ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "btn col",
+            on: {
+              click: function($event) {
+                return _vm.fillSame()
+              }
+            }
+          },
+          [_vm._v("Без выезда")]
+        )
       ]
     ),
     _vm._v(" "),
@@ -45751,46 +45789,36 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "createRemindsPre" } }, [
+          _c("label", { attrs: { for: "createRemainsPost" } }, [
             _vm._v("Остаток при заезде")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-row" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.new_remains_post,
-                  expression: "new_remains_post"
-                }
-              ],
-              staticClass: "form-control short",
-              attrs: { type: "number", id: "createRemindsPre", required: "" },
-              domProps: { value: _vm.new_remains_post },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.new_remains_post = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
+          _c("input", {
+            directives: [
               {
-                staticClass: "btn col",
-                on: {
-                  click: function($event) {
-                    return _vm.fillSame()
-                  }
+                name: "model",
+                rawName: "v-model",
+                value: _vm.new_remains_post,
+                expression: "new_remains_post"
+              }
+            ],
+            staticClass: "form-control short",
+            attrs: {
+              type: "number",
+              step: "any",
+              id: "createRemainsPost",
+              required: ""
+            },
+            domProps: { value: _vm.new_remains_post },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
                 }
-              },
-              [_vm._v("Без выезда")]
-            )
-          ])
+                _vm.new_remains_post = $event.target.value
+              }
+            }
+          })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "btn-block p-0" }, [
@@ -46140,7 +46168,11 @@ var render = function() {
             0
           )
         ]
-      )
+      ),
+      _vm._v(" "),
+      _vm.days.length === 0
+        ? _c("h6", { staticClass: "text-center" }, [_vm._v("Данных нет...")])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "button-block" }, [
@@ -46166,6 +46198,18 @@ var render = function() {
           }
         },
         [_vm._v("Домой")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          on: {
+            click: function($event) {
+              return _vm.deleteAll()
+            }
+          }
+        },
+        [_vm._v("Удалить всё")]
       )
     ])
   ])
