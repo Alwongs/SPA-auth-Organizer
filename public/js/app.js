@@ -3106,8 +3106,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fillSame: function fillSame() {
       this.new_odo_post = this.new_odo_pre;
-      this.new_remains_post = this.new_remains_pre;
-      console.log(this.new_remains_post);
+      var remains_post = this.new_remains_pre;
+      this.new_remains_post = remains_post;
     },
     getLastData: function getLastData(array) {
       var lastData = array[array.length - 1];
@@ -3121,12 +3121,12 @@ __webpack_require__.r(__webpack_exports__);
       var year = new Date(date).getFullYear();
       return day + ' ' + month + ' ' + year;
     },
-    countOdoPost: function countOdoPost() {
+    countRemainsPost: function countRemainsPost() {
       var norm = 15.4;
-      var odo = parseInt(this.new_odo_post, 10) - parseInt(this.new_odo_pre, 10);
+      var odo = parseInt(this.new_odo_post) - parseInt(this.new_odo_pre);
       var spent = odo / 100 * norm;
       var fuel = this.new_fuel ? this.new_fuel : 0;
-      var result = parseInt(this.new_remains_pre, 10) + parseInt(fuel, 10) - spent;
+      var result = parseFloat(this.new_remains_pre) + parseFloat(fuel) - spent;
       this.new_remains_post = result ? result : 0;
     },
     addDay: function addDay() {
@@ -3562,7 +3562,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3587,7 +3586,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     if (this.data == null) {
-      alert('данные устарели!');
+      this.$router.push({
+        name: 'logbook'
+      });
     }
   }
 });
@@ -5243,6 +5244,7 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   path: '/',
   component: _components_Reminder_Home__WEBPACK_IMPORTED_MODULE_5__["default"],
+  name: 'home',
   meta: {
     middlewareAuth: true
   }
@@ -5292,7 +5294,7 @@ var routes = [{
 }, {
   path: '/logbook',
   component: _components_Logbook_Main__WEBPACK_IMPORTED_MODULE_0__["default"],
-  name: 'home',
+  name: 'logbook',
   meta: {
     middlewareAuth: true
   }
@@ -45771,7 +45773,7 @@ var render = function() {
             ],
             staticClass: "form-control",
             attrs: {
-              input: _vm.countOdoPost(),
+              input: _vm.countRemainsPost(),
               type: "number",
               id: "createRemindsPre",
               required: ""
@@ -45872,14 +45874,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
+  return _c("div", { staticClass: "container-fluid pt-3" }, [
     _vm.data !== null
       ? _c("div", [
-          _c("div", { staticClass: "header text-center p-3" }, [
+          _c("div", { staticClass: "header text-center p-2" }, [
             _c("h3", [_vm._v(_vm._s(_vm.formatDate(_vm.data.date)))])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "data-block" }, [
+          _c("div", { staticClass: "data-block m-3" }, [
             _c(
               "p",
               {
@@ -45891,7 +45893,9 @@ var render = function() {
               },
               [
                 _vm._v("Остаток: "),
-                _c("span", [_vm._v(_vm._s(Math.round(_vm.data.remains_pre)))])
+                _c("span", { staticClass: "bg-warning" }, [
+                  _vm._v(_vm._s(Math.round(_vm.data.remains_pre)))
+                ])
               ]
             ),
             _vm._v(" "),
@@ -45902,7 +45906,9 @@ var render = function() {
             _vm._v(" "),
             _c("p", [
               _vm._v("Заправка: "),
-              _c("span", [_vm._v(_vm._s(Math.round(_vm.data.fuel)))])
+              _c("span", { staticClass: "text-danger" }, [
+                _vm._v(_vm._s(Math.round(_vm.data.fuel)))
+              ])
             ]),
             _vm._v(" "),
             _c("p", [
@@ -45912,7 +45918,9 @@ var render = function() {
             _vm._v(" "),
             _c("p", [
               _vm._v("Остаток: "),
-              _c("span", [_vm._v(_vm._s(Math.round(_vm.data.remains_post)))])
+              _c("span", { staticClass: "bg-warning" }, [
+                _vm._v(_vm._s(Math.round(_vm.data.remains_post)))
+              ])
             ])
           ])
         ])
@@ -46256,15 +46264,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
+  return _c("div", { staticClass: "container-fluid pt-2" }, [
+    _vm.data !== null
+      ? _c(
+          "div",
+          { staticClass: "alert alert-success", attrs: { role: "alert" } },
+          [
+            _vm._v("\n        Дата "),
+            _c("strong", [
+              _vm._v(_vm._s(_vm.formatDate(_vm.data.date, "DD.MM.YYYY")))
+            ]),
+            _vm._v(" успешно сохранена!\n    ")
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
     _vm.data !== null
       ? _c("div", { staticClass: "data-block" }, [
-          _c("div", { staticClass: "header text-center p-3" }, [
-            _c("h5", [
-              _vm._v(_vm._s(_vm.formatDate(_vm.data.date, "DD.MM.YYYY")))
-            ])
-          ]),
-          _vm._v(" "),
           _c("p", [
             _vm._v("Остаток: "),
             _c("span", [_vm._v(_vm._s(Math.round(_vm.data.remains_pre)))])

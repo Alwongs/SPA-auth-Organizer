@@ -1,16 +1,16 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid pt-3">
 
         <div v-if="data !== null">
-            <div class="header text-center p-3">
+            <div class="header text-center p-2">
                 <h3>{{ formatDate(data.date) }}</h3>
             </div>
-            <div class="data-block">
-                <p @click="notification('fuck!')">Остаток: <span>{{ Math.round(data.remains_pre) }}</span></p>
+            <div class="data-block m-3">
+                <p @click="notification('fuck!')">Остаток: <span class="bg-warning">{{ Math.round(data.remains_pre) }}</span></p>
                 <p>Километраж: <span>{{ data.odo_pre }}</span></p>
-                <p>Заправка: <span>{{ Math.round(data.fuel) }}</span></p>
+                <p>Заправка: <span class="text-danger">{{ Math.round(data.fuel) }}</span></p>
                 <p>Километраж: <span>{{ data.odo_post }}</span></p>
-                <p>Остаток: <span>{{ Math.round(data.remains_post) }}</span></p>
+                <p>Остаток: <span class="bg-warning">{{ Math.round(data.remains_post) }}</span></p>
             </div>
         </div>
         <div class="button-block">

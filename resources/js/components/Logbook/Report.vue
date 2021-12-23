@@ -1,10 +1,9 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid pt-2">
+        <div v-if="data !== null" class="alert alert-success" role="alert">
+            Дата <strong>{{ formatDate(data.date, 'DD.MM.YYYY') }}</strong> успешно сохранена!
+        </div>
         <div v-if="data !== null" class="data-block">
-            <div class="header text-center p-3">
-                <h5>{{ formatDate(data.date, 'DD.MM.YYYY') }}</h5>
-            </div>
-
             <p>Остаток: <span>{{ Math.round(data.remains_pre) }}</span></p>
             <p>Километраж: <span>{{ data.odo_pre }}</span></p>
             <p>Заправка: <span>{{ data.fuel }}</span></p>
@@ -47,7 +46,7 @@ export default {
     },
     mounted(){
         if(this.data == null) {
-            alert('данные устарели!')
+            this.$router.push({ name: 'logbook' });
         }
     }
 }

@@ -19,6 +19,7 @@ let routes = [
     {
         path: '/',
         component: Home,
+        name: 'home',
         meta: { middlewareAuth: true }
     },
     {
@@ -62,7 +63,7 @@ let routes = [
     {
         path: '/logbook',
         component: Main,
-        name: 'home',
+        name: 'logbook',
         meta: { middlewareAuth: true }
     },
     {

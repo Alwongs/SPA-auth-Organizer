@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label for="createRemindsPre">Километраж при заезде</label>
-                <input v-model="new_odo_post" :input="countOdoPost()" type="number" class="form-control" id="createRemindsPre" required>                                         
+                <input v-model="new_odo_post" :input="countRemainsPost()" type="number" class="form-control" id="createRemindsPre" required>                                         
             </div>
             <div class="form-group">
                 <label for="createRemainsPost">Остаток при заезде</label>
@@ -75,8 +75,8 @@ export default {
     methods: {
         fillSame() {
             this.new_odo_post = this.new_odo_pre;
-            this.new_remains_post = this.new_remains_pre;
-            console.log(this.new_remains_post)
+            let remains_post = this.new_remains_pre;
+            this.new_remains_post = remains_post;
         },
         getLastData(array) {
             let lastData = array[array.length - 1];
@@ -88,12 +88,12 @@ export default {
             let year = new Date(date). getFullYear();
             return day + ' ' + month + ' ' + year;
         },
-        countOdoPost() {
+        countRemainsPost() {
             let norm = 15.4;
-            let odo = parseInt(this.new_odo_post, 10) - parseInt(this.new_odo_pre, 10);
+            let odo = parseInt(this.new_odo_post) - parseInt(this.new_odo_pre);
             let spent = odo/100*norm;
             let fuel = this.new_fuel ? this.new_fuel : 0;
-            let result = parseInt(this.new_remains_pre, 10) + parseInt(fuel, 10) - spent;
+            let result = parseFloat(this.new_remains_pre) + parseFloat(fuel) - spent;
             this.new_remains_post = result ? result : 0;
         },
         addDay(){
