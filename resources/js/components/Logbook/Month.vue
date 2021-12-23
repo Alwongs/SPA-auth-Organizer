@@ -4,23 +4,25 @@
             <h1>{{ month_name }}</h1>
         </div>
         <div class="table-block t-wrapper">
-            <table class="table table-sm table-hover text-light bg-secondary">
-                <thead>
-                    <th>Дт</th>
-                    <th>Ост</th>
-                    <th>Км</th>
-                    <th>Запр</th>
-                    <th>Км</th>
-                    <th>Ост</th>
+            <table class="table table-sm table-hover text-light text-right">
+                <thead class=" bg-secondary">
+                    <th class="col-1.5">Дт</th>
+                    <th class="col-1">Ост</th>
+                    <th class="col-3 text-center">Км</th>
+                    <th class="col-1 text-center">Зап</th>
+                    <th class="col-3 text-center">Км</th>
+                    <th class="col-1">Ост</th>
+                    <th class="col-1.5"><small>Вых</small></th>
                 </thead>
                 <tbody class="text-dark bg-light">
                     <tr @click="$router.push({ name: 'day', params: {data: day, month_type: month_type}})" v-for="day in days" :key="day.id"  :class="{ 'weekend': isWeekend(new Date(day.date).getDay()) }">
-                        <th scope="row">{{ new Date(day.date).getDate()  }}</th>
-                        <td>{{ Math.round(day.remains_pre) }}</td>
-                        <td>{{ day.odo_pre }}</td>
-                        <td>{{ Math.round(day.fuel) }}</td>
-                        <td>{{ day.odo_post }}</td>
-                        <td>{{ Math.round(day.remains_post) }}</td>
+                        <th class="border-right-bold" scope="row">{{ new Date(day.date).getDate()  }}.</th>
+                        <td class="border-right">{{ Math.round(day.remains_pre) }}</td>
+                        <td class="border-right pr-3">{{ day.odo_pre }}</td>
+                        <td class="border-right text-center">{{ Math.round(day.fuel) === 0 ? '-' : Math.round(day.fuel) }}</td>
+                        <td class="border-right pr-3">{{ day.odo_post }}</td>
+                        <td class="border-right">{{ Math.round(day.remains_post) }}</td>
+                        <td><small>Вых</small></td>
                     </tr>
                 </tbody>
             </table>
@@ -118,7 +120,7 @@ export default {
 
     .container-fluid {
         background-color: rgb(221, 221, 221);
-        height: 100vh;
+        min-height: 100vh;
     }
     .button-block {
         margin-bottom: 20px;
@@ -132,6 +134,15 @@ export default {
     }
     tr {
         cursor: pointer;
+    }
+    .bg-data {
+        background-color: rgba(231, 232, 235, 0.493);
+    }
+    small {
+        font-size: 70%;
+    }
+    .border-right-bold {
+        border-right: 2px solid rgba(204, 204, 204, 0.904);
     }
     button {
         font-size: 140%;

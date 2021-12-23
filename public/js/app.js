@@ -3348,6 +3348,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3355,14 +3370,24 @@ __webpack_require__.r(__webpack_exports__);
       errors: [],
       loading: true,
       days: [],
+      firstDate: '',
       firstRemains: 0,
       firstOdo: 0,
       fuel: 0,
+      lastDate: '',
       lastOdo: 0,
       lastRemains: 0
     };
   },
   methods: {
+    formatDate: function formatDate(date) {
+      var day = new Date(date).getDate();
+      var month = new Date(date).toLocaleString('ru-Ru', {
+        month: 'long'
+      }).toLowerCase();
+      var year = new Date(date).getFullYear();
+      return day + ' ' + month + ' ' + year;
+    },
     getCurrentMonth: function getCurrentMonth() {
       var _this = this;
 
@@ -3370,9 +3395,9 @@ __webpack_require__.r(__webpack_exports__);
         var current_month = response.data.current_month;
 
         if (current_month.length !== 0) {
-          _this.getFirstRemains(current_month);
+          _this.getFirstData(current_month);
 
-          _this.getLastRemains(current_month);
+          _this.getLastData(current_month);
 
           _this.getSummFuel(current_month);
         }
@@ -3383,13 +3408,15 @@ __webpack_require__.r(__webpack_exports__);
         _this.loading = false;
       });
     },
-    getFirstRemains: function getFirstRemains(current_month) {
+    getFirstData: function getFirstData(current_month) {
       var firstDay = current_month[0];
+      this.firstDate = firstDay.date;
       this.firstRemains = firstDay.remains_pre;
       this.firstOdo = firstDay.odo_pre;
     },
-    getLastRemains: function getLastRemains(current_month) {
+    getLastData: function getLastData(current_month) {
       var lastDay = current_month[current_month.length - 1];
+      this.lastDate = lastDay.date;
       this.lastOdo = lastDay.odo_post;
       this.lastRemains = lastDay.remains_post;
     },
@@ -3419,6 +3446,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -9935,7 +9964,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-16acfe34] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\nbutton[data-v-16acfe34] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.data-block[data-v-16acfe34] {\n    font-size: 120%;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-16acfe34] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\nbutton[data-v-16acfe34] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.data-block[data-v-16acfe34] {\n    font-size: 120%;\n}\ntr td[data-v-16acfe34] {\n    padding: 0;\n    padding-bottom: 8px;\n}\n.tr-small td[data-v-16acfe34] {\n    padding: 0;\n    font-size: 70%\n}\nli[data-v-16acfe34] {\n    font-style: italic;\n    margin-bottom: 10px\n}\n.text-center[data-v-16acfe34] {\n    padding-top: 2px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9959,7 +9988,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-64a3eaa3] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\n.button-block[data-v-64a3eaa3] {\n    margin-bottom: 20px;\n}\n.weekend[data-v-64a3eaa3] {\n    background-color: rgba(218, 35, 96, 0.13);\n}\n.t-wrapper[data-v-64a3eaa3] {\n    max-height: 75%;\n    overflow-y: auto;\n}\ntr[data-v-64a3eaa3] {\n    cursor: pointer;\n}\nbutton[data-v-64a3eaa3] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-64a3eaa3] {\n    background-color: rgb(221, 221, 221);\n    min-height: 100vh;\n}\n.button-block[data-v-64a3eaa3] {\n    margin-bottom: 20px;\n}\n.weekend[data-v-64a3eaa3] {\n    background-color: rgba(218, 35, 96, 0.13);\n}\n.t-wrapper[data-v-64a3eaa3] {\n    max-height: 75%;\n    overflow-y: auto;\n}\ntr[data-v-64a3eaa3] {\n    cursor: pointer;\n}\n.bg-data[data-v-64a3eaa3] {\n    background-color: rgba(231, 232, 235, 0.493);\n}\nsmall[data-v-64a3eaa3] {\n    font-size: 70%;\n}\n.border-right-bold[data-v-64a3eaa3] {\n    border-right: 2px solid rgba(204, 204, 204, 0.904);\n}\nbutton[data-v-64a3eaa3] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -46009,10 +46038,16 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "data-block border mt-2" }, [
       _c("table", { staticClass: "table" }, [
+        _c("tr", { staticClass: "tr-small text-center" }, [
+          _c("td", { attrs: { colspan: "2" } }, [
+            _vm._v("Выезд: " + _vm._s(_vm.formatDate(_vm.firstDate)))
+          ])
+        ]),
+        _vm._v(" "),
         _c("tr", [
           _c("td", [_vm._v("Остаток на начало месяца:")]),
           _vm._v(" "),
-          _c("td", { staticClass: "bg-warning" }, [
+          _c("td", { staticClass: "bg-warning text-center" }, [
             _vm._v(_vm._s(Math.round(_vm.firstRemains)))
           ])
         ]),
@@ -46020,27 +46055,37 @@ var render = function() {
         _c("tr", [
           _c("td", [_vm._v("Пробег на начало месяца:")]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.firstOdo))])
+          _c("td", { staticClass: "text-center" }, [
+            _vm._v(_vm._s(_vm.firstOdo))
+          ])
         ]),
         _vm._v(" "),
         _c("tr", [
           _c("td", [_vm._v("Заправлено в этом месяце:")]),
           _vm._v(" "),
-          _c("td", { staticClass: "text-danger" }, [
+          _c("td", { staticClass: "text-danger text-center" }, [
             _vm._v(_vm._s(Math.round(_vm.fuel)))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tr", { staticClass: "tr-small text-center" }, [
+          _c("td", { attrs: { colspan: "2" } }, [
+            _vm._v("Заезд: " + _vm._s(_vm.formatDate(_vm.lastDate)))
           ])
         ]),
         _vm._v(" "),
         _c("tr", [
           _c("td", [_vm._v("Последний пробег:")]),
           _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.lastOdo))])
+          _c("td", { staticClass: "text-center" }, [
+            _vm._v(_vm._s(_vm.lastOdo))
+          ])
         ]),
         _vm._v(" "),
         _c("tr", [
           _c("td", [_vm._v("Последний остаток:")]),
           _vm._v(" "),
-          _c("td", { staticClass: "bg-warning" }, [
+          _c("td", { staticClass: "bg-warning text-center" }, [
             _vm._v(_vm._s(Math.round(_vm.lastRemains)))
           ])
         ])
@@ -46089,7 +46134,9 @@ var render = function() {
         },
         [_vm._v("Текущий месяц")]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -46099,6 +46146,28 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header text-center p-3" }, [
       _c("h1", [_vm._v("Главная")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pt-4" }, [
+      _c("ul", [
+        _c("li", [_vm._v("Добавить метку о выходных в таблице")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Уменьшить кнопки и добавить пиктограммы")]),
+        _vm._v(" "),
+        _c("li", [
+          _c("del", [_vm._v("Дата начала и последняя дата на главной стр")])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _vm._v("Реализовать перезагрузку страниц с сохранением данных")
+        ]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Перенести заголовок на панель")])
+      ])
     ])
   }
 ]
@@ -46132,7 +46201,7 @@ var render = function() {
     _c("div", { staticClass: "table-block t-wrapper" }, [
       _c(
         "table",
-        { staticClass: "table table-sm table-hover text-light bg-secondary" },
+        { staticClass: "table table-sm table-hover text-light text-right" },
         [
           _vm._m(0),
           _vm._v(" "),
@@ -46157,19 +46226,40 @@ var render = function() {
                   }
                 },
                 [
-                  _c("th", { attrs: { scope: "row" } }, [
-                    _vm._v(_vm._s(new Date(day.date).getDate()))
+                  _c(
+                    "th",
+                    {
+                      staticClass: "border-right-bold",
+                      attrs: { scope: "row" }
+                    },
+                    [_vm._v(_vm._s(new Date(day.date).getDate()) + ".")]
+                  ),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border-right" }, [
+                    _vm._v(_vm._s(Math.round(day.remains_pre)))
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(Math.round(day.remains_pre)))]),
+                  _c("td", { staticClass: "border-right pr-3" }, [
+                    _vm._v(_vm._s(day.odo_pre))
+                  ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(day.odo_pre))]),
+                  _c("td", { staticClass: "border-right text-center" }, [
+                    _vm._v(
+                      _vm._s(
+                        Math.round(day.fuel) === 0 ? "-" : Math.round(day.fuel)
+                      )
+                    )
+                  ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(Math.round(day.fuel)))]),
+                  _c("td", { staticClass: "border-right pr-3" }, [
+                    _vm._v(_vm._s(day.odo_post))
+                  ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(day.odo_post))]),
+                  _c("td", { staticClass: "border-right" }, [
+                    _vm._v(_vm._s(Math.round(day.remains_post)))
+                  ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(Math.round(day.remains_post)))])
+                  _vm._m(1, true)
                 ]
               )
             }),
@@ -46227,19 +46317,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("th", [_vm._v("Дт")]),
+    return _c("thead", { staticClass: " bg-secondary" }, [
+      _c("th", { staticClass: "col-1.5" }, [_vm._v("Дт")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Ост")]),
+      _c("th", { staticClass: "col-1" }, [_vm._v("Ост")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Км")]),
+      _c("th", { staticClass: "col-3 text-center" }, [_vm._v("Км")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Запр")]),
+      _c("th", { staticClass: "col-1 text-center" }, [_vm._v("Зап")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Км")]),
+      _c("th", { staticClass: "col-3 text-center" }, [_vm._v("Км")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Ост")])
+      _c("th", { staticClass: "col-1" }, [_vm._v("Ост")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "col-1.5" }, [_c("small", [_vm._v("Вых")])])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("small", [_vm._v("Вых")])])
   }
 ]
 render._withStripped = true
