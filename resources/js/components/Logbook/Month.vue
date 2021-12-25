@@ -15,7 +15,7 @@
                     <th class="col-1"><small>Вых</small></th>
                 </thead>
                 <tbody class="text-dark bg-light">
-                    <tr @click="$router.push({ name: 'day', params: {data: day, month_type: month_type}})" v-for="day in days" :key="day.id"  :class="{ 'weekend': isWeekend(new Date(day.date).getDay()) }">
+                    <tr @click="goToDay(day.id)" v-for="day in days" :key="day.id"  :class="{ 'weekend': isWeekend(new Date(day.date).getDay()) }">
                         <th class="border-right-bold" scope="row">{{ new Date(day.date).getDate()  }}.</th>
                         <td class="border-right">{{ Math.round(day.remains_pre) }}</td>
                         <td class="border-right-bold pr-3">{{ day.odo_pre }}</td>
@@ -54,6 +54,10 @@ export default {
         }
     },
     methods: {
+        goToDay(id) {
+            localStorage.setItem('day_id', id.toString())
+            this.$router.push({ name: 'day'})
+        },
         deleteAll() {
             if(confirm('Are your shure you want to DELETE All notes?!!!')) {
                     console.log(this.days)

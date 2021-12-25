@@ -42,8 +42,6 @@
             <ul>
                 <li>Добавить метку о выходных в таблице</li>
                 <li>Уменьшить кнопки и добавить пиктограммы</li>
-                <li><del>Дата начала и последняя дата на главной стр</del></li>
-                <li>Реализовать перезагрузку страниц с сохранением данных</li>
                 <li>Перенести заголовок на панель</li>
             </ul>
         </div>
@@ -71,7 +69,7 @@ export default {
     methods: {
         goToMonth(type) {
             localStorage.setItem('month_type', type);
-            this.$router.push({name: 'month', params: {month_type: type}});
+            this.$router.push({name: 'month'});
         },
         formatDate(date) {
             let day = new Date(date). getDate();

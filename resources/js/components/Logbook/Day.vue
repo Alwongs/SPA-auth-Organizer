@@ -1,21 +1,21 @@
 <template>
     <div class="container-fluid pt-3">
 
-        <div v-if="data !== null">
+        <div v-if="day !== null">
             <div class="header text-center p-2">
-                <h3>{{ formatDate(data.date) }}</h3>
+                <h3>{{ formatDate(day.date) }}</h3>
             </div>
             <div class="data-block m-3">
-                <p @click="notification('fuck!')">Остаток: <span class="bg-warning">{{ Math.round(data.remains_pre) }}</span></p>
-                <p>Километраж: <span>{{ data.odo_pre }}</span></p>
-                <p>Заправлено: <span class="text-danger">{{ Math.round(data.fuel) }}</span></p>
-                <p>Километраж: <span>{{ data.odo_post }}</span></p>
-                <p>Остаток: <span class="bg-warning">{{ Math.round(data.remains_post) }}</span></p>
+                <p @click="notification('fuck!')">Остаток: <span class="bg-warning">{{ Math.round(day.remains_pre) }}</span></p>
+                <p>Километраж: <span>{{ day.odo_pre }}</span></p>
+                <p>Заправлено: <span class="text-danger">{{ Math.round(day.fuel) }}</span></p>
+                <p>Километраж: <span>{{ day.odo_post }}</span></p>
+                <p>Остаток: <span class="bg-warning">{{ Math.round(day.remains_post) }}</span></p>
             </div>
         </div>
         <div class="button-block">
             <button @click="$router.push('/create')">Создать день</button>
-            <button @click="deleteDay(data.id)">Удалить</button>
+            <button @click="deleteDay(day.id)">Удалить</button>
             <button @click="$router.push('/logbook')">Домой</button>
             <button @click.prevent="$router.push({ name: 'month', params: { month_type: month_type} })">Back</button>
         </div>
@@ -31,7 +31,8 @@ export default {
             errored: false,
             errors: [],
             loading: true,
-            data: this.$route.params.data ? this.$route.params.data : null,
+            day_id: localStorage.getItem('day_id'),
+            day: {},
             month_type: this.$route.params.month_type,
             dayOfWeek: 'den neleli'
         }
@@ -62,12 +63,23 @@ export default {
                         this.loading = false
                     })
             }
+        },
+        getDay(id) {
+            axios.get('/api/days/' + id)
+                .then(response => {
+                    this.day = response.data.data
+                })
+                .catch(error => {
+                    this.errored = true
+                })
+                .finally(() => {
+                    this.loading = false
+                })
         }
     },
     mounted(){
-        if(this.data == null) {
-            alert('данные устарели!')
-        }
+        console.log(this.day_id);
+        this.getDay(this.day_id);
     }
 }
 </script>

@@ -32,7 +32,9 @@
                 </div>
             </div>
         </nav>
-        
+        <div class="container">
+            <i>Contact me: </i> Alwong@ya.ru, @vinniepooh444
+        </div>       
         
 
         <div>

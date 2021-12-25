@@ -2253,6 +2253,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3253,7 +3255,8 @@ __webpack_require__.r(__webpack_exports__);
       errored: false,
       errors: [],
       loading: true,
-      data: this.$route.params.data ? this.$route.params.data : null,
+      day_id: localStorage.getItem('day_id'),
+      day: {},
       month_type: this.$route.params.month_type,
       dayOfWeek: 'den neleli'
     };
@@ -3290,12 +3293,22 @@ __webpack_require__.r(__webpack_exports__);
           _this.loading = false;
         });
       }
+    },
+    getDay: function getDay(id) {
+      var _this2 = this;
+
+      axios.get('/api/days/' + id).then(function (response) {
+        _this2.day = response.data.data;
+      })["catch"](function (error) {
+        _this2.errored = true;
+      })["finally"](function () {
+        _this2.loading = false;
+      });
     }
   },
   mounted: function mounted() {
-    if (this.data == null) {
-      alert('данные устарели!');
-    }
+    console.log(this.day_id);
+    this.getDay(this.day_id);
   }
 });
 
@@ -3312,8 +3325,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
 //
 //
 //
@@ -3384,10 +3395,7 @@ __webpack_require__.r(__webpack_exports__);
     goToMonth: function goToMonth(type) {
       localStorage.setItem('month_type', type);
       this.$router.push({
-        name: 'month',
-        params: {
-          month_type: type
-        }
+        name: 'month'
       });
     },
     formatDate: function formatDate(date) {
@@ -3510,6 +3518,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    goToDay: function goToDay(id) {
+      localStorage.setItem('day_id', id.toString());
+      this.$router.push({
+        name: 'day'
+      });
+    },
     deleteAll: function deleteAll() {
       var _this = this;
 
@@ -43868,10 +43882,22 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
     _c("div", [_c("router-view")], 1)
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("i", [_vm._v("Contact me: ")]),
+      _vm._v(" Alwong@ya.ru, @vinniepooh444\n    ")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -45915,10 +45941,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid pt-3" }, [
-    _vm.data !== null
+    _vm.day !== null
       ? _c("div", [
           _c("div", { staticClass: "header text-center p-2" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.formatDate(_vm.data.date)))])
+            _c("h3", [_vm._v(_vm._s(_vm.formatDate(_vm.day.date)))])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "data-block m-3" }, [
@@ -45934,32 +45960,32 @@ var render = function() {
               [
                 _vm._v("Остаток: "),
                 _c("span", { staticClass: "bg-warning" }, [
-                  _vm._v(_vm._s(Math.round(_vm.data.remains_pre)))
+                  _vm._v(_vm._s(Math.round(_vm.day.remains_pre)))
                 ])
               ]
             ),
             _vm._v(" "),
             _c("p", [
               _vm._v("Километраж: "),
-              _c("span", [_vm._v(_vm._s(_vm.data.odo_pre))])
+              _c("span", [_vm._v(_vm._s(_vm.day.odo_pre))])
             ]),
             _vm._v(" "),
             _c("p", [
               _vm._v("Заправлено: "),
               _c("span", { staticClass: "text-danger" }, [
-                _vm._v(_vm._s(Math.round(_vm.data.fuel)))
+                _vm._v(_vm._s(Math.round(_vm.day.fuel)))
               ])
             ]),
             _vm._v(" "),
             _c("p", [
               _vm._v("Километраж: "),
-              _c("span", [_vm._v(_vm._s(_vm.data.odo_post))])
+              _c("span", [_vm._v(_vm._s(_vm.day.odo_post))])
             ]),
             _vm._v(" "),
             _c("p", [
               _vm._v("Остаток: "),
               _c("span", { staticClass: "bg-warning" }, [
-                _vm._v(_vm._s(Math.round(_vm.data.remains_post)))
+                _vm._v(_vm._s(Math.round(_vm.day.remains_post)))
               ])
             ])
           ])
@@ -45984,7 +46010,7 @@ var render = function() {
         {
           on: {
             click: function($event) {
-              return _vm.deleteDay(_vm.data.id)
+              return _vm.deleteDay(_vm.day.id)
             }
           }
         },
@@ -46163,14 +46189,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("li", [_vm._v("Уменьшить кнопки и добавить пиктограммы")]),
         _vm._v(" "),
-        _c("li", [
-          _c("del", [_vm._v("Дата начала и последняя дата на главной стр")])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _vm._v("Реализовать перезагрузку страниц с сохранением данных")
-        ]),
-        _vm._v(" "),
         _c("li", [_vm._v("Перенести заголовок на панель")])
       ])
     ])
@@ -46223,10 +46241,7 @@ var render = function() {
                   },
                   on: {
                     click: function($event) {
-                      return _vm.$router.push({
-                        name: "day",
-                        params: { data: day, month_type: _vm.month_type }
-                      })
+                      return _vm.goToDay(day.id)
                     }
                   }
                 },
