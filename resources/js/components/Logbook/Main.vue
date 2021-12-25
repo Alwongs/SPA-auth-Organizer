@@ -35,8 +35,8 @@
         </div>
         <div class="btn-block">
             <button @click="$router.push('/create')">Создать день</button>
-            <button @click="$router.push({name: 'month', params: {month_type: 'pre_month'}})">Предыдущий месяц</button>
-            <button @click="$router.push({name: 'month', params: {month_type: 'current_month'}})">Текущий месяц</button>
+            <button @click="goToMonth('pre_month')">Предыдущий месяц</button>
+            <button @click="goToMonth('current_month')">Текущий месяц</button>
         </div>
         <div class="pt-4">
             <ul>
@@ -69,6 +69,10 @@ export default {
         }
     },
     methods: {
+        goToMonth(type) {
+            localStorage.setItem('month_type', type);
+            this.$router.push({name: 'month', params: {month_type: type}});
+        },
         formatDate(date) {
             let day = new Date(date). getDate();
             let month = new Date(date).toLocaleString('ru-Ru', { month: 'long' }).toLowerCase();

@@ -3084,6 +3084,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3100,7 +3101,7 @@ __webpack_require__.r(__webpack_exports__);
       new_remains_post: '',
       message: '',
       dataExist: false,
-      dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thirsday', 'Friday', 'Suturday']
+      dayOfWeek: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
     };
   },
   methods: {
@@ -3380,6 +3381,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    goToMonth: function goToMonth(type) {
+      localStorage.setItem('month_type', type);
+      this.$router.push({
+        name: 'month',
+        params: {
+          month_type: type
+        }
+      });
+    },
     formatDate: function formatDate(date) {
       var day = new Date(date).getDate();
       var month = new Date(date).toLocaleString('ru-Ru', {
@@ -3495,7 +3505,7 @@ __webpack_require__.r(__webpack_exports__);
       loading: true,
       data: this.$route.params.data,
       month_name: '',
-      month_type: this.$route.params.month_type,
+      month_type: localStorage.getItem('month_type'),
       month_js: new Date()
     };
   },
@@ -9988,7 +9998,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-64a3eaa3] {\n    background-color: rgb(221, 221, 221);\n    min-height: 100vh;\n}\n.button-block[data-v-64a3eaa3] {\n    margin-bottom: 20px;\n}\n.weekend[data-v-64a3eaa3] {\n    background-color: rgba(218, 35, 96, 0.13);\n}\n.t-wrapper[data-v-64a3eaa3] {\n    max-height: 75%;\n    overflow-y: auto;\n}\ntr[data-v-64a3eaa3] {\n    cursor: pointer;\n}\n.bg-data[data-v-64a3eaa3] {\n    background-color: rgba(231, 232, 235, 0.493);\n}\nsmall[data-v-64a3eaa3] {\n    font-size: 70%;\n}\n.border-right-bold[data-v-64a3eaa3] {\n    border-right: 2px solid rgba(204, 204, 204, 0.904);\n}\nbutton[data-v-64a3eaa3] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-64a3eaa3] {\n            padding: 5px;\n    background-color: rgb(221, 221, 221);\n    min-height: 100vh;\n}\n.button-block[data-v-64a3eaa3] {\n    margin-bottom: 20px;\n}\n.weekend[data-v-64a3eaa3] {\n    background-color: rgba(218, 35, 96, 0.13);\n}\n.t-wrapper[data-v-64a3eaa3] {\n    max-height: 75%;\n    overflow-y: auto;\n}\ntable[data-v-64a3eaa3] {\n    border: 1px solid rgba(167, 167, 167, 0.904);\n}\ntr[data-v-64a3eaa3] {\n    cursor: pointer;\n}\n.bg-data[data-v-64a3eaa3] {\n    background-color: rgba(231, 232, 235, 0.493);\n}\nsmall[data-v-64a3eaa3] {\n    font-size: 70%;\n}\n.border-right-bold[data-v-64a3eaa3] {\n    border-right: 2px solid rgba(204, 204, 204, 0.904);\n}\nbutton[data-v-64a3eaa3] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -45525,14 +45535,15 @@ var render = function() {
         }
       },
       [
-        _c("h5", { staticClass: "col pt-2" }, [
+        _c("h5", { staticClass: "col pt-2 text-center" }, [
           _vm._v(_vm._s(_vm.dayOfWeek[new Date(this.new_date).getDay()]))
         ]),
         _vm._v(" "),
         _c(
           "div",
           {
-            staticClass: "btn col",
+            staticClass: "btn btn-secondary col",
+            attrs: { type: "button" },
             on: {
               click: function($event) {
                 return _vm.fillSame()
@@ -45934,7 +45945,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", [
-              _vm._v("Заправка: "),
+              _vm._v("Заправлено: "),
               _c("span", { staticClass: "text-danger" }, [
                 _vm._v(_vm._s(Math.round(_vm.data.fuel)))
               ])
@@ -46110,10 +46121,7 @@ var render = function() {
         {
           on: {
             click: function($event) {
-              return _vm.$router.push({
-                name: "month",
-                params: { month_type: "pre_month" }
-              })
+              return _vm.goToMonth("pre_month")
             }
           }
         },
@@ -46125,10 +46133,7 @@ var render = function() {
         {
           on: {
             click: function($event) {
-              return _vm.$router.push({
-                name: "month",
-                params: { month_type: "current_month" }
-              })
+              return _vm.goToMonth("current_month")
             }
           }
         },
@@ -46194,8 +46199,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
-    _c("div", { staticClass: "header text-center p-3" }, [
-      _c("h1", [_vm._v(_vm._s(_vm.month_name))])
+    _c("div", { staticClass: "header text-center pt-2 pb-1" }, [
+      _c("h3", [_vm._v(_vm._s(_vm.month_name))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-block t-wrapper" }, [
@@ -46239,11 +46244,11 @@ var render = function() {
                     _vm._v(_vm._s(Math.round(day.remains_pre)))
                   ]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "border-right pr-3" }, [
+                  _c("td", { staticClass: "border-right-bold pr-3" }, [
                     _vm._v(_vm._s(day.odo_pre))
                   ]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "border-right text-center" }, [
+                  _c("td", { staticClass: "border-right-bold text-center" }, [
                     _vm._v(
                       _vm._s(
                         Math.round(day.fuel) === 0 ? "-" : Math.round(day.fuel)
@@ -46318,9 +46323,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: " bg-secondary" }, [
-      _c("th", { staticClass: "col-1.5" }, [_vm._v("Дт")]),
+      _c("th", { staticClass: "col-1" }, [_vm._v("Дт")]),
       _vm._v(" "),
-      _c("th", { staticClass: "col-1" }, [_vm._v("Ост")]),
+      _c("th", { staticClass: "col-1.5" }, [_vm._v("Ост")]),
       _vm._v(" "),
       _c("th", { staticClass: "col-3 text-center" }, [_vm._v("Км")]),
       _vm._v(" "),
@@ -46328,16 +46333,16 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", { staticClass: "col-3 text-center" }, [_vm._v("Км")]),
       _vm._v(" "),
-      _c("th", { staticClass: "col-1" }, [_vm._v("Ост")]),
+      _c("th", { staticClass: "col-1.5" }, [_vm._v("Ост")]),
       _vm._v(" "),
-      _c("th", { staticClass: "col-1.5" }, [_c("small", [_vm._v("Вых")])])
+      _c("th", { staticClass: "col-1" }, [_c("small", [_vm._v("Вых")])])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [_c("small", [_vm._v("Вых")])])
+    return _c("td", [_c("i", { staticClass: "bi bi-truck text-center" })])
   }
 ]
 render._withStripped = true

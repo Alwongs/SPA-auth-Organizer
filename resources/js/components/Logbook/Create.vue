@@ -7,8 +7,9 @@
             <h1>Создать новый день</h1>
         </div>
         <div class="header text-right pr-3 row" :class="{ 'text-danger': new Date(this.new_date).getDay() == 0 || new Date(this.new_date).getDay() == 6}">
-            <h5 class="col pt-2">{{ dayOfWeek[new Date(this.new_date).getDay()] }}</h5>
-            <div class="btn col" @click="fillSame()">Без выезда</div>
+            <h5 class="col pt-2 text-center">{{ dayOfWeek[new Date(this.new_date).getDay()] }}</h5>
+            <div type="button" class="btn btn-secondary col" @click="fillSame()">Без выезда</div>
+            
         </div>
         <form @submit.prevent="addDay">
             <fieldset v-bind:disabled="dataExist">
@@ -69,7 +70,7 @@ export default {
             new_remains_post: '',
             message: '',
             dataExist: false,
-            dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thirsday', 'Friday', 'Suturday']
+            dayOfWeek: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
         }
     },
     methods: {

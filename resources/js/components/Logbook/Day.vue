@@ -8,7 +8,7 @@
             <div class="data-block m-3">
                 <p @click="notification('fuck!')">Остаток: <span class="bg-warning">{{ Math.round(data.remains_pre) }}</span></p>
                 <p>Километраж: <span>{{ data.odo_pre }}</span></p>
-                <p>Заправка: <span class="text-danger">{{ Math.round(data.fuel) }}</span></p>
+                <p>Заправлено: <span class="text-danger">{{ Math.round(data.fuel) }}</span></p>
                 <p>Километраж: <span>{{ data.odo_post }}</span></p>
                 <p>Остаток: <span class="bg-warning">{{ Math.round(data.remains_post) }}</span></p>
             </div>

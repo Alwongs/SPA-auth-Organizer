@@ -1,28 +1,28 @@
 <template>
     <div class="container-fluid">
-        <div class="header text-center p-3">
-            <h1>{{ month_name }}</h1>
+        <div class="header text-center pt-2 pb-1">
+            <h3>{{ month_name }}</h3>
         </div>
         <div class="table-block t-wrapper">
             <table class="table table-sm table-hover text-light text-right">
                 <thead class=" bg-secondary">
-                    <th class="col-1.5">Дт</th>
-                    <th class="col-1">Ост</th>
+                    <th class="col-1">Дт</th>
+                    <th class="col-1.5">Ост</th>
                     <th class="col-3 text-center">Км</th>
                     <th class="col-1 text-center">Зап</th>
                     <th class="col-3 text-center">Км</th>
-                    <th class="col-1">Ост</th>
-                    <th class="col-1.5"><small>Вых</small></th>
+                    <th class="col-1.5">Ост</th>
+                    <th class="col-1"><small>Вых</small></th>
                 </thead>
                 <tbody class="text-dark bg-light">
                     <tr @click="$router.push({ name: 'day', params: {data: day, month_type: month_type}})" v-for="day in days" :key="day.id"  :class="{ 'weekend': isWeekend(new Date(day.date).getDay()) }">
                         <th class="border-right-bold" scope="row">{{ new Date(day.date).getDate()  }}.</th>
                         <td class="border-right">{{ Math.round(day.remains_pre) }}</td>
-                        <td class="border-right pr-3">{{ day.odo_pre }}</td>
-                        <td class="border-right text-center">{{ Math.round(day.fuel) === 0 ? '-' : Math.round(day.fuel) }}</td>
+                        <td class="border-right-bold pr-3">{{ day.odo_pre }}</td>
+                        <td class="border-right-bold text-center">{{ Math.round(day.fuel) === 0 ? '-' : Math.round(day.fuel) }}</td>
                         <td class="border-right pr-3">{{ day.odo_post }}</td>
                         <td class="border-right">{{ Math.round(day.remains_post) }}</td>
-                        <td><small>Вых</small></td>
+                        <td><i class="bi bi-truck text-center"></i></td>
                     </tr>
                 </tbody>
             </table>
@@ -49,7 +49,7 @@ export default {
             loading: true,
             data: this.$route.params.data,   
             month_name: '',
-            month_type: this.$route.params.month_type,
+            month_type: localStorage.getItem('month_type'),
             month_js: new Date() 
         }
     },
@@ -119,6 +119,7 @@ export default {
 <style scoped>
 
     .container-fluid {
+                padding: 5px;
         background-color: rgb(221, 221, 221);
         min-height: 100vh;
     }
@@ -131,6 +132,9 @@ export default {
     .t-wrapper {
         max-height: 75%;
         overflow-y: auto;
+    }
+    table {
+        border: 1px solid rgba(167, 167, 167, 0.904);
     }
     tr {
         cursor: pointer;
