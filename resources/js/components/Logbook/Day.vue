@@ -1,23 +1,32 @@
 <template>
     <div class="container-fluid pt-3">
-
         <div v-if="day !== null">
-            <div class="header text-center p-2">
+            <div class="header text-center p-2 mb-2" :class="{ 'text-danger': new Date(day.date).getDay() == 0 || new Date(day.date).getDay() == 6}">
                 <h3>{{ formatDate(day.date) }}</h3>
             </div>
-            <div class="data-block m-3">
-                <p @click="notification('fuck!')">Остаток: <span class="bg-warning">{{ Math.round(day.remains_pre) }}</span></p>
-                <p>Километраж: <span>{{ day.odo_pre }}</span></p>
-                <p>Заправлено: <span class="text-danger">{{ Math.round(day.fuel) }}</span></p>
-                <p>Километраж: <span>{{ day.odo_post }}</span></p>
-                <p>Остаток: <span class="bg-warning">{{ Math.round(day.remains_post) }}</span></p>
+            <div class="data-block text-center">
+                <span class="bg-warning">{{ Math.round(day.remains_pre) }}<small>л</small></span>
+                .. 
+                <span>{{ day.odo_pre }}<small>км</small></span>
+                .... 
+                <span class="text-danger">{{ Math.round(day.fuel) }}<small>л</small></span>
+                .... 
+                <span>{{ day.odo_post }}<small>км</small></span>
+                .. 
+                <span class="bg-warning">{{ Math.round(day.remains_post) }}<small>л</small></span>
+            </div>
+            <div class="note text-center mb-4">
+                <span class="text-info pl-5" v-if="day.odo_pre === day.odo_post"> ...Без выезда</span>
+            </div>
+            <div v-if="day.comment" class="mt-4">
+                <p>Комментарий:</p>
+                <p class="p-2 bg-grey rounded"><i>{{ day.comment }}</i></p>
             </div>
         </div>
         <div class="button-block">
             <button @click="$router.push('/create')">Создать день</button>
             <button @click="deleteDay(day.id)">Удалить</button>
             <button @click="$router.push('/logbook')">Домой</button>
-            <button @click.prevent="$router.push({ name: 'month', params: { month_type: month_type} })">Back</button>
         </div>
     </div>
 </template>
@@ -90,7 +99,7 @@ export default {
         height: 100vh;
     }
     .data-block {
-        font-size: 120%;
+        font-size: 140%;
     }
     button {
         font-size: 140%;

@@ -6,30 +6,37 @@
         <div class="header text-center p-3">
             <h1>Создать новый день</h1>
         </div>
-        <div class="header text-right pr-3 row" :class="{ 'text-danger': new Date(this.new_date).getDay() == 0 || new Date(this.new_date).getDay() == 6}">
-            <h5 class="col pt-2 text-center">{{ dayOfWeek[new Date(this.new_date).getDay()] }}</h5>
-            <div type="button" class="btn btn-secondary col" @click="fillSame()">Без выезда</div>
+        
+
+
             
-        </div>
+
         <form @submit.prevent="addDay">
             <fieldset v-bind:disabled="dataExist">
                 <div class="form-group">
                     <label for="createDateModal">Date</label>
-                    <input v-model="new_date" :type="dataExist ? 'text' : 'date'" min="2021-01-01" max="2100-01-01" class="form-control" id="createDateModal" required>
+                    <div class="width-30 form-row" :class="{ 'text-danger': new Date(this.new_date).getDay() == 0 || new Date(this.new_date).getDay() == 6}">
+                        <input v-model="new_date" :type="dataExist ? 'text' : 'date'" min="2021-01-01" max="2100-01-01" class="ml-1 form-control col" id="createDateModal" required>
+                        <h5 class="text-center col pt-1">{{ dayOfWeek[new Date(this.new_date).getDay()] }}</h5>
+                        <div @click="isDayOff = !isDayOff" class="btn" :class="{ 'btn-danger': isDayOff}">Выходной <i class="bi bi-house-door"></i></div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="createRemindsPre">Остаток при выезде</label>
-                    <input v-model="new_remains_pre" type="text" class="form-control short" id="createRemindsPre">                                       
+                     <div class="form-row">
+                        <input v-model="new_remains_pre" type="text" class="form-control short col" id="createRemindsPre">
+                        <div @click="isTrip = !isTrip" class="btn col" :class="{ 'btn-primary': isTrip}">Командировка <i class="bi bi-briefcase-fill"></i></div>                                       
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="createRemindsPre">Километраж при выезде</label>
-                    <input v-model="new_odo_pre" type="number" class="form-control" id="createRemindsPre" required>                                         
+                    <input v-model="new_odo_pre" type="number" class="form-control width-50" id="createRemindsPre" required>                                         
                 </div>
             </fieldset> 
             <div class="form-group">
                 <label for="createRemindsPre">Заправка</label>
                 <div class="form-row">
-                    <input v-model="new_fuel" type="text" class="form-control short col" id="createRemindsPre">
+                    <input v-model="new_fuel" type="number" class="ml-1 form-control short col" id="createRemindsPre">
                     <div class="btn col" @click="new_fuel = 0">0</div>  
                     <div class="btn col" @click="new_fuel = 25">25</div>  
                     <div class="btn col" @click="new_fuel = 40">40</div>   
@@ -37,11 +44,19 @@
             </div>
             <div class="form-group">
                 <label for="createRemindsPre">Километраж при заезде</label>
-                <input v-model="new_odo_post" :input="countRemainsPost()" type="number" class="form-control" id="createRemindsPre" required>                                         
+                <input v-model="new_odo_post" :input="countRemainsPost()" type="number" class="form-control width-50" id="createRemindsPre" required>                                         
             </div>
             <div class="form-group">
                 <label for="createRemainsPost">Остаток при заезде</label>
-                <input v-model="new_remains_post" type="number" step="any" class="form-control short" id="createRemainsPost" required>                                         
+                <div class="form-row">
+                    <input v-model="new_remains_post" type="number" step="any" class="ml-1 form-control short" id="createRemainsPost" required>                                         
+                    <div type="button" class="btn col" @click="fillSame()" :class="{ 'btn-success': notMoved}">Без выезда</div>
+                    <div type="button" class="btn col" @click="addComment()" :class="{ 'btn-info': commentExist}">Комментарий</div>
+                </div>
+            </div>
+            <div v-if="commentExist" class="form-group">
+                <label for="createComment">Километраж при заезде</label>
+                <textarea v-model="new_comment" type="text" class="form-control" id="createComment"></textarea>                                         
             </div>
                                  
             <div class="btn-block p-0">
@@ -70,14 +85,30 @@ export default {
             new_remains_post: '',
             message: '',
             dataExist: false,
-            dayOfWeek: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
+            dayOfWeek: ['Вc', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+            isDayOff: false,
+            isTrip: false,
+            notMoved: false,
+            commentExist: false,
+            new_comment: ''
         }
     },
     methods: {
+        addComment() {
+            this.commentExist = !this.commentExist;
+            console.log('works');
+        },
         fillSame() {
-            this.new_odo_post = this.new_odo_pre;
-            let remains_post = this.new_remains_pre;
-            this.new_remains_post = remains_post;
+            if (this.notMoved === false) {
+                this.new_odo_post = this.new_odo_pre;
+                let remains_post = this.new_remains_pre;
+                this.new_remains_post = remains_post;
+                this.notMoved = !this.notMoved;
+            } else {
+                this.new_odo_post = ''; 
+                this.new_remains_post = '';
+                this.notMoved = !this.notMoved;                          
+            }
         },
         getLastData(array) {
             let lastData = array[array.length - 1];
@@ -106,6 +137,9 @@ export default {
                     fuel: this.new_fuel ? this.new_fuel : 0,
                     odo_post: this.new_odo_post,
                     remains_post: this.new_remains_post,
+                    is_day_off: this.isDayOff,
+                    is_trip: this.isTrip,
+                    comment: this.new_comment,
                     user_id: this.user.id
                 })
                     .then(response => {
@@ -190,8 +224,15 @@ export default {
     .form-group {
         margin-bottom: 10px;
     }
-    .short {
-        max-width: 25%;
+    .width-50 {
+        max-width: 50%;        
     }
+    .short {
+        max-width: 20%;
+    }
+    label {
+        margin-bottom: 0;
+    }
+
 
 </style>

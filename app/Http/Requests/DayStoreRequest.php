@@ -30,6 +30,8 @@ class DayStoreRequest extends FormRequest
             'fuel' => 'required',
             'odo_post' => 'required',
             'remains_post' => 'required',
+            'is_day_off' => 'required',
+            'is_trip' => 'required',
             'comment' => 'nullable',
             'user_id' => 'required'
         ];

@@ -21,6 +21,9 @@ class DayResource extends JsonResource
             'odo_pre' => $this->odo_pre,
             'fuel' => $this->fuel,
             'odo_post' => $this->odo_post,
+            'is_day_off' => $this->is_day_off,
+            'is_trip' => $this->is_trip,
+            'comment' => $this->comment,
             'remains_post' => $this->remains_post
         ];
     }

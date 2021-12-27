@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <div class="container">
+            <i>Contact me: </i> <span>Alwong@ya.ru</span> 
+        </div> 
         <div class="header m-4">
             <h1 class="m-4">About</h1>
             <p><i>Данный органайзер содержит несколько независимых приложений:</i></p>

@@ -2193,6 +2193,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -2210,8 +2213,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../app */ "./resources/js/app.js");
 /* harmony import */ var _Reminder_AddEvent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Reminder/AddEvent.vue */ "./resources/js/components/Reminder/AddEvent.vue");
-//
-//
 //
 //
 //
@@ -3087,6 +3088,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3103,14 +3119,30 @@ __webpack_require__.r(__webpack_exports__);
       new_remains_post: '',
       message: '',
       dataExist: false,
-      dayOfWeek: ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
+      dayOfWeek: ['Вc', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+      isDayOff: false,
+      isTrip: false,
+      notMoved: false,
+      commentExist: false,
+      new_comment: ''
     };
   },
   methods: {
+    addComment: function addComment() {
+      this.commentExist = !this.commentExist;
+      console.log('works');
+    },
     fillSame: function fillSame() {
-      this.new_odo_post = this.new_odo_pre;
-      var remains_post = this.new_remains_pre;
-      this.new_remains_post = remains_post;
+      if (this.notMoved === false) {
+        this.new_odo_post = this.new_odo_pre;
+        var remains_post = this.new_remains_pre;
+        this.new_remains_post = remains_post;
+        this.notMoved = !this.notMoved;
+      } else {
+        this.new_odo_post = '';
+        this.new_remains_post = '';
+        this.notMoved = !this.notMoved;
+      }
     },
     getLastData: function getLastData(array) {
       var lastData = array[array.length - 1];
@@ -3143,6 +3175,9 @@ __webpack_require__.r(__webpack_exports__);
           fuel: this.new_fuel ? this.new_fuel : 0,
           odo_post: this.new_odo_post,
           remains_post: this.new_remains_post,
+          is_day_off: this.isDayOff,
+          is_trip: this.isTrip,
+          comment: this.new_comment,
           user_id: this.user.id
         }).then(function (response) {
           var data = response.data.data;
@@ -3247,6 +3282,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3325,6 +3369,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -3502,6 +3550,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3527,14 +3586,17 @@ __webpack_require__.r(__webpack_exports__);
     deleteAll: function deleteAll() {
       var _this = this;
 
-      if (confirm('Are your shure you want to DELETE All notes?!!!')) {
-        console.log(this.days);
-        this.days.map(function (day) {
-          console.log(day.id);
+      if (confirm('Вы уверены, что хотите удалить все данные в таблице?!!!')) {
+        if (confirm('Хорошо подумали?!!!')) {
+          this.days.map(function (day) {
+            console.log(day.id);
 
-          _this.deleteDay(day.id);
-        });
-        this.getMonth();
+            _this.deleteDay(day.id);
+          });
+          setTimeout(function () {
+            _this.getMonth();
+          }, 5000);
+        }
       }
     },
     deleteDay: function deleteDay(id) {
@@ -3615,6 +3677,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3623,7 +3696,7 @@ __webpack_require__.r(__webpack_exports__);
       errored: false,
       errors: [],
       loading: true,
-      data: this.$route.params.data ? this.$route.params.data : null,
+      day: this.$route.params.data ? this.$route.params.data : null,
       month_type: 'current_month'
     };
   },
@@ -3638,7 +3711,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    if (this.data == null) {
+    if (this.day == null) {
       this.$router.push({
         name: 'logbook'
       });
@@ -9940,7 +10013,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-35b05d2e] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\nbutton[data-v-35b05d2e] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.btn[data-v-35b05d2e] {\n    border: 1px solid grey;\n    max-width: -webkit-fit-content;\n    max-width: -moz-fit-content;\n    max-width: fit-content;\n    max-height: -webkit-fit-content;\n    max-height: -moz-fit-content;\n    max-height: fit-content;\n    margin: 0 10px 0 10px;\n    padding-right: 20px;\n    padding-left: 20px;\n}\n.form-group[data-v-35b05d2e] {\n    margin-bottom: 10px;\n}\n.short[data-v-35b05d2e] {\n    max-width: 25%;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-35b05d2e] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\nbutton[data-v-35b05d2e] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.btn[data-v-35b05d2e] {\n    border: 1px solid grey;\n    max-width: -webkit-fit-content;\n    max-width: -moz-fit-content;\n    max-width: fit-content;\n    max-height: -webkit-fit-content;\n    max-height: -moz-fit-content;\n    max-height: fit-content;\n    margin: 0 10px 0 10px;\n    padding-right: 20px;\n    padding-left: 20px;\n}\n.form-group[data-v-35b05d2e] {\n    margin-bottom: 10px;\n}\n.width-50[data-v-35b05d2e] {\n    max-width: 50%;\n}\n.short[data-v-35b05d2e] {\n    max-width: 20%;\n}\nlabel[data-v-35b05d2e] {\n    margin-bottom: 0;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9964,7 +10037,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-2afd7702] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\n.data-block[data-v-2afd7702] {\n    font-size: 120%;\n}\nbutton[data-v-2afd7702] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\nspan[data-v-2afd7702] {\n    color: blue;\n}\n.form-group[data-v-2afd7702] {\n    margin-bottom: 30px;\n}\n.short[data-v-2afd7702] {\n    width: 25%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-2afd7702] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\n.data-block[data-v-2afd7702] {\n    font-size: 140%;\n}\nbutton[data-v-2afd7702] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\nspan[data-v-2afd7702] {\n    color: blue;\n}\n.form-group[data-v-2afd7702] {\n    margin-bottom: 30px;\n}\n.short[data-v-2afd7702] {\n    width: 25%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9988,7 +10061,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-16acfe34] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\nbutton[data-v-16acfe34] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.data-block[data-v-16acfe34] {\n    font-size: 120%;\n}\ntr td[data-v-16acfe34] {\n    padding: 0;\n    padding-bottom: 8px;\n}\n.tr-small td[data-v-16acfe34] {\n    padding: 0;\n    font-size: 70%\n}\nli[data-v-16acfe34] {\n    font-style: italic;\n    margin-bottom: 10px\n}\n.text-center[data-v-16acfe34] {\n    padding-top: 2px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-16acfe34] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\nbutton[data-v-16acfe34] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.data-block[data-v-16acfe34] {\n    font-size: 120%;\n}\ntr td[data-v-16acfe34] {\n    font-size: 120%;\n    padding: 0;\n    padding-bottom: 8px;\n}\n.tr-small td[data-v-16acfe34] {\n    padding: 0;\n    font-size: 70%\n}\nspan[data-v-16acfe34] {\n    color: blue;\n}\nli[data-v-16acfe34] {\n    font-style: italic;\n    margin-bottom: 10px\n}\n.text-center[data-v-16acfe34] {\n    padding-top: 2px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10036,7 +10109,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-06a9a9a1] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\n.data-block[data-v-06a9a9a1] {\n    font-size: 120%;\n}\nbutton[data-v-06a9a9a1] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\nspan[data-v-06a9a9a1] {\n    color: blue;\n}\n.form-group[data-v-06a9a9a1] {\n    margin-bottom: 30px;\n}\n.short[data-v-06a9a9a1] {\n    width: 25%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container-fluid[data-v-06a9a9a1] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\n.data-block[data-v-06a9a9a1] {\n    font-size: 140%;\n}\nbutton[data-v-06a9a9a1] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\nspan[data-v-06a9a9a1] {\n    color: blue;\n}\n.form-group[data-v-06a9a9a1] {\n    margin-bottom: 30px;\n}\n.short[data-v-06a9a9a1] {\n    width: 25%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -43437,6 +43510,12 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("i", [_vm._v("Contact me: ")]),
+        _vm._v(" "),
+        _c("span", [_vm._v("Alwong@ya.ru")])
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "header m-4" }, [
         _c("h1", { staticClass: "m-4" }, [_vm._v("About")]),
         _vm._v(" "),
@@ -43882,22 +43961,10 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
     _c("div", [_c("router-view")], 1)
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("i", [_vm._v("Contact me: ")]),
-      _vm._v(" Alwong@ya.ru, @vinniepooh444\n    ")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -45551,37 +45618,6 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c(
-      "div",
-      {
-        staticClass: "header text-right pr-3 row",
-        class: {
-          "text-danger":
-            new Date(this.new_date).getDay() == 0 ||
-            new Date(this.new_date).getDay() == 6
-        }
-      },
-      [
-        _c("h5", { staticClass: "col pt-2 text-center" }, [
-          _vm._v(_vm._s(_vm.dayOfWeek[new Date(this.new_date).getDay()]))
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "btn btn-secondary col",
-            attrs: { type: "button" },
-            on: {
-              click: function($event) {
-                return _vm.fillSame()
-              }
-            }
-          },
-          [_vm._v("Без выезда")]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
       "form",
       {
         on: {
@@ -45598,103 +45634,139 @@ var render = function() {
               _vm._v("Date")
             ]),
             _vm._v(" "),
-            (_vm.dataExist ? "text" : "date") === "checkbox"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.new_date,
-                      expression: "new_date"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    min: "2021-01-01",
-                    max: "2100-01-01",
-                    id: "createDateModal",
-                    required: "",
-                    type: "checkbox"
-                  },
-                  domProps: {
-                    checked: Array.isArray(_vm.new_date)
-                      ? _vm._i(_vm.new_date, null) > -1
-                      : _vm.new_date
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.new_date,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.new_date = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.new_date = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
+            _c(
+              "div",
+              {
+                staticClass: "width-30 form-row",
+                class: {
+                  "text-danger":
+                    new Date(this.new_date).getDay() == 0 ||
+                    new Date(this.new_date).getDay() == 6
+                }
+              },
+              [
+                (_vm.dataExist ? "text" : "date") === "checkbox"
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_date,
+                          expression: "new_date"
                         }
-                      } else {
-                        _vm.new_date = $$c
+                      ],
+                      staticClass: "ml-1 form-control col",
+                      attrs: {
+                        min: "2021-01-01",
+                        max: "2100-01-01",
+                        id: "createDateModal",
+                        required: "",
+                        type: "checkbox"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.new_date)
+                          ? _vm._i(_vm.new_date, null) > -1
+                          : _vm.new_date
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.new_date,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.new_date = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.new_date = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.new_date = $$c
+                          }
+                        }
+                      }
+                    })
+                  : (_vm.dataExist ? "text" : "date") === "radio"
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_date,
+                          expression: "new_date"
+                        }
+                      ],
+                      staticClass: "ml-1 form-control col",
+                      attrs: {
+                        min: "2021-01-01",
+                        max: "2100-01-01",
+                        id: "createDateModal",
+                        required: "",
+                        type: "radio"
+                      },
+                      domProps: { checked: _vm._q(_vm.new_date, null) },
+                      on: {
+                        change: function($event) {
+                          _vm.new_date = null
+                        }
+                      }
+                    })
+                  : _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_date,
+                          expression: "new_date"
+                        }
+                      ],
+                      staticClass: "ml-1 form-control col",
+                      attrs: {
+                        min: "2021-01-01",
+                        max: "2100-01-01",
+                        id: "createDateModal",
+                        required: "",
+                        type: _vm.dataExist ? "text" : "date"
+                      },
+                      domProps: { value: _vm.new_date },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.new_date = $event.target.value
+                        }
+                      }
+                    }),
+                _vm._v(" "),
+                _c("h5", { staticClass: "text-center col pt-1" }, [
+                  _vm._v(
+                    _vm._s(_vm.dayOfWeek[new Date(this.new_date).getDay()])
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn",
+                    class: { "btn-danger": _vm.isDayOff },
+                    on: {
+                      click: function($event) {
+                        _vm.isDayOff = !_vm.isDayOff
                       }
                     }
-                  }
-                })
-              : (_vm.dataExist ? "text" : "date") === "radio"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.new_date,
-                      expression: "new_date"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    min: "2021-01-01",
-                    max: "2100-01-01",
-                    id: "createDateModal",
-                    required: "",
-                    type: "radio"
                   },
-                  domProps: { checked: _vm._q(_vm.new_date, null) },
-                  on: {
-                    change: function($event) {
-                      _vm.new_date = null
-                    }
-                  }
-                })
-              : _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.new_date,
-                      expression: "new_date"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    min: "2021-01-01",
-                    max: "2100-01-01",
-                    id: "createDateModal",
-                    required: "",
-                    type: _vm.dataExist ? "text" : "date"
-                  },
-                  domProps: { value: _vm.new_date },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.new_date = $event.target.value
-                    }
-                  }
-                })
+                  [
+                    _vm._v("Выходной "),
+                    _c("i", { staticClass: "bi bi-house-door" })
+                  ]
+                )
+              ]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
@@ -45702,27 +45774,46 @@ var render = function() {
               _vm._v("Остаток при выезде")
             ]),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.new_remains_pre,
-                  expression: "new_remains_pre"
-                }
-              ],
-              staticClass: "form-control short",
-              attrs: { type: "text", id: "createRemindsPre" },
-              domProps: { value: _vm.new_remains_pre },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c("div", { staticClass: "form-row" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.new_remains_pre,
+                    expression: "new_remains_pre"
                   }
-                  _vm.new_remains_pre = $event.target.value
+                ],
+                staticClass: "form-control short col",
+                attrs: { type: "text", id: "createRemindsPre" },
+                domProps: { value: _vm.new_remains_pre },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.new_remains_pre = $event.target.value
+                  }
                 }
-              }
-            })
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "btn col",
+                  class: { "btn-primary": _vm.isTrip },
+                  on: {
+                    click: function($event) {
+                      _vm.isTrip = !_vm.isTrip
+                    }
+                  }
+                },
+                [
+                  _vm._v("Командировка "),
+                  _c("i", { staticClass: "bi bi-briefcase-fill" })
+                ]
+              )
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
@@ -45739,7 +45830,7 @@ var render = function() {
                   expression: "new_odo_pre"
                 }
               ],
-              staticClass: "form-control",
+              staticClass: "form-control width-50",
               attrs: { type: "number", id: "createRemindsPre", required: "" },
               domProps: { value: _vm.new_odo_pre },
               on: {
@@ -45769,8 +45860,8 @@ var render = function() {
                   expression: "new_fuel"
                 }
               ],
-              staticClass: "form-control short col",
-              attrs: { type: "text", id: "createRemindsPre" },
+              staticClass: "ml-1 form-control short col",
+              attrs: { type: "number", id: "createRemindsPre" },
               domProps: { value: _vm.new_fuel },
               on: {
                 input: function($event) {
@@ -45837,7 +45928,7 @@ var render = function() {
                 expression: "new_odo_post"
               }
             ],
-            staticClass: "form-control",
+            staticClass: "form-control width-50",
             attrs: {
               input: _vm.countRemainsPost(),
               type: "number",
@@ -45861,33 +45952,95 @@ var render = function() {
             _vm._v("Остаток при заезде")
           ]),
           _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.new_remains_post,
-                expression: "new_remains_post"
-              }
-            ],
-            staticClass: "form-control short",
-            attrs: {
-              type: "number",
-              step: "any",
-              id: "createRemainsPost",
-              required: ""
-            },
-            domProps: { value: _vm.new_remains_post },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "form-row" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.new_remains_post,
+                  expression: "new_remains_post"
                 }
-                _vm.new_remains_post = $event.target.value
+              ],
+              staticClass: "ml-1 form-control short",
+              attrs: {
+                type: "number",
+                step: "any",
+                id: "createRemainsPost",
+                required: ""
+              },
+              domProps: { value: _vm.new_remains_post },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.new_remains_post = $event.target.value
+                }
               }
-            }
-          })
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "btn col",
+                class: { "btn-success": _vm.notMoved },
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.fillSame()
+                  }
+                }
+              },
+              [_vm._v("Без выезда")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "btn col",
+                class: { "btn-info": _vm.commentExist },
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.addComment()
+                  }
+                }
+              },
+              [_vm._v("Комментарий")]
+            )
+          ])
         ]),
+        _vm._v(" "),
+        _vm.commentExist
+          ? _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "createComment" } }, [
+                _vm._v("Километраж при заезде")
+              ]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.new_comment,
+                    expression: "new_comment"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "createComment" },
+                domProps: { value: _vm.new_comment },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.new_comment = $event.target.value
+                  }
+                }
+              })
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "btn-block p-0" }, [
           _c("button", { attrs: { type: "submit" } }, [_vm._v("Сохранить")]),
@@ -45943,52 +46096,63 @@ var render = function() {
   return _c("div", { staticClass: "container-fluid pt-3" }, [
     _vm.day !== null
       ? _c("div", [
-          _c("div", { staticClass: "header text-center p-2" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.formatDate(_vm.day.date)))])
+          _c(
+            "div",
+            {
+              staticClass: "header text-center p-2 mb-2",
+              class: {
+                "text-danger":
+                  new Date(_vm.day.date).getDay() == 0 ||
+                  new Date(_vm.day.date).getDay() == 6
+              }
+            },
+            [_c("h3", [_vm._v(_vm._s(_vm.formatDate(_vm.day.date)))])]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "data-block text-center" }, [
+            _c("span", { staticClass: "bg-warning" }, [
+              _vm._v(_vm._s(Math.round(_vm.day.remains_pre))),
+              _c("small", [_vm._v("л")])
+            ]),
+            _vm._v("\n            .. \n            "),
+            _c("span", [
+              _vm._v(_vm._s(_vm.day.odo_pre)),
+              _c("small", [_vm._v("км")])
+            ]),
+            _vm._v("\n            .... \n            "),
+            _c("span", { staticClass: "text-danger" }, [
+              _vm._v(_vm._s(Math.round(_vm.day.fuel))),
+              _c("small", [_vm._v("л")])
+            ]),
+            _vm._v("\n            .... \n            "),
+            _c("span", [
+              _vm._v(_vm._s(_vm.day.odo_post)),
+              _c("small", [_vm._v("км")])
+            ]),
+            _vm._v("\n            .. \n            "),
+            _c("span", { staticClass: "bg-warning" }, [
+              _vm._v(_vm._s(Math.round(_vm.day.remains_post))),
+              _c("small", [_vm._v("л")])
+            ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "data-block m-3" }, [
-            _c(
-              "p",
-              {
-                on: {
-                  click: function($event) {
-                    return _vm.notification("fuck!")
-                  }
-                }
-              },
-              [
-                _vm._v("Остаток: "),
-                _c("span", { staticClass: "bg-warning" }, [
-                  _vm._v(_vm._s(Math.round(_vm.day.remains_pre)))
+          _c("div", { staticClass: "note text-center mb-4" }, [
+            _vm.day.odo_pre === _vm.day.odo_post
+              ? _c("span", { staticClass: "text-info pl-5" }, [
+                  _vm._v(" ...Без выезда")
                 ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("Километраж: "),
-              _c("span", [_vm._v(_vm._s(_vm.day.odo_pre))])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("Заправлено: "),
-              _c("span", { staticClass: "text-danger" }, [
-                _vm._v(_vm._s(Math.round(_vm.day.fuel)))
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm.day.comment
+            ? _c("div", { staticClass: "mt-4" }, [
+                _c("p", [_vm._v("Комментарий:")]),
+                _vm._v(" "),
+                _c("p", { staticClass: "p-2 bg-grey rounded" }, [
+                  _c("i", [_vm._v(_vm._s(_vm.day.comment))])
+                ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("Километраж: "),
-              _c("span", [_vm._v(_vm._s(_vm.day.odo_post))])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("Остаток: "),
-              _c("span", { staticClass: "bg-warning" }, [
-                _vm._v(_vm._s(Math.round(_vm.day.remains_post)))
-              ])
-            ])
-          ])
+            : _vm._e()
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -46027,22 +46191,6 @@ var render = function() {
           }
         },
         [_vm._v("Домой")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.$router.push({
-                name: "month",
-                params: { month_type: _vm.month_type }
-              })
-            }
-          }
-        },
-        [_vm._v("Back")]
       )
     ])
   ])
@@ -46073,7 +46221,7 @@ var render = function() {
   return _c("div", { staticClass: "container-fluid" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "data-block border mt-2" }, [
+    _c("div", { staticClass: "data-block border" }, [
       _c("table", { staticClass: "table" }, [
         _c("tr", { staticClass: "tr-small text-center" }, [
           _c("td", { attrs: { colspan: "2" } }, [
@@ -46084,8 +46232,9 @@ var render = function() {
         _c("tr", [
           _c("td", [_vm._v("Остаток на начало месяца:")]),
           _vm._v(" "),
-          _c("td", { staticClass: "bg-warning text-center" }, [
-            _vm._v(_vm._s(Math.round(_vm.firstRemains)))
+          _c("td", { staticClass: "bg-warning text-danger text-center" }, [
+            _vm._v(_vm._s(Math.round(_vm.firstRemains))),
+            _c("small", [_vm._v("л")])
           ])
         ]),
         _vm._v(" "),
@@ -46093,17 +46242,12 @@ var render = function() {
           _c("td", [_vm._v("Пробег на начало месяца:")]),
           _vm._v(" "),
           _c("td", { staticClass: "text-center" }, [
-            _vm._v(_vm._s(_vm.firstOdo))
+            _c("span", [_vm._v(_vm._s(_vm.firstOdo))]),
+            _c("small", [_vm._v("км")])
           ])
         ]),
         _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("Заправлено в этом месяце:")]),
-          _vm._v(" "),
-          _c("td", { staticClass: "text-danger text-center" }, [
-            _vm._v(_vm._s(Math.round(_vm.fuel)))
-          ])
-        ]),
+        _c("hr"),
         _vm._v(" "),
         _c("tr", { staticClass: "tr-small text-center" }, [
           _c("td", { attrs: { colspan: "2" } }, [
@@ -46115,15 +46259,39 @@ var render = function() {
           _c("td", [_vm._v("Последний пробег:")]),
           _vm._v(" "),
           _c("td", { staticClass: "text-center" }, [
-            _vm._v(_vm._s(_vm.lastOdo))
+            _c("span", [_vm._v(_vm._s(_vm.lastOdo))]),
+            _c("small", [_vm._v("км")])
           ])
         ]),
         _vm._v(" "),
         _c("tr", [
           _c("td", [_vm._v("Последний остаток:")]),
           _vm._v(" "),
-          _c("td", { staticClass: "bg-warning text-center" }, [
-            _vm._v(_vm._s(Math.round(_vm.lastRemains)))
+          _c("td", { staticClass: "bg-warning text-danger text-center" }, [
+            _vm._v(_vm._s(Math.round(_vm.lastRemains))),
+            _c("small", [_vm._v("л")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c("tr", {}, [
+          _c("td", [_vm._v("Заправлено:")]),
+          _vm._v(" "),
+          _c("td", { staticClass: "text-danger text-center" }, [
+            _vm._v(_vm._s(Math.round(_vm.fuel))),
+            _vm.fuel != 0 ? _c("small", [_vm._v("л")]) : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", [_vm._v("Пройдено:")]),
+          _vm._v(" "),
+          _c("td", { staticClass: "text-center" }, [
+            _c("span", [_vm._v(_vm._s(_vm.lastOdo - _vm.firstOdo))]),
+            _c("small", [_vm._v("км")])
           ])
         ])
       ])
@@ -46165,9 +46333,7 @@ var render = function() {
         },
         [_vm._v("Текущий месяц")]
       )
-    ]),
-    _vm._v(" "),
-    _vm._m(1)
+    ])
   ])
 }
 var staticRenderFns = [
@@ -46175,7 +46341,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "header text-center p-3" }, [
+    return _c("div", { staticClass: "header text-center p-2" }, [
       _c("h1", [_vm._v("Главная")])
     ])
   },
@@ -46183,14 +46349,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pt-4" }, [
-      _c("ul", [
-        _c("li", [_vm._v("Добавить метку о выходных в таблице")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Уменьшить кнопки и добавить пиктограммы")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Перенести заголовок на панель")])
-      ])
+    return _c("tr", { staticClass: "tr-small text-center" }, [
+      _c("td", { attrs: { colspan: "2" } }, [_vm._v("Итог за месяц:")])
     ])
   }
 ]
@@ -46279,7 +46439,25 @@ var render = function() {
                     _vm._v(_vm._s(Math.round(day.remains_post)))
                   ]),
                   _vm._v(" "),
-                  _vm._m(1, true)
+                  day.is_trip
+                    ? _c("td", { staticClass: "text-center" }, [
+                        _c("i", { staticClass: "bi bi-briefcase-fill" })
+                      ])
+                    : (new Date(day.date).getDay() == 0 ||
+                        new Date(day.date).getDay() == 6) &&
+                      !day.is_day_off
+                    ? _c("td", { staticClass: "text-center" }, [
+                        _c("i", { staticClass: "bi bi-hammer" })
+                      ])
+                    : day.is_day_off
+                    ? _c("td", { staticClass: "text-center" }, [
+                        _c("i", {
+                          staticClass: " text-danger bi bi-brightness-high-fill"
+                        })
+                      ])
+                    : _c("td", { staticClass: "text-center" }, [
+                        _c("i", { staticClass: "text-primary bi bi-truck" })
+                      ])
                 ]
               )
             }),
@@ -46350,14 +46528,8 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", { staticClass: "col-1.5" }, [_vm._v("Ост")]),
       _vm._v(" "),
-      _c("th", { staticClass: "col-1" }, [_c("small", [_vm._v("Вых")])])
+      _c("th", { staticClass: "col-1" })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("i", { staticClass: "bi bi-truck text-center" })])
   }
 ]
 render._withStripped = true
@@ -46382,46 +46554,64 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid pt-2" }, [
-    _vm.data !== null
+  return _c("div", { staticClass: "container-fluid p-3" }, [
+    _vm.day !== null
       ? _c(
           "div",
           { staticClass: "alert alert-success", attrs: { role: "alert" } },
           [
             _vm._v("\n        Дата "),
             _c("strong", [
-              _vm._v(_vm._s(_vm.formatDate(_vm.data.date, "DD.MM.YYYY")))
+              _vm._v(_vm._s(_vm.formatDate(_vm.day.date, "DD.MM.YYYY")))
             ]),
             _vm._v(" успешно сохранена!\n    ")
           ]
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm.data !== null
-      ? _c("div", { staticClass: "data-block" }, [
-          _c("p", [
-            _vm._v("Остаток: "),
-            _c("span", [_vm._v(_vm._s(Math.round(_vm.data.remains_pre)))])
+    _vm.day !== null
+      ? _c("div", { staticClass: "data-block text-center mt-4" }, [
+          _c("span", { staticClass: "bg-warning" }, [
+            _vm._v(_vm._s(Math.round(_vm.day.remains_pre))),
+            _c("small", [_vm._v("л")])
           ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v("Километраж: "),
-            _c("span", [_vm._v(_vm._s(_vm.data.odo_pre))])
+          _vm._v("\n            .. \n            "),
+          _c("span", [
+            _vm._v(_vm._s(_vm.day.odo_pre)),
+            _c("small", [_vm._v("км")])
           ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v("Заправка: "),
-            _c("span", [_vm._v(_vm._s(_vm.data.fuel))])
+          _vm._v("\n            .... \n            "),
+          _c("span", { staticClass: "text-danger" }, [
+            _vm._v(_vm._s(Math.round(_vm.day.fuel))),
+            _c("small", [_vm._v("л")])
           ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v("Километраж: "),
-            _c("span", [_vm._v(_vm._s(_vm.data.odo_post))])
+          _vm._v("\n            .... \n            "),
+          _c("span", [
+            _vm._v(_vm._s(_vm.day.odo_post)),
+            _c("small", [_vm._v("км")])
           ]),
+          _vm._v("\n            .. \n            "),
+          _c("span", { staticClass: "bg-warning" }, [
+            _vm._v(_vm._s(Math.round(_vm.day.remains_post))),
+            _c("small", [_vm._v("л")])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "note text-center mb-4" }, [
+      _vm.day.odo_pre === _vm.day.odo_post
+        ? _c("span", { staticClass: "text-info pl-5" }, [
+            _vm._v(" ...Без выезда")
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _vm.day.comment
+      ? _c("div", { staticClass: "mt-4" }, [
+          _c("p", [_vm._v("Комментарий:")]),
           _vm._v(" "),
-          _c("p", [
-            _vm._v("Остаток: "),
-            _c("span", [_vm._v(_vm._s(Math.round(_vm.data.remains_post)))])
+          _c("p", { staticClass: "p-2 bg-grey rounded" }, [
+            _c("i", [_vm._v(_vm._s(_vm.day.comment))])
           ])
         ])
       : _vm._e(),
@@ -46449,23 +46639,6 @@ var render = function() {
           }
         },
         [_vm._v("Домой")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.$router.push({
-                name: "month",
-                params: { data: _vm.data, month_type: _vm.month_type }
-              })
-            }
-          }
-        },
-        [_vm._v("Back")]
       )
     ])
   ])

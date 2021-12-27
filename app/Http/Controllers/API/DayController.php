@@ -31,17 +31,9 @@ class DayController extends Controller
             $diff = $carbon->diffInMonths($day->date);
 
             if($day_carbon->isCurrentMonth()) {
-                /*
-                $extract_day = $day_carbon->format('d');
-                $day->date = $extract_day;
-                */
                 $current_month[] = $day;
 
             } elseif ($day_carbon->isLastMonth()) {
-                /*
-                $extract_day = $day_carbon->format('d');
-                $day->date = $extract_day;
-                */
                 $pre_month[] = $day;
             }
         }       

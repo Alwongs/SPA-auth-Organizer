@@ -12,7 +12,7 @@
                     <th class="col-1 text-center">Зап</th>
                     <th class="col-3 text-center">Км</th>
                     <th class="col-1.5">Ост</th>
-                    <th class="col-1"><small>Вых</small></th>
+                    <th class="col-1"></th>
                 </thead>
                 <tbody class="text-dark bg-light">
                     <tr @click="goToDay(day.id)" v-for="day in days" :key="day.id"  :class="{ 'weekend': isWeekend(new Date(day.date).getDay()) }">
@@ -22,7 +22,18 @@
                         <td class="border-right-bold text-center">{{ Math.round(day.fuel) === 0 ? '-' : Math.round(day.fuel) }}</td>
                         <td class="border-right pr-3">{{ day.odo_post }}</td>
                         <td class="border-right">{{ Math.round(day.remains_post) }}</td>
-                        <td><i class="bi bi-truck text-center"></i></td>
+                        <td v-if="day.is_trip" class="text-center">
+                            <i class="bi bi-briefcase-fill"></i>
+                        </td>
+                        <td v-else-if="(new Date(day.date).getDay() == 0 || new Date(day.date).getDay() == 6) && !day.is_day_off" class="text-center">
+                            <i class="bi bi-hammer"></i>
+                        </td>
+                        <td v-else-if="day.is_day_off" class="text-center">
+                            <i class=" text-danger bi bi-brightness-high-fill"></i>
+                        </td>
+                        <td v-else class="text-center">
+                            <i class="text-primary bi bi-truck"></i>
+                        </td>                                            
                     </tr>
                 </tbody>
             </table>
@@ -59,14 +70,17 @@ export default {
             this.$router.push({ name: 'day'})
         },
         deleteAll() {
-            if(confirm('Are your shure you want to DELETE All notes?!!!')) {
-                    console.log(this.days)
-                this.days.map((day) => {
-                    console.log(day.id)
-                    this.deleteDay(day.id);
-                });
-                
-                this.getMonth();
+            if(confirm('Вы уверены, что хотите удалить все данные в таблице?!!!')) {
+                if(confirm('Хорошо подумали?!!!')) {
+
+                    this.days.map((day) => {
+                        console.log(day.id)
+                        this.deleteDay(day.id);
+                    });
+
+                    setTimeout(() => { this.getMonth(); }, 5000);                   
+                    
+                }
             }
         },
         deleteDay(id) {

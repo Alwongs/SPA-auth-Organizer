@@ -1,49 +1,53 @@
 <template>
     <div class="container-fluid">
-        <div class="header text-center p-3">
+        <div class="header text-center p-2">
             <h1>Главная</h1>
         </div>
-        <div class="data-block border mt-2">
+        <div class="data-block border">
             <table class="table">
                 <tr class="tr-small text-center">
                     <td colspan="2">Выезд: {{ formatDate(firstDate) }}</td>
                 </tr>
                 <tr>
                     <td>Остаток на начало месяца:</td>
-                    <td class="bg-warning text-center">{{ Math.round(firstRemains) }}</td>
+                    <td class="bg-warning text-danger text-center">{{ Math.round(firstRemains) }}<small>л</small></td>
                 </tr>
                 <tr>
                     <td>Пробег на начало месяца:</td>
-                    <td class="text-center">{{ firstOdo }}</td>
+                    <td class="text-center"><span>{{ firstOdo }}</span><small>км</small></td>
                 </tr>
-                <tr>
-                    <td>Заправлено в этом месяце:</td>
-                    <td class="text-danger text-center">{{ Math.round(fuel) }}</td>
-                </tr>
+                <hr>
                 <tr class="tr-small text-center">
                     <td colspan="2">Заезд: {{ formatDate(lastDate) }}</td>
                 </tr>
                 <tr>
                     <td>Последний пробег:</td>
-                    <td class="text-center">{{ lastOdo }}</td>
+                    <td class="text-center"><span>{{ lastOdo }}</span><small>км</small></td>
                 </tr>
                 <tr>
                     <td>Последний остаток:</td>
-                    <td class="bg-warning text-center">{{ Math.round(lastRemains) }}</td>
+                    <td class="bg-warning text-danger text-center">{{ Math.round(lastRemains) }}<small>л</small></td>
                 </tr>
+                <hr>
+                <tr class="tr-small text-center">
+                    <td colspan="2">Итог за месяц:</td>
+                </tr>
+                <tr class="">
+                    <td>Заправлено:</td>
+                    <td class="text-danger text-center">{{ Math.round(fuel) }}<small v-if="fuel != 0">л</small></td>
+                </tr>
+                <tr>
+                    <td>Пройдено:</td>
+                    <td class="text-center"><span>{{ lastOdo - firstOdo }}</span><small>км</small></td>
+                </tr>
+
+
             </table>
         </div>
         <div class="btn-block">
             <button @click="$router.push('/create')">Создать день</button>
             <button @click="goToMonth('pre_month')">Предыдущий месяц</button>
             <button @click="goToMonth('current_month')">Текущий месяц</button>
-        </div>
-        <div class="pt-4">
-            <ul>
-                <li>Добавить метку о выходных в таблице</li>
-                <li>Уменьшить кнопки и добавить пиктограммы</li>
-                <li>Перенести заголовок на панель</li>
-            </ul>
         </div>
     </div>
 </template>
@@ -140,6 +144,7 @@ export default {
     }
 
     tr td {
+        font-size: 120%;
         padding: 0;
         padding-bottom: 8px;        
     }
@@ -147,6 +152,9 @@ export default {
     .tr-small td {
         padding: 0;
         font-size: 70%
+    }
+    span {
+        color: blue;
     }
 
     li {

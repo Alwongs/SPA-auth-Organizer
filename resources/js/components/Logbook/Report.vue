@@ -1,19 +1,30 @@
 <template>
-    <div class="container-fluid pt-2">
-        <div v-if="data !== null" class="alert alert-success" role="alert">
-            Дата <strong>{{ formatDate(data.date, 'DD.MM.YYYY') }}</strong> успешно сохранена!
+    <div class="container-fluid p-3">
+        <div v-if="day !== null" class="alert alert-success" role="alert">
+            Дата <strong>{{ formatDate(day.date, 'DD.MM.YYYY') }}</strong> успешно сохранена!
         </div>
-        <div v-if="data !== null" class="data-block">
-            <p>Остаток: <span>{{ Math.round(data.remains_pre) }}</span></p>
-            <p>Километраж: <span>{{ data.odo_pre }}</span></p>
-            <p>Заправка: <span>{{ data.fuel }}</span></p>
-            <p>Километраж: <span>{{ data.odo_post }}</span></p>
-            <p>Остаток: <span>{{ Math.round(data.remains_post) }}</span></p>
-        </div>
+
+            <div v-if="day !== null" class="data-block text-center mt-4">
+                <span class="bg-warning">{{ Math.round(day.remains_pre) }}<small>л</small></span>
+                .. 
+                <span>{{ day.odo_pre }}<small>км</small></span>
+                .... 
+                <span class="text-danger">{{ Math.round(day.fuel) }}<small>л</small></span>
+                .... 
+                <span>{{ day.odo_post }}<small>км</small></span>
+                .. 
+                <span class="bg-warning">{{ Math.round(day.remains_post) }}<small>л</small></span>
+            </div>
+            <div class="note text-center mb-4">
+                <span class="text-info pl-5" v-if="day.odo_pre === day.odo_post"> ...Без выезда</span>
+            </div>
+            <div v-if="day.comment" class="mt-4">
+                <p>Комментарий:</p>
+                <p class="p-2 bg-grey rounded"><i>{{ day.comment }}</i></p>
+            </div>
         <div class="button-block">
             <button @click="$router.push('/create')">Создать день</button>
             <button @click="$router.push('/logbook')">Домой</button>
-            <button type="submit" @click.prevent="$router.push({ name: 'month', params: { data: data,  month_type: month_type} })">Back</button>
         </div>
 
 
@@ -31,7 +42,7 @@ export default {
             errored: false,
             errors: [],
             loading: true,
-            data: this.$route.params.data ? this.$route.params.data : null,
+            day: this.$route.params.data ? this.$route.params.data : null,
             month_type: 'current_month'
         }
 
@@ -45,7 +56,7 @@ export default {
         },
     },
     mounted(){
-        if(this.data == null) {
+        if(this.day == null) {
             this.$router.push({ name: 'logbook' });
         }
     }
@@ -59,7 +70,7 @@ export default {
         height: 100vh;
     }
     .data-block {
-        font-size: 120%;
+        font-size: 140%;
     }
     button {
         font-size: 140%;
