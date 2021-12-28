@@ -30,18 +30,16 @@
                 </tr>
                 <hr>
                 <tr class="tr-small text-center">
-                    <td colspan="2">Итог за месяц:</td>
+                    <td colspan="2"><b>Итог за месяц:</b></td>
                 </tr>
                 <tr class="">
-                    <td>Заправлено:</td>
+                    <td><b>Заправлено:</b></td>
                     <td class="text-danger text-center">{{ Math.round(fuel) }}<small v-if="fuel != 0">л</small></td>
                 </tr>
                 <tr>
-                    <td>Пройдено:</td>
+                    <td><b>Пройдено:</b></td>
                     <td class="text-center"><span>{{ lastOdo - firstOdo }}</span><small>км</small></td>
                 </tr>
-
-
             </table>
         </div>
         <div class="btn-block">
@@ -76,10 +74,15 @@ export default {
             this.$router.push({name: 'month'});
         },
         formatDate(date) {
-            let day = new Date(date). getDate();
-            let month = new Date(date).toLocaleString('ru-Ru', { month: 'long' }).toLowerCase();
-            let year = new Date(date). getFullYear();
-            return day + ' ' + month + ' ' + year;
+            if (date) {
+                let day = new Date(date). getDate();
+                let month = new Date(date).toLocaleString('ru-Ru', { month: 'long' }).toLowerCase();
+                let year = new Date(date). getFullYear();
+                return day + ' ' + month + ' ' + year;
+            } else {
+                return 'нет данных';
+            }
+
         },
         getCurrentMonth() {
             axios.get('/api/days')

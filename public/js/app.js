@@ -3421,8 +3421,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3447,12 +3445,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     formatDate: function formatDate(date) {
-      var day = new Date(date).getDate();
-      var month = new Date(date).toLocaleString('ru-Ru', {
-        month: 'long'
-      }).toLowerCase();
-      var year = new Date(date).getFullYear();
-      return day + ' ' + month + ' ' + year;
+      if (date) {
+        var day = new Date(date).getDate();
+        var month = new Date(date).toLocaleString('ru-Ru', {
+          month: 'long'
+        }).toLowerCase();
+        var year = new Date(date).getFullYear();
+        return day + ' ' + month + ' ' + year;
+      } else {
+        return 'нет данных';
+      }
     },
     getCurrentMonth: function getCurrentMonth() {
       var _this = this;
@@ -46119,12 +46121,12 @@ var render = function() {
               _vm._v(_vm._s(_vm.day.odo_pre)),
               _c("small", [_vm._v("км")])
             ]),
-            _vm._v("\n            .... \n            "),
+            _vm._v("\n            ... \n            "),
             _c("span", { staticClass: "text-danger" }, [
               _vm._v(_vm._s(Math.round(_vm.day.fuel))),
               _c("small", [_vm._v("л")])
             ]),
-            _vm._v("\n            .... \n            "),
+            _vm._v("\n            ...\n            "),
             _c("span", [
               _vm._v(_vm._s(_vm.day.odo_post)),
               _c("small", [_vm._v("км")])
@@ -46278,7 +46280,7 @@ var render = function() {
         _vm._m(1),
         _vm._v(" "),
         _c("tr", {}, [
-          _c("td", [_vm._v("Заправлено:")]),
+          _vm._m(2),
           _vm._v(" "),
           _c("td", { staticClass: "text-danger text-center" }, [
             _vm._v(_vm._s(Math.round(_vm.fuel))),
@@ -46287,7 +46289,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("tr", [
-          _c("td", [_vm._v("Пройдено:")]),
+          _vm._m(3),
           _vm._v(" "),
           _c("td", { staticClass: "text-center" }, [
             _c("span", [_vm._v(_vm._s(_vm.lastOdo - _vm.firstOdo))]),
@@ -46350,8 +46352,22 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticClass: "tr-small text-center" }, [
-      _c("td", { attrs: { colspan: "2" } }, [_vm._v("Итог за месяц:")])
+      _c("td", { attrs: { colspan: "2" } }, [
+        _c("b", [_vm._v("Итог за месяц:")])
+      ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("b", [_vm._v("Заправлено:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("b", [_vm._v("Пройдено:")])])
   }
 ]
 render._withStripped = true
