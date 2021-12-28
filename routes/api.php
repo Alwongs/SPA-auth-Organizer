@@ -10,6 +10,7 @@ use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\CompanyController;
 use App\Http\Controllers\API\TestController;
 use App\Http\Controllers\API\DayController;
+use App\Http\Controllers\API\PrintController;
 
 
 /*

@@ -39,12 +39,6 @@
             </table>
             <h6 class="text-center" v-if="days.length === 0">Данных нет...</h6>
         </div>
-        <div class="button-block">
-            <button @click="$router.push('/create')">Создать день</button>
-            <button @click="goToMonth(month_type)">Распечатать месяц <i class="bi bi-calendar3"></i></button>
-            <button @click="$router.push('/logbook')">Домой</button>
-            <button @click="deleteAll()">Удалить всё</button>
-        </div>
     </div>
 </template>
 
@@ -58,53 +52,12 @@ export default {
             errored: false,
             errors: [],
             days: [],
-            loading: true,   
+            loading: true,  
             month_name: '',
             month_type: localStorage.getItem('month_type')
         }
     },
     methods: {
-        goToMonth(type) {
-            localStorage.setItem('month_type', type);
-            this.$router.push('/print')
-        },
-        goToDay(id) {
-            localStorage.setItem('day_id', id.toString())
-            this.$router.push({ name: 'day'})
-        },
-        deleteAll() {
-            if(confirm('Вы уверены, что хотите удалить все данные в таблице?!!!')) {
-                if(confirm('Хорошо подумали?!!!')) {
-
-                    this.days.map((day) => {
-                        console.log(day.id)
-                        this.deleteDay(day.id);
-                    });
-
-                    setTimeout(() => { this.getMonth(); }, 5000);                   
-                    
-                }
-            }
-        },
-        deleteDay(id) {
-            axios.post('/api/days/' + id, {
-                _method: 'DELETE'
-            })
-                .then(response => {                       
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                })
-                .finally(() => {
-                    this.loading = false
-                })
-        },
-        isWeekend(day) {
-            if(day === 0 || day === 6) {
-                return true;
-            }
-        },
         getMonth(){
             axios.get('/api/days')
                 .then(response => {
@@ -128,6 +81,11 @@ export default {
                 .finally(() => {
                     this.loading = false
                 })
+        },
+        isWeekend(day) {
+            if(day === 0 || day === 6) {
+                return true;
+            }
         },
     },
     mounted(){

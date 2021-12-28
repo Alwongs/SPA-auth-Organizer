@@ -10,7 +10,7 @@
                 </tr>
                 <tr>
                     <td>Остаток на начало месяца:</td>
-                    <td class="bg-warning text-danger text-center">{{ Math.round(firstRemains) }}<small>л</small></td>
+                    <td class="text-danger text-center">{{ Math.round(firstRemains) }}<small>л</small></td>
                 </tr>
                 <tr>
                     <td>Пробег на начало месяца:</td>
@@ -26,7 +26,7 @@
                 </tr>
                 <tr>
                     <td>Последний остаток:</td>
-                    <td class="bg-warning text-danger text-center">{{ Math.round(lastRemains) }}<small>л</small></td>
+                    <td class="text-danger text-center">{{ Math.round(lastRemains) }}<small>л</small></td>
                 </tr>
                 <hr>
                 <tr class="tr-small text-center">

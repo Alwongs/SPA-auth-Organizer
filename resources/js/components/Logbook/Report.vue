@@ -3,20 +3,20 @@
         <div v-if="day !== null" class="alert alert-success" role="alert">
             Дата <strong>{{ formatDate(day.date, 'DD.MM.YYYY') }}</strong> успешно сохранена!
         </div>
-
             <div v-if="day !== null" class="data-block text-center mt-4">
                 <span class="bg-warning">{{ Math.round(day.remains_pre) }}<small>л</small></span>
                 .. 
                 <span>{{ day.odo_pre }}<small>км</small></span>
-                .... 
+                .. 
                 <span class="text-danger">{{ Math.round(day.fuel) }}<small>л</small></span>
-                .... 
+                .. 
                 <span>{{ day.odo_post }}<small>км</small></span>
                 .. 
                 <span class="bg-warning">{{ Math.round(day.remains_post) }}<small>л</small></span>
             </div>
             <div class="note text-center mb-4">
-                <span class="text-info pl-5" v-if="day.odo_pre === day.odo_post"> ...Без выезда</span>
+                <h5 class="mt-3" v-if="day.odo_pre === day.odo_post"> ...Без выезда</h5>
+                <h5 class="mt-3" v-else>Пробег: <span>{{ day.odo_post - day.odo_pre }}</span><small>км</small></h5>
             </div>
             <div v-if="day.comment" class="mt-4">
                 <p>Комментарий:</p>
@@ -70,7 +70,7 @@ export default {
         height: 100vh;
     }
     .data-block {
-        font-size: 140%;
+        font-size: 130%;
     }
     button {
         font-size: 140%;

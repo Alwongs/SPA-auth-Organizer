@@ -4,6 +4,7 @@ import Create from './components/Logbook/Create';
 import Day from './components/Logbook/Day';
 import Report from './components/Logbook/Report';
 import Month from './components/Logbook/Month';
+import Print from './components/Logbook/Print';
 import Home from './components/Reminder/Home';
 import Events from './components/Reminder/Events';
 import Event from './components/Reminder/Event';
@@ -89,6 +90,11 @@ let routes = [
         component: Month,
         name: 'month',
         meta: { middlewareAuth: true }
+    },
+    {
+        path: '/print',
+        component: Print,
+        name: 'print'
     },
     {
         path: '/register',
