@@ -39,7 +39,10 @@ Route::middleware('auth:api')->group(function () {
             'companies' => CompanyController::class,
             'tests' => TestController::class,
             'days' => DayController::class
+
         ]);
 });
+
+Route::apiResources(['days/print' => PrintController::class]);
 
 

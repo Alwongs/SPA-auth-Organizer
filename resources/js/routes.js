@@ -92,7 +92,7 @@ let routes = [
         meta: { middlewareAuth: true }
     },
     {
-        path: '/print',
+        path: '/print/:id',
         component: Print,
         name: 'print'
     },

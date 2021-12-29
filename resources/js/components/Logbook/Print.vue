@@ -54,24 +54,16 @@ export default {
             days: [],
             loading: true,  
             month_name: '',
-            month_type: localStorage.getItem('month_type')
+            month_type: localStorage.getItem('month_type'),
+            id: this.$route.params.id,
         }
     },
     methods: {
-        getMonth(){
-            axios.get('/api/days')
+        getMonth(id){
+            axios.get('/api/days/print/' + id)
                 .then(response => {
-                    if (this.month_type == 'pre_month') {
-                        this.days = response.data.pre_month
-                        this.month_name = response.data.previous_month_name
-
-                    } else if (this.month_type == 'current_month') {
-                        this.days = response.data.current_month
-                        this.month_name = response.data.current_month_name
-
-                    } else {
-                        this.days = {}
-                    }
+                    console.log(response.data.data);
+                    this.days = response.data.data;
 
                 })
                 .catch(error => {
@@ -89,7 +81,7 @@ export default {
         },
     },
     mounted(){
-        this.getMonth()
+        this.getMonth(this.id)
     }
 }
 </script>

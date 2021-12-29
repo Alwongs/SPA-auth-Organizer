@@ -24,7 +24,8 @@ class DayResource extends JsonResource
             'is_day_off' => $this->is_day_off,
             'is_trip' => $this->is_trip,
             'comment' => $this->comment,
-            'remains_post' => $this->remains_post
+            'remains_post' => $this->remains_post,
+            'user_id' => $this->user_id
         ];
     }
 }

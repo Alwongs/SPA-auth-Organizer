@@ -66,7 +66,8 @@ export default {
     methods: {
         goToMonth(type) {
             localStorage.setItem('month_type', type);
-            this.$router.push('/print')
+            //localStorage.setItem('user_id', this.user.id);
+            this.$router.push({ name: 'print', params: {id: this.user.id}})
         },
         goToDay(id) {
             localStorage.setItem('day_id', id.toString())

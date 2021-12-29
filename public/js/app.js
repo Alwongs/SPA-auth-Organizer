@@ -3580,8 +3580,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     goToMonth: function goToMonth(type) {
-      localStorage.setItem('month_type', type);
-      this.$router.push('/print');
+      localStorage.setItem('month_type', type); //localStorage.setItem('user_id', this.user.id);
+
+      this.$router.push({
+        name: 'print',
+        params: {
+          id: this.user.id
+        }
+      });
     },
     goToDay: function goToDay(id) {
       localStorage.setItem('day_id', id.toString());
@@ -3715,23 +3721,17 @@ __webpack_require__.r(__webpack_exports__);
       days: [],
       loading: true,
       month_name: '',
-      month_type: localStorage.getItem('month_type')
+      month_type: localStorage.getItem('month_type'),
+      id: this.$route.params.id
     };
   },
   methods: {
-    getMonth: function getMonth() {
+    getMonth: function getMonth(id) {
       var _this = this;
 
-      axios.get('/api/days').then(function (response) {
-        if (_this.month_type == 'pre_month') {
-          _this.days = response.data.pre_month;
-          _this.month_name = response.data.previous_month_name;
-        } else if (_this.month_type == 'current_month') {
-          _this.days = response.data.current_month;
-          _this.month_name = response.data.current_month_name;
-        } else {
-          _this.days = {};
-        }
+      axios.get('/api/days/print/' + id).then(function (response) {
+        console.log(response.data.data);
+        _this.days = response.data.data;
       })["catch"](function (error) {
         console.log(error);
         _this.errored = true;
@@ -3746,7 +3746,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getMonth();
+    this.getMonth(this.id);
   }
 });
 
@@ -5563,7 +5563,7 @@ var routes = [{
     middlewareAuth: true
   }
 }, {
-  path: '/print',
+  path: '/print/:id',
   component: _components_Logbook_Print__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: 'print'
 }, {
