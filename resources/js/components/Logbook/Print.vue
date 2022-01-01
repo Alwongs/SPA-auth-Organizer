@@ -1,7 +1,11 @@
 <template>
     <div class="container-fluid">
-        <div class="header text-center pt-2 pb-1">
-            <h3>{{ month_name }}</h3>
+        <div class="header row p-3">
+            <a v-if="month_type !== 'pre_month'" @click="openMonth('pre_month')" class="btn col-4 btn-outline-secondary">{{ previous_month_name }}</a>
+            <a v-else class="btn col-4 btn-outline-grey disabled"><span>Предыдущий месяц</span></a>
+            <h2 class="col-4 text-center"> {{ month_name }}</h2>
+            <a v-if="month_type !== 'current_month'" @click="openMonth('current_month')" class="btn col-4 btn-outline-secondary">{{ current_month_name }}</a>
+            <a v-else class="btn col-4 btn-outline-grey disabled"><span>Текущий месяц</span></a>
         </div>
         <div class="table-block t-wrapper">
             <table class="table table-sm table-hover text-light text-right">
@@ -54,24 +58,39 @@ export default {
             days: [],
             loading: true,  
             month_name: '',
-            month_type: localStorage.getItem('month_type'),
+            previous_month_name: '',
+            current_month_name: '',
+            month_type: localStorage.getItem('month_type') ? localStorage.getItem('month_type') : 'pre_month',
             id: this.$route.params.id,
         }
     },
     methods: {
+        openMonth(msg) {
+            if(msg === 'pre_month') {
+                this.month_type = 'pre_month';
+            } else if (msg === 'current_month') {
+                this.month_type = 'current_month';
+            }
+            this.getMonth(this.id)            
+        },
         getMonth(id){
+            
             axios.get('/api/days/print/' + id)
                 .then(response => {
-                    console.log(response.data.data);
-                    this.days = response.data.data;
+                    this.previous_month_name = response.data.previous_month_name;
+                    this.current_month_name = response.data.current_month_name;
+                    if (this.month_type == 'pre_month') {
+                        this.days = response.data.pre_month
+                        this.month_name = response.data.previous_month_name
 
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.errored = true
-                })
-                .finally(() => {
-                    this.loading = false
+                    } else if (this.month_type == 'current_month') {
+                        this.days = response.data.current_month
+                        this.month_name = response.data.current_month_name
+
+                    } else {
+                        this.days = {}
+                    }
+
                 })
         },
         isWeekend(day) {
@@ -90,7 +109,7 @@ export default {
 <style scoped>
 
     .container-fluid {
-                padding: 5px;
+        padding: 5px;
         background-color: rgb(221, 221, 221);
         min-height: 100vh;
     }
@@ -124,5 +143,8 @@ export default {
         width: 100%;
         margin-top: 10px;
         padding: 20px;
+    }
+    span {
+        color: rgb(199, 199, 199);
     }
 </style>

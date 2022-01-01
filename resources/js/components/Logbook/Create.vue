@@ -5,11 +5,7 @@
         </div>
         <div class="header text-center p-3">
             <h1>Создать новый день</h1>
-        </div>
-        
-
-
-            
+        </div>            
 
         <form @submit.prevent="addDay">
             <fieldset v-bind:disabled="dataExist">
@@ -18,12 +14,12 @@
                     <div class="width-30 form-row" :class="{ 'text-danger': new Date(this.new_date).getDay() == 0 || new Date(this.new_date).getDay() == 6}">
                         <input v-model="new_date" :type="dataExist ? 'text' : 'date'" min="2021-01-01" max="2100-01-01" class="ml-1 form-control col" id="createDateModal" required>
                         <h5 class="text-center col pt-1">{{ dayOfWeek[new Date(this.new_date).getDay()] }}</h5>
-                        <div @click="isDayOff = !isDayOff" class="btn" :class="{ 'btn-danger': isDayOff}">Выходной <i class="bi bi-house-door"></i></div>
+                        <div @click="isDayOff = !isDayOff" class="btn col" :class="{ 'btn-danger': isDayOff}">Выходной <i class="bi bi-house-door"></i></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="createRemindsPre">Остаток при выезде</label>
-                     <div class="form-row">
+                     <div class="form-row justify-content-between">
                         <input v-model="new_remains_pre" type="text" class="form-control short col" id="createRemindsPre">
                         <div @click="isTrip = !isTrip" class="btn col" :class="{ 'btn-primary': isTrip}">Командировка <i class="bi bi-briefcase-fill"></i></div>                                       
                     </div>
@@ -48,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label for="createRemainsPost">Остаток при заезде</label>
-                <div class="form-row">
+                <div class="form-row justify-content-between">
                     <input v-model="new_remains_post" type="number" step="any" class="ml-1 form-control short" id="createRemainsPost" required>                                         
                     <div type="button" class="btn col" @click="fillSame()" :class="{ 'btn-success': notMoved}">Без выезда</div>
                     <div type="button" class="btn col" @click="addComment()" :class="{ 'btn-info': commentExist}">Комментарий</div>

@@ -10,10 +10,10 @@
                         </div>
                         <div class="navbar-nav">
                             <button @click.prevent="current_company = company" type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#editCompanyModal">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <i class="bi bi-pencil" aria-hidden="true"></i>
                             </button>
                             <button @click="deleteCompany(company.id)" class="btn btn-danger m-1">
-                                <i class="fa fa-trash"></i>
+                                <i class="bi bi-trash"></i>
                             </button>
                         </div>
                     </div>
@@ -58,14 +58,14 @@
                                     <td @click.prevent="current_test = test" data-toggle="modal" data-target="#showModal">{{ test.result }}</td>
                                     <td>
                                         <button @click.prevent="current_test = test" type="button" class="btn btn-primary m-0" data-toggle="modal" data-target="#editTestModal">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            <i class="bi bi-pencil" aria-hidden="true"></i>
                                         </button>
                                     </td>
                                     <td>
 
 
                                         <button @click="deleteTest(test.id)" class="btn btn-danger m-0">
-                                            <i class="fa fa-trash"></i>
+                                            <i class="bi bi-trash"></i>
                                         </button>
                                     </td>
                                 </tr>

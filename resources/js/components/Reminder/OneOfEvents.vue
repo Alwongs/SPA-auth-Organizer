@@ -28,15 +28,15 @@
                         <td @click="$router.push({ name: 'event', params: {id: event.id}})" class="show-date"><h4>{{ event.title }}!</h4></td>
                         <td>
                             <button v-if="event.type != 'unique'" @click="postponeEvent(event)" type="button" class="btn btn-success m-0">
-                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <i class="bi bi-check2-square"></i>
                             </button>
                             <button v-else @click="deleteEvent(event.id)" type="button" class="btn btn-success m-0">
-                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <i class="bi bi-trash"></i>
                             </button>                            
                         </td>
                         <td>
                             <button @click.prevent="editEvent(event)" type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditModal">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <i class="bi bi-pencil"></i>
                             </button>
                         </td>
                     </tr>

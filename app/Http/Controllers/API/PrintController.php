@@ -21,9 +21,30 @@ class PrintController extends Controller
      */
     public function index()
     {
-        /*
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(DayStoreRequest $request)
+    {
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
         $carbon = Carbon::today();
-        $all_days = DayResource::collection(Day::where('user_id', Auth::id())->orderBy('date', 'asc')->get());
+        $all_days = DayResource::collection(Day::where('user_id', $id)->orderBy('date', 'asc')->get());
         $pre_month = [];
         $current_month = [];
         foreach ($all_days as $day) {
@@ -40,40 +61,14 @@ class PrintController extends Controller
         }       
         $arrays = array(
             'current_month_name' => $carbon->format('F'),
-            'previous_month_name' => $carbon->subMonth()->format('F'),
+            'previous_month_name' => $carbon->subMonthsNoOverflow(1)->format('F'),
             'all_days' => $all_days, 
             'current_month' => $current_month,  
-            'pre_month' => $pre_month
-        );   
+            'pre_month' => $pre_month,
+            'id' => $id
+        ); 
+
         return $arrays;
-        */
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(DayStoreRequest $request)
-    {
-        /*
-        $day = Day::create($request->validated());
-        return new DayResource($day);
-        */
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $month_for_print = DayResource::collection(Day::where('user_id', $id)->orderBy('date', 'asc')->get());
-        return $month_for_print;
-
     }
 
     /**
@@ -85,10 +80,7 @@ class PrintController extends Controller
      */
     public function update(DayUpdateRequest $request, Day $day)
     {
-        /*
-        $day->update($request->validated());
-        return new DayResource($day);
-        */
+
     }
 
     /**
@@ -99,9 +91,6 @@ class PrintController extends Controller
      */
     public function destroy(Day $day)
     {
-        /*
-        $day->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
-        */
+
     }
 }

@@ -39,7 +39,7 @@ class DayController extends Controller
         }       
         $arrays = array(
             'current_month_name' => $carbon->format('F'),
-            'previous_month_name' => $carbon->subMonth()->format('F'),
+            'previous_month_name' => $carbon->subMonthsNoOverflow(1)->format('F'),
             'all_days' => $all_days, 
             'current_month' => $current_month,  
             'pre_month' => $pre_month

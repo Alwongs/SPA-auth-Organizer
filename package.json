@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "bootstrap-icons": "^1.7.2",
+        "v-clipboard": "^2.2.3",
         "vuelidate": "^0.7.6"
     }
 }

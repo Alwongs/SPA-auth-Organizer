@@ -86,12 +86,12 @@
                             <td @click="$router.push({ name: 'company', params: {id: company.id}})" style="cursor:pointer;">Подробнее</td>
                             <td>
                                 <button @click.prevent="current_company = company" type="button" class="btn btn-primary m-0" data-toggle="modal" data-target="#editModal">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    <i class="bi bi-pencil" aria-hidden="true"></i>
                                 </button>
                             </td>
                             <td>
                                 <button @click="deleteCompany(company.id)" class="btn btn-danger m-0">
-                                    <i class="fa fa-trash"></i>
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </td>
 

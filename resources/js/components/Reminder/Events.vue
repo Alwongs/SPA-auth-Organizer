@@ -35,12 +35,12 @@
                             <td class="pl-0">{{event.type}}</td>
                             <td class="pl-0">
                                 <button @click.prevent="editEvent(event)" type="button" class="btn btn-primary">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    <i class="bi bi-pencil"></i>
                                 </button>
                             </td>
                             <td class="pl-0">
                                 <button @click="deleteEvent(event.id)" class="btn btn-danger m-0">
-                                    <i class="fa fa-trash"></i>
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             </td>
                         </tr>

@@ -10,10 +10,10 @@
                         </div>
                         <div class="navbar-nav">
                             <button @click.prevent="current_event = event" type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#editModal">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                <i class="bi bi-pencil"></i>
                             </button>
                             <button @click="deleteEvent(event.id)" class="btn btn-danger m-1">
-                                <i class="fa fa-trash"></i>
+                                <i class="bi bi-trash"></i>
                             </button>
                         </div>
                     </div>

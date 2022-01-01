@@ -42,6 +42,7 @@
         <div class="button-block">
             <button @click="$router.push('/create')">Создать день</button>
             <button @click="goToMonth(month_type)">Распечатать месяц <i class="bi bi-calendar3"></i></button>
+            <button @click="copyLink()">Скопировать ссылку</button>
             <button @click="$router.push('/logbook')">Домой</button>
             <button @click="deleteAll()">Удалить всё</button>
         </div>
@@ -49,7 +50,6 @@
 </template>
 
 <script>
-
 export default {
     data() {
         return {
@@ -64,10 +64,13 @@ export default {
         }
     },
     methods: {
+        copyLink() {
+            this.$clipboard(`http://o937876j.beget.tech/#/print/${this.user.id}`);
+            alert(`Ссылка: http://o937876j.beget.tech/#/print/${this.user.id} скопирована`)
+        },
         goToMonth(type) {
             localStorage.setItem('month_type', type);
-            //localStorage.setItem('user_id', this.user.id);
-            this.$router.push({ name: 'print', params: {id: this.user.id}})
+            this.$router.push({ name: 'print', params: {id: this.user.id}});
         },
         goToDay(id) {
             localStorage.setItem('day_id', id.toString())
@@ -137,11 +140,9 @@ export default {
 }
 </script>
 
-
 <style scoped>
-
     .container-fluid {
-                padding: 5px;
+        padding: 5px;
         background-color: rgb(221, 221, 221);
         min-height: 100vh;
     }
