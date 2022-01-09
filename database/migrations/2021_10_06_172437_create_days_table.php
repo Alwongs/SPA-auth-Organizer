@@ -21,10 +21,11 @@ class CreateDaysTable extends Migration
             $table->float('fuel');
             $table->integer('odo_post');
             $table->float('remains_post');
-            $table->boolean('is_day_off');
+            $table->boolean('work_in_red');
             $table->boolean('is_trip');
+            $table->boolean('red_day');
             $table->string('comment')->nullable();
-			$table->foreignId('user_id')->constrained()->onDelete('cascade');
+			$table->foreignId('car_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

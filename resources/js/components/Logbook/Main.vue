@@ -1,51 +1,34 @@
 <template>
-    <div class="container-fluid">
+    <div class="container">
+        <div class="button-block px-2 py-0 row justify-content-around">
+            <button title="На главную" disabled class="col-2"><i class="bi bi-house-door"></i></button>
+            <button title="Создать новый автомобиль" class="col-2" @click="goToCreate()"><i class="bi bi-plus-square-dotted"></i></button>
+            <button title="504" @click="goToMonth()" class="col-2"><i class="bi bi-calendar3"></i></button>
+            <button title="Чат" disabled class="col-2"><i class="bi bi-chat-dots"></i></button>
+            <button title="Настройки" class="col-2" @click="goToSettings()"><i class="bi bi-gear-wide"></i></button>
+        </div>
+        <hr>
         <div class="header text-center p-2">
-            <h1>Главная</h1>
+            <h4>Выберите автомобиль..</h4>
         </div>
-        <div class="data-block border">
-            <table class="table">
-                <tr class="tr-small text-center">
-                    <td colspan="2">Выезд: {{ formatDate(firstDate) }}</td>
-                </tr>
-                <tr>
-                    <td>Остаток на начало месяца:</td>
-                    <td class="text-danger text-center">{{ Math.round(firstRemains) }}<small>л</small></td>
-                </tr>
-                <tr>
-                    <td>Пробег на начало месяца:</td>
-                    <td class="text-center"><span>{{ firstOdo }}</span><small>км</small></td>
-                </tr>
-                <hr>
-                <tr class="tr-small text-center">
-                    <td colspan="2">Заезд: {{ formatDate(lastDate) }}</td>
-                </tr>
-                <tr>
-                    <td>Последний пробег:</td>
-                    <td class="text-center"><span>{{ lastOdo }}</span><small>км</small></td>
-                </tr>
-                <tr>
-                    <td>Последний остаток:</td>
-                    <td class="text-danger text-center">{{ Math.round(lastRemains) }}<small>л</small></td>
-                </tr>
-                <hr>
-                <tr class="tr-small text-center">
-                    <td colspan="2"><b>Итог за месяц:</b></td>
-                </tr>
-                <tr class="">
-                    <td><b>Заправлено:</b></td>
-                    <td class="text-danger text-center">{{ Math.round(fuel) }}<small v-if="fuel != 0">л</small></td>
-                </tr>
-                <tr>
-                    <td><b>Пройдено:</b></td>
-                    <td class="text-center"><span>{{ lastOdo - firstOdo }}</span><small>км</small></td>
-                </tr>
-            </table>
-        </div>
-        <div class="btn-block">
-            <button @click="$router.push('/create')">Создать день</button>
-            <button @click="goToMonth('pre_month')">Предыдущий месяц</button>
-            <button @click="goToMonth('current_month')">Текущий месяц</button>
+        <div class="data-block p-2">
+            <div v-if="cars">
+                <div class="tr py-3 row" @click="goToCar(car.id)" v-for="car in cars" :key="car.id">
+                    <div class="col-6"><i>{{ car.model }}</i></div>
+                    <div class="col-6">
+                        <div class="car-plate bg-light row">
+                            <div class="car-number bg-light px-1">&middot; {{ car.car_number }}</div>
+                            <div class="car-region  bg-light px-1">{{ car.region }} &middot;</div>
+                        </div>
+                    </div>                                         
+                </div>
+            </div>
+            <div v-if="loading" class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden"></span>
+                </div>
+            </div>
+            <h6 class="text-center" v-if="cars.length === 0 && !loading">Данных нет...</h6>
         </div>
     </div>
 </template>
@@ -58,7 +41,10 @@ export default {
             errored: false,
             errors: [],
             loading: true,
-            days: [],
+            cars: [],
+            settings: [],
+            default_car_id: 0,
+            /*
             firstDate: '',
             firstRemains: 0,
             firstOdo: 0,
@@ -66,9 +52,67 @@ export default {
             lastDate: '',
             lastOdo: 0,
             lastRemains: 0
+            */
         }
     },
     methods: {
+        goToMonth() {
+            if (this.default_car_id !== 0) {
+                localStorage.setItem('month_type', 'current_month');
+                localStorage.setItem('car_id', this.default_car_id); 
+                this.$router.push({name: 'month'}); 
+            } else {
+                alert('Автомобиль по умолчанию не установлен. Проверьте настройки!');
+            }               
+        },
+        goToSettings() {
+            if(confirm('Не изменяте настройки, если не уверены!')) {
+                this.$router.push({name: 'settings'});
+            }
+        },
+        goToCreate() {
+            if(this.settings.length !== 0) {
+                this.$router.push({name: 'create-car'});               
+            } else {
+                alert('Необходимо создать настройки!')
+                this.$router.push({name: 'settings'});
+            }
+
+        },
+        goToCar(id) {
+            localStorage.setItem('car_id', id.toString())
+            this.$router.push({ name: 'car', params: {car_id: id}})
+        },
+        getCars(){
+            axios.get('/api/cars')
+                .then(response => {
+                    this.cars = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.errored = true
+                })
+                .finally(() => {
+                    this.loading = false
+                })
+        },
+        getSettings() {
+            axios.get('/api/settings')
+                .then(response => {
+                    this.settings = response.data.data;
+                    if (response.data.data[0]) {
+                        this.default_car_id = response.data.data[0].default_car_id;
+                    }                     
+                })
+                .catch(error => {
+                    console.log(error)
+                    this.errored = true
+                })
+                .finally(() => {
+                    this.loading = false
+                })            
+        } 
+                /*
         goToMonth(type) {
             localStorage.setItem('month_type', type);
             this.$router.push({name: 'month'});
@@ -122,19 +166,31 @@ export default {
            }) 
            this.fuel = result;
         }
-    },
+        */
+    },    
     mounted(){
-        this.getCurrentMonth()
-    }
+        this.getCars();
+        this.getSettings();
+    }    
 }
 </script>
 
 
 <style scoped>
-
-    .container-fluid {
+    .car-plate {
+        font-size: 100%;
+        border: 1px solid black;
+        border-radius: 5px;
+        width: fit-content;
+        margin: 0 auto;
+    }
+    .car-number {
+        border-right: 1px solid black;
+    }
+    .container {
+        padding: 0 5px 0 5px;
         background-color: rgb(221, 221, 221);
-        height: 100vh;
+        min-height: 100vh;
     }
     button {
         font-size: 140%;
@@ -143,10 +199,16 @@ export default {
         padding: 20px;
     }
     .data-block {
-        font-size: 120%;
+        font-size: 150%;
+        border-radius: 5px; 
+    }
+    .tr {
+        border: rgb(189, 189, 189) solid 1px;
+       cursor: pointer;
     }
 
     tr td {
+        cursor: pointer;
         font-size: 120%;
         padding: 0;
         padding-bottom: 8px;        

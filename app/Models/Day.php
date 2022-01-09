@@ -9,10 +9,10 @@ class Day extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'remains_pre', 'odo_pre', 'fuel', 'odo_post', 'remains_post', 'is_day_off', 'is_trip', 'comment', 'user_id'];
+    protected $fillable = ['date', 'remains_pre', 'odo_pre', 'fuel', 'odo_post', 'remains_post', 'work_in_red', 'is_trip', 'red_day', 'comment', 'car_id'];
 
-    public function user()
+    public function car()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Car::class);
     }
 }

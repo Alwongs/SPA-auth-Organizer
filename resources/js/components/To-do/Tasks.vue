@@ -45,7 +45,19 @@
                             <form @submit.prevent="updateTask(task)" v-if="task_input_name_id == task.id" class="d-flex">
                                 <input v-on:keyup.esc="task_input_name_id = null" type="text" v-model="task.title" class="form-control" placeholder="enter your task here" required>                               
                             </form>
-                            <h4 :class="[{'task-is-done': task.is_done},{'text-brown bg-warning': task.importance == 5},{'text-brown': task.importance == 4},{'text-muted': task.importance == 0},{'text-dark': task.importance == 1}]" v-if="task_input_name_id != task.id" @click="task_input_name_id = task.id">{{ task.title | capitalize }}</h4>
+                            <h4 
+                                :class="[
+                                    {'task-is-done': task.is_done},
+                                    {'text-brown bg-warning': task.importance == 5},
+                                    {'text-brown': task.importance == 4},
+                                    {'text-muted': task.importance == 0},
+                                    {'text-dark': task.importance == 1}
+                                ]" 
+                                v-if="task_input_name_id != task.id" 
+                                @click="task_input_name_id = task.id"
+                            >
+                                {{ task.title | capitalize }}
+                            </h4>
                         </td>                     
                         <td>
                             <form>

@@ -1,9 +1,13 @@
 import VueRouter from 'vue-router';
 import Main from './components/Logbook/Main';
-import Create from './components/Logbook/Create';
-import Day from './components/Logbook/Day';
+import Create from './components/Logbook/Day/Create';
+import Day from './components/Logbook/Day/Day';
 import Report from './components/Logbook/Report';
-import Month from './components/Logbook/Month';
+import Settings from './components/Logbook/Settings';
+import Month from './components/Logbook/Day/Month';
+import Car from './components/Logbook/Car/Car';
+import CreateCar from './components/Logbook/Car/CreateCar';
+import EditCar from './components/Logbook/Car/EditCar';
 import Print from './components/Logbook/Print';
 import Home from './components/Reminder/Home';
 import Events from './components/Reminder/Events';
@@ -86,9 +90,33 @@ let routes = [
         meta: { middlewareAuth: true }
     },
     {
+        path: '/settings',
+        component: Settings,
+        name: 'settings',
+        meta: { middlewareAuth: true }
+    },
+    {
         path: '/month',
         component: Month,
         name: 'month',
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/car',
+        component: Car,
+        name: 'car',
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/create-car',
+        component: CreateCar,
+        name: 'create-car',
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/edit-car',
+        component: EditCar,
+        name: 'edit-car',
         meta: { middlewareAuth: true }
     },
     {

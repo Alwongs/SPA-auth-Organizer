@@ -22,7 +22,7 @@ class DayController extends Controller
     public function index()
     {
         $carbon = Carbon::today();
-        $all_days = DayResource::collection(Day::where('user_id', Auth::id())->orderBy('date', 'asc')->get());
+        $all_days = DayResource::collection(Day::where('car_id', 1)->orderBy('date', 'asc')->get());
         $pre_month = [];
         $current_month = [];
         foreach ($all_days as $day) {
@@ -36,10 +36,44 @@ class DayController extends Controller
             } elseif ($day_carbon->isLastMonth()) {
                 $pre_month[] = $day;
             }
-        }       
+        }      
+        
+        //список месяцев с названиями для замены
+        $_monthsList = array(
+            "January" => "январь",
+            "February " => "февраль",
+            "March" => "март",
+            "April" => "апрель",
+            "May" => "май",
+            "June" => "июнь",
+            "July" => "июль",
+            "August" => "август",
+            "September" => "сентябрь",
+            "October" => "октябрь",
+            "November" => "ноябрь",
+            "December" => "декабрь"
+        );
+
+        $_monthsListModif = array(
+            "January" => "января",
+            "February " => "февраля",
+            "March" => "марта",
+            "April" => "апреля",
+            "May" => "мая",
+            "June" => "июня",
+            "July" => "июля",
+            "August" => "августа",
+            "September" => "сентября",
+            "October" => "октября",
+            "November" => "ноября",
+            "December" => "декабря"
+        );
+        
+
+
         $arrays = array(
-            'current_month_name' => $carbon->format('F'),
-            'previous_month_name' => $carbon->subMonthsNoOverflow(1)->format('F'),
+            'current_month_name' => $_monthsList[$carbon->format('F')],
+            'previous_month_name' => $_monthsList[$carbon->subMonthsNoOverflow(1)->format('F')],
             'all_days' => $all_days, 
             'current_month' => $current_month,  
             'pre_month' => $pre_month

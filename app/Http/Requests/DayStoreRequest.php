@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DayStoreRequest extends FormRequest
 {
@@ -24,16 +25,19 @@ class DayStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required|unique:days,date',
+            'date' => Rule::unique('days')->where(function ($query) {
+                return $query->where('car_id', $this->car_id);
+            }),
             'remains_pre' => 'required',
             'odo_pre' => 'required',
             'fuel' => 'required',
             'odo_post' => 'required',
             'remains_post' => 'required',
-            'is_day_off' => 'required',
+            'work_in_red' => 'required',
             'is_trip' => 'required',
+            'red_day' => 'required',
             'comment' => 'nullable',
-            'user_id' => 'required'
+            'car_id' => 'required'
         ];
     }
 }
