@@ -15,23 +15,23 @@
             <div v-if="settings">
                 <div v-for="setting in settings" :key="setting.id">
                     <form @submit.prevent="updateSettings(setting)">
-                        <div class="row">
-                            <div class="col-8">Автомобиль по умолчанию:</div>
-                            <select v-model="setting.default_car_id" class="form-control col-4" id="createTypeModal">
+                        <div class="form-group">
+                            <div class="">Автомобиль по умолчанию:</div>
+                            <select v-model="setting.default_car_id" class="form-control" id="createTypeModal">
                                 <option v-for="(car, index) in cars" :key="index" :value="car.id">{{ car.car_number }}{{ car.region }}</option>
                             </select>
                         </div>
-                        <div class="row">
-                            <div class="col-8">Сезон нормы:</div>
-                            <select v-model="setting.season" class="form-control col-4" id="createTypeModal">
+                        <div class="form-group">
+                            <div class="">Сезон нормы:</div>
+                            <select v-model="setting.season" class="form-control" id="createTypeModal">
                                 <option value="summer">лето</option>
                                 <option value="winter">зима</option>
                             </select>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-8">Зимний процент прибавки:</div>
-                            <div class="col-4 pl-0">
-                                <input class="text-center" type="number" step="any" v-model="setting.percent">
+                        <div class="form-group mt-4">
+                            <div class="">Зимний процент прибавки:</div>
+                            <div class="pl-0">
+                                <input class="text-center form-control" type="number" step="any" v-model="setting.percent">
                             </div>
                         </div>
                         <button title="Сохранить" type="submit">&#128190;</button>
@@ -176,11 +176,9 @@ export default {
 <style scoped>
     select {
         font-size: 120%;
-        width: 90%;
     }
     input {
         font-size: 120%;
-        width: 90%;
     }
     .car-plate {
         font-size: 80%;

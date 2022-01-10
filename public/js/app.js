@@ -3480,7 +3480,7 @@ __webpack_require__.r(__webpack_exports__);
       errored: false,
       errors: [],
       loading: true,
-      norm: '',
+      season: '',
       percent: null,
       car: {},
       all_days: [],
@@ -3548,9 +3548,9 @@ __webpack_require__.r(__webpack_exports__);
     getNorm: function getNorm() {
       var norm = 0;
 
-      if (this.norm == 'summer') {
+      if (this.season == 'summer') {
         norm = this.car.summer_norm;
-      } else if (this.norm == 'winter') {
+      } else if (this.season == 'winter') {
         norm = this.car.winter_norm;
       } else {
         alert('ошибка в методе getNorm!');
@@ -3652,7 +3652,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.get('/api/settings').then(function (response) {
-        _this4.norm = response.data.data[0].norm;
+        _this4.season = response.data.data[0].season;
         _this4.percent = response.data.data[0].percent;
       })["catch"](function (error) {
         console.log(error);
@@ -11276,7 +11276,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.car-plate[data-v-16acfe34] {\n    font-size: 100%;\n    border: 1px solid black;\n    border-radius: 5px;\n    width: -webkit-fit-content;\n    width: -moz-fit-content;\n    width: fit-content;\n    margin: 0 auto;\n}\n.car-number[data-v-16acfe34] {\n    border-right: 1px solid black;\n}\n.container[data-v-16acfe34] {\n    padding: 0 5px 0 5px;\n    background-color: rgb(221, 221, 221);\n    min-height: 100vh;\n}\nbutton[data-v-16acfe34] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.data-block[data-v-16acfe34] {\n    font-size: 150%;\n    border-radius: 5px;\n}\n.tr[data-v-16acfe34] {\n    border: rgb(189, 189, 189) solid 1px;\n   cursor: pointer;\n}\ntr td[data-v-16acfe34] {\n    cursor: pointer;\n    font-size: 120%;\n    padding: 0;\n    padding-bottom: 8px;\n}\n.tr-small td[data-v-16acfe34] {\n    padding: 0;\n    font-size: 70%\n}\nspan[data-v-16acfe34] {\n    color: blue;\n}\nli[data-v-16acfe34] {\n    font-style: italic;\n    margin-bottom: 10px\n}\n.text-center[data-v-16acfe34] {\n    padding-top: 2px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.car-plate[data-v-16acfe34] {\n    font-size: 100%;\n    border: 1px solid black;\n    border-radius: 5px;\n    width: -webkit-fit-content;\n    width: -moz-fit-content;\n    width: fit-content;\n    margin: 0 auto;\n}\n.car-number[data-v-16acfe34] {\n    border-right: 1px solid black;\n}\n.container[data-v-16acfe34] {\n    padding: 0 5px 0 5px;\n    background-color: rgb(221, 221, 221);\n    min-height: 100vh;\n}\nbutton[data-v-16acfe34] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.data-block[data-v-16acfe34] {\n    font-size: 150%;\n    border-radius: 5px;\n}\n.tr[data-v-16acfe34] {\n    border: rgb(189, 189, 189) solid 2px;\n    cursor: pointer;\n    background-color: rgb(78, 131, 131);\n}\ntr td[data-v-16acfe34] {\n    cursor: pointer;\n    font-size: 120%;\n    padding: 0;\n    padding-bottom: 8px;\n}\n.tr-small td[data-v-16acfe34] {\n    padding: 0;\n    font-size: 70%\n}\nspan[data-v-16acfe34] {\n    color: blue;\n}\nli[data-v-16acfe34] {\n    font-style: italic;\n    margin-bottom: 10px\n}\n.text-center[data-v-16acfe34] {\n    padding-top: 2px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11348,7 +11348,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nselect[data-v-3dbd5fd0] {\n    font-size: 120%;\n    width: 90%;\n}\ninput[data-v-3dbd5fd0] {\n    font-size: 120%;\n    width: 90%;\n}\n.car-plate[data-v-3dbd5fd0] {\n    font-size: 80%;\n    border: 1px solid black;\n    border-radius: 5px;\n    width: -webkit-fit-content;\n    width: -moz-fit-content;\n    width: fit-content;\n    margin: 0 auto;\n}\n.car-number[data-v-3dbd5fd0] {\n    border-right: 1px solid black;\n}\n.container[data-v-3dbd5fd0] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\nbutton[data-v-3dbd5fd0] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.data-block[data-v-3dbd5fd0] {\n    border: rgb(189, 189, 189) solid 1px;\n    border-radius: 5px;\n}\n.tr[data-v-3dbd5fd0] {\n    border: rgb(189, 189, 189) solid 1px;\n   cursor: pointer;\n}\ntr td[data-v-3dbd5fd0] {\n    cursor: pointer;\n    font-size: 120%;\n    padding: 0;\n    padding-bottom: 8px;\n}\n.tr-small td[data-v-3dbd5fd0] {\n    padding: 0;\n    font-size: 70%\n}\nspan[data-v-3dbd5fd0] {\n    color: blue;\n}\nli[data-v-3dbd5fd0] {\n    font-style: italic;\n    margin-bottom: 10px\n}\n.text-center[data-v-3dbd5fd0] {\n    padding-top: 2px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nselect[data-v-3dbd5fd0] {\n    font-size: 120%;\n}\ninput[data-v-3dbd5fd0] {\n    font-size: 120%;\n}\n.car-plate[data-v-3dbd5fd0] {\n    font-size: 80%;\n    border: 1px solid black;\n    border-radius: 5px;\n    width: -webkit-fit-content;\n    width: -moz-fit-content;\n    width: fit-content;\n    margin: 0 auto;\n}\n.car-number[data-v-3dbd5fd0] {\n    border-right: 1px solid black;\n}\n.container[data-v-3dbd5fd0] {\n    background-color: rgb(221, 221, 221);\n    height: 100vh;\n}\nbutton[data-v-3dbd5fd0] {\n    font-size: 140%;\n    width: 100%;\n    margin-top: 10px;\n    padding: 20px;\n}\n.data-block[data-v-3dbd5fd0] {\n    border: rgb(189, 189, 189) solid 1px;\n    border-radius: 5px;\n}\n.tr[data-v-3dbd5fd0] {\n    border: rgb(189, 189, 189) solid 1px;\n   cursor: pointer;\n}\ntr td[data-v-3dbd5fd0] {\n    cursor: pointer;\n    font-size: 120%;\n    padding: 0;\n    padding-bottom: 8px;\n}\n.tr-small td[data-v-3dbd5fd0] {\n    padding: 0;\n    font-size: 70%\n}\nspan[data-v-3dbd5fd0] {\n    color: blue;\n}\nli[data-v-3dbd5fd0] {\n    font-style: italic;\n    margin-bottom: 10px\n}\n.text-center[data-v-3dbd5fd0] {\n    padding-top: 2px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -49300,7 +49300,7 @@ var render = function() {
     _vm._v(" "),
     _vm._m(2),
     _vm._v(" "),
-    _c("div", { staticClass: "data-block p-2" }, [
+    _c("div", { staticClass: "data-block m-1 p-2" }, [
       _vm.cars
         ? _c(
             "div",
@@ -49309,7 +49309,7 @@ var render = function() {
                 "div",
                 {
                   key: car.id,
-                  staticClass: "tr py-3 row",
+                  staticClass: "tr my-1 py-3 row",
                   on: {
                     click: function($event) {
                       return _vm.goToCar(car.id)
@@ -49317,18 +49317,18 @@ var render = function() {
                   }
                 },
                 [
-                  _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "col-6 text-white" }, [
                     _c("i", [_vm._v(_vm._s(car.model))])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-6" }, [
                     _c("div", { staticClass: "car-plate bg-light row" }, [
                       _c("div", { staticClass: "car-number bg-light px-1" }, [
-                        _vm._v("· " + _vm._s(car.car_number))
+                        _vm._v("·" + _vm._s(car.car_number) + " ")
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "car-region  bg-light px-1" }, [
-                        _vm._v(_vm._s(car.region) + " ·")
+                        _vm._v(" " + _vm._s(car.region) + "·")
                       ])
                     ])
                   ])
@@ -49812,10 +49812,8 @@ var render = function() {
                         }
                       },
                       [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-8" }, [
-                            _vm._v("Автомобиль по умолчанию:")
-                          ]),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("div", {}, [_vm._v("Автомобиль по умолчанию:")]),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -49828,7 +49826,7 @@ var render = function() {
                                   expression: "setting.default_car_id"
                                 }
                               ],
-                              staticClass: "form-control col-4",
+                              staticClass: "form-control",
                               attrs: { id: "createTypeModal" },
                               on: {
                                 change: function($event) {
@@ -49866,10 +49864,8 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-8" }, [
-                            _vm._v("Сезон нормы:")
-                          ]),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("div", {}, [_vm._v("Сезон нормы:")]),
                           _vm._v(" "),
                           _c(
                             "select",
@@ -49882,7 +49878,7 @@ var render = function() {
                                   expression: "setting.season"
                                 }
                               ],
-                              staticClass: "form-control col-4",
+                              staticClass: "form-control",
                               attrs: { id: "createTypeModal" },
                               on: {
                                 change: function($event) {
@@ -49917,12 +49913,10 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "row mt-4" }, [
-                          _c("div", { staticClass: "col-8" }, [
-                            _vm._v("Зимний процент прибавки:")
-                          ]),
+                        _c("div", { staticClass: "form-group mt-4" }, [
+                          _c("div", {}, [_vm._v("Зимний процент прибавки:")]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-4 pl-0" }, [
+                          _c("div", { staticClass: "pl-0" }, [
                             _c("input", {
                               directives: [
                                 {
@@ -49932,7 +49926,7 @@ var render = function() {
                                   expression: "setting.percent"
                                 }
                               ],
-                              staticClass: "text-center",
+                              staticClass: "text-center form-control",
                               attrs: { type: "number", step: "any" },
                               domProps: { value: setting.percent },
                               on: {

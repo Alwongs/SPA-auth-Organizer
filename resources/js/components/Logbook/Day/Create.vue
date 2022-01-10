@@ -84,7 +84,7 @@ export default {
             errors: [],
             loading: true,
 
-            norm: '',
+            season: '',
             percent: null,
             car: {},
             all_days: [],
@@ -146,9 +146,9 @@ export default {
         },
         getNorm() {
             let norm = 0;
-            if(this.norm == 'summer') {
+            if(this.season == 'summer') {
                 norm = this.car.summer_norm;
-            } else if (this.norm == 'winter') {
+            } else if (this.season == 'winter') {
                 norm = this.car.winter_norm;
             } else {
                 alert('ошибка в методе getNorm!');
@@ -244,7 +244,7 @@ export default {
         getSettings() {
             axios.get('/api/settings')
                 .then(response => {
-                    this.norm = response.data.data[0].norm;
+                    this.season = response.data.data[0].season;
                     this.percent = response.data.data[0].percent;
                 })
                 .catch(error => {

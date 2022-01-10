@@ -11,14 +11,14 @@
         <div class="header text-center p-2">
             <h4>Выберите автомобиль..</h4>
         </div>
-        <div class="data-block p-2">
+        <div class="data-block m-1 p-2">
             <div v-if="cars">
-                <div class="tr py-3 row" @click="goToCar(car.id)" v-for="car in cars" :key="car.id">
-                    <div class="col-6"><i>{{ car.model }}</i></div>
+                <div class="tr my-1 py-3 row" @click="goToCar(car.id)" v-for="car in cars" :key="car.id">
+                    <div class="col-6 text-white"><i>{{ car.model }}</i></div>
                     <div class="col-6">
                         <div class="car-plate bg-light row">
-                            <div class="car-number bg-light px-1">&middot; {{ car.car_number }}</div>
-                            <div class="car-region  bg-light px-1">{{ car.region }} &middot;</div>
+                            <div class="car-number bg-light px-1">&middot;{{ car.car_number }} </div>
+                            <div class="car-region  bg-light px-1"> {{ car.region }}&middot;</div>
                         </div>
                     </div>                                         
                 </div>
@@ -203,8 +203,9 @@ export default {
         border-radius: 5px; 
     }
     .tr {
-        border: rgb(189, 189, 189) solid 1px;
-       cursor: pointer;
+        border: rgb(189, 189, 189) solid 2px;
+        cursor: pointer;
+        background-color: rgb(78, 131, 131);
     }
 
     tr td {
