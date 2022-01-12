@@ -16,9 +16,9 @@
                 <div class="tr my-1 py-3 row" @click="goToCar(car.id)" v-for="car in cars" :key="car.id">
                     <div class="col-6 text-white"><i>{{ car.model }}</i></div>
                     <div class="col-6">
-                        <div class="car-plate bg-light row">
-                            <div class="car-number bg-light px-1">&middot; {{ car.car_number }} </div>
-                            <div class="car-region  bg-light px-1"> {{ car.region }} &middot;</div>
+                        <div class="car-plate bg-white row">
+                            <div class="car-number bg-white px-1">&middot; {{ car.car_number }} </div>
+                            <div class="car-region  bg-white px-1"> {{ car.region }} &middot;</div>
                         </div>
                     </div>                                         
                 </div>
@@ -62,7 +62,7 @@ export default {
                 localStorage.setItem('car_id', this.default_car_id); 
                 this.$router.push({name: 'month'}); 
             } else {
-                alert('Автомобиль по умолчанию не установлен. Проверьте настройки!');
+                alert('"Автомобиль по умолчанию" не установлен. Проверьте настройки!');
             }               
         },
         goToSettings() {

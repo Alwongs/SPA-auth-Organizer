@@ -15,9 +15,9 @@
         </div>
         <div v-if="!loading && car.id">
             <div class="header text-center p-3">
-                <div class="car-plate bg-light row">
-                    <div class="car-number bg-light px-1">&middot; {{ car.car_number }}</div>
-                    <div class="car-region  bg-light px-1">{{ car.region }} &middot;</div>
+                <div class="car-plate bg-white row">
+                    <div class="car-number bg-white px-1">&middot; {{ car.car_number }}</div>
+                    <div class="car-region  bg-white px-1">{{ car.region }} &middot;</div>
                 </div>
             </div>   
             <div class="data-block m-3 p-4">

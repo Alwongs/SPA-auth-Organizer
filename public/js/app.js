@@ -4244,7 +4244,7 @@ __webpack_require__.r(__webpack_exports__);
           name: 'month'
         });
       } else {
-        alert('Автомобиль по умолчанию не установлен. Проверьте настройки!');
+        alert('"Автомобиль по умолчанию" не установлен. Проверьте настройки!');
       }
     },
     goToSettings: function goToSettings() {
@@ -47527,12 +47527,12 @@ var render = function() {
     !_vm.loading && _vm.car.id
       ? _c("div", [
           _c("div", { staticClass: "header text-center p-3" }, [
-            _c("div", { staticClass: "car-plate bg-light row" }, [
-              _c("div", { staticClass: "car-number bg-light px-1" }, [
+            _c("div", { staticClass: "car-plate bg-white row" }, [
+              _c("div", { staticClass: "car-number bg-white px-1" }, [
                 _vm._v("· " + _vm._s(_vm.car.car_number))
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "car-region  bg-light px-1" }, [
+              _c("div", { staticClass: "car-region  bg-white px-1" }, [
                 _vm._v(_vm._s(_vm.car.region) + " ·")
               ])
             ])
@@ -49322,12 +49322,12 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-6" }, [
-                    _c("div", { staticClass: "car-plate bg-light row" }, [
-                      _c("div", { staticClass: "car-number bg-light px-1" }, [
+                    _c("div", { staticClass: "car-plate bg-white row" }, [
+                      _c("div", { staticClass: "car-number bg-white px-1" }, [
                         _vm._v("· " + _vm._s(car.car_number) + " ")
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "car-region  bg-light px-1" }, [
+                      _c("div", { staticClass: "car-region  bg-white px-1" }, [
                         _vm._v(" " + _vm._s(car.region) + " ·")
                       ])
                     ])
