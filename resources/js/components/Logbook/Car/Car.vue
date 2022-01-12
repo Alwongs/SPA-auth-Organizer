@@ -113,12 +113,16 @@ export default {
     .car-plate {
         font-size: 170%;
         border: 1px solid black;
-        border-radius: 5px;
+        border-radius: 3px;
         width: fit-content;
         margin: 0 auto;
     }
     .car-number {
         border-right: 1px solid black;
+        border-radius: 3px 0 0 3px;
+    }
+    .car-region {
+        border-radius: 0 3px 3px 0;
     }
     .container {
         padding: 0 5px 0 5px;

@@ -17,8 +17,8 @@
                     <div class="col-6 text-white"><i>{{ car.model }}</i></div>
                     <div class="col-6">
                         <div class="car-plate bg-light row">
-                            <div class="car-number bg-light px-1">&middot;{{ car.car_number }} </div>
-                            <div class="car-region  bg-light px-1"> {{ car.region }}&middot;</div>
+                            <div class="car-number bg-light px-1">&middot; {{ car.car_number }} </div>
+                            <div class="car-region  bg-light px-1"> {{ car.region }} &middot;</div>
                         </div>
                     </div>                                         
                 </div>
@@ -180,12 +180,16 @@ export default {
     .car-plate {
         font-size: 100%;
         border: 1px solid black;
-        border-radius: 5px;
+        border-radius: 3px;
         width: fit-content;
         margin: 0 auto;
     }
     .car-number {
         border-right: 1px solid black;
+        border-radius: 3px 0 0 3px;
+    }
+    .car-region {
+        border-radius: 0 3px 3px 0;
     }
     .container {
         padding: 0 5px 0 5px;
