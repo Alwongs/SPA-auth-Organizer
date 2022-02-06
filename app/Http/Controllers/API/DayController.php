@@ -36,8 +36,7 @@ class DayController extends Controller
             } elseif ($day_carbon->isLastMonth()) {
                 $pre_month[] = $day;
             }
-        }      
-        
+        }           
         //список месяцев с названиями для замены
         $_monthsList = array(
             "January" => "январь",
@@ -67,9 +66,7 @@ class DayController extends Controller
             "October" => "октября",
             "November" => "ноября",
             "December" => "декабря"
-        );
-        
-
+        );      
 
         $arrays = array(
             'current_month_name' => $_monthsList[$carbon->format('F')],

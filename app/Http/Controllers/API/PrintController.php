@@ -92,5 +92,6 @@ class PrintController extends Controller
     public function destroy(Day $day)
     {
 
+
     }
 }

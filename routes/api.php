@@ -13,6 +13,7 @@ use App\Http\Controllers\API\DayController;
 use App\Http\Controllers\API\PrintController;
 use App\Http\Controllers\API\CarController;
 use App\Http\Controllers\API\SettingController;
+use App\Http\Controllers\API\DeleteController;
 
 
 /*
@@ -47,5 +48,4 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::apiResources(['days/print' => PrintController::class]);
-
 

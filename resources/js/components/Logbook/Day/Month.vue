@@ -16,7 +16,7 @@
             <h3>{{ month_name }}</h3>
         </div> 
                     <h6 class="mb-0 px-4"><i>Журнал автомобиля: {{ car.model }} {{ car.car_number }} {{ car.region }}</i></h6>               
-        <div class="table-block t-wrapper">
+        <div class="table-block t-wrapper mb-5">
             <table class="table table-sm table-hover text-light text-right">
                 <thead class=" bg-secondary">
                     <th class="col-1">Дт</th>
@@ -69,6 +69,9 @@
                 </table>
             </div>
         </div>
+        <div @click="clearOldDays" class="btn btn-outline-danger delete-all-days">
+            Очистить старые данные
+        </div>
     </div>
 </template>
 
@@ -86,6 +89,7 @@ export default {
             month_type: localStorage.getItem('month_type'),
 
             car: {},
+            all_days: [],
             month: [],
             pre_month: [],
             current_month: [],
@@ -99,6 +103,25 @@ export default {
         }
     },
     methods: {
+        clearOldDays() {
+            if(confirm('Вы уверены, что хотите удалить старые данные в таблице?!!!')) {
+                if(confirm('Будут удалены записи журнала старше двух месцев. Хорошо подумали?!!!')) {
+                    let password = prompt("Введите пароль..");
+                    if(password == '9061453121') {
+                        let now = Date.now();
+                        this.all_days.map((day) => {                
+                            if(now - Date.parse(day.date) > 1000*60*60*24*65) {
+                                this.deleteDay(day.id);
+                            }                
+                        });
+                        alert('Нажмите ОК через 10 секунд')
+                        setTimeout(() => { this.getCar(); }, 5000);
+                    } else {
+                        alert('Пароль не верный!')
+                    }   
+                }
+            }              
+        },
         getSummFuel(month) {
             let result = 0;
             month.map((day) => {
@@ -141,7 +164,6 @@ export default {
                 if(confirm('Хорошо подумали?!!!')) {
 
                     this.month.map((day) => {
-                        console.log(day.id)
                         this.deleteDay(day.id);
                     });
 
@@ -174,6 +196,7 @@ export default {
             axios.get('/api/cars/' + this.car_id)
                 .then(response => {
                     this.car = response.data.data.car;
+                    this.all_days = response.data.data.days.all_days;
 
                     if (this.month_type == 'pre_month') {
                         this.month = response.data.data.days.pre_month;

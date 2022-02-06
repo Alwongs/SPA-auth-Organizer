@@ -37,7 +37,7 @@ class CarResource extends JsonResource
                 //список месяцев с названиями для замены
                 $_monthsList = array(
                     "January" => "Январь",
-                    "February " => "Февраль",
+                    "February" => "Февраль",
                     "March" => "Март",
                     "April" => "Апрель",
                     "May" => "Май",
