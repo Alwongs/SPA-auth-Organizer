@@ -65,8 +65,10 @@ class CarResource extends JsonResource
                 'all_days' => $all_days,
                 'pre_month' => $pre_month,
                 'current_month' => $current_month,             
-                'current_month_name' => $_monthsList[$carbon->format('F')],
-                'previous_month_name' => $_monthsList[$carbon->subMonthsNoOverflow(1)->format('F')],
+                'current_month_name' => $carbon->format('F'),
+                //'current_month_name' => $_monthsList[$carbon->format('F')],
+                'previous_month_name' => $carbon->subMonthsNoOverflow(1)->format('F'),
+                //'previous_month_name' => $_monthsList[$carbon->subMonthsNoOverflow(1)->format('F')],
             ]
         ];
     }
