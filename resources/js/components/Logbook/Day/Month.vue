@@ -110,7 +110,7 @@ export default {
                     if(password == '9061453121') {
                         let now = Date.now();
                         this.all_days.map((day) => {                
-                            if(now - Date.parse(day.date) > 1000*60*60*24*65) {
+                            if(now - Date.parse(day.date) > 1000*60*60*24*62) {
                                 this.deleteDay(day.id);
                             }                
                         });

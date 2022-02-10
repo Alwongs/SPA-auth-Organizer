@@ -24,7 +24,17 @@ class DayUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required|unique:days,date,' . $this->day->id
+            'date' => 'required',
+            'remains_pre' =>  'required',
+            'odo_pre' =>  'required',
+            'fuel' =>  'required',
+            'odo_post' =>  'required',
+            'work_in_red' =>  'required',
+            'is_trip' =>  'required',
+            'red_day' =>  'required',
+            'comment' =>  'nullable',
+            'remains_post' =>  'required',
+            'car_id' =>  'required'
         ];
     }
 }

@@ -3,7 +3,7 @@
         <div class="button-block px-2 py-0 row justify-content-around">
             <button title="На главную" class="col-2" @click="$router.push('/logbook')"><i class="bi bi-house-door"></i></button>            
             <button title="Создать новый день" class="col-2" @click="$router.push('/create')"><i class="bi bi-plus-square-dotted"></i></button>
-            <button title="Редактировать день" disabled class="col-2"><i class="bi bi-pen"></i></button>            
+            <button title="Редактировать день" class="col-2" @click="updateDay()"><i class="bi bi-pen"></i></button>            
             <button title="Удалить" class="col-2" @click="deleteDay(day.id)"><i class="bi bi-trash"></i></button>
             <button title="Настройки" class="col-2" @click="goToSettings()"><i class="bi bi-gear-wide"></i></button>
         </div> 
@@ -61,6 +61,9 @@ export default {
         }
     },
     methods: {
+        updateDay() {
+            this.$router.push({name: 'update-day', params: {day: this.day}});
+        },
         goToSettings() {
             if(confirm('Не изменяте настройки, если не уверены!')) {
                 this.$router.push({name: 'settings'});

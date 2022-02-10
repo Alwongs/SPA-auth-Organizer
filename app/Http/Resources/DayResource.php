@@ -26,7 +26,7 @@ class DayResource extends JsonResource
             'red_day' => $this->red_day,
             'comment' => $this->comment,
             'remains_post' => $this->remains_post,
-            'user_id' => $this->user_id
+            'car_id' => $this->car_id
         ];
     }
 }

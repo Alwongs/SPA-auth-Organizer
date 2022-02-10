@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 import Main from './components/Logbook/Main';
 import Create from './components/Logbook/Day/Create';
+import Update from './components/Logbook/Day/Update';
 import Day from './components/Logbook/Day/Day';
 import Report from './components/Logbook/Report';
 import Settings from './components/Logbook/Settings';
@@ -75,6 +76,12 @@ let routes = [
         path: '/create',
         component: Create,
         name: 'create',
+        meta: { middlewareAuth: true }
+    },
+    {
+        path: '/update-day',
+        component: Update,
+        name: 'update-day',
         meta: { middlewareAuth: true }
     },
     {
